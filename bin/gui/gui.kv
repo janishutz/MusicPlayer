@@ -1,6 +1,11 @@
 RootScreen:
     Home:
     Main:
+    ShowcaseS
+
+###########
+# POPUPS
+###########
 
 <PathMissingPU>:
     title: "NOTICE!"
@@ -19,6 +24,46 @@ RootScreen:
             text:"Ok"
             on_release:
                 root.dismiss()
+
+<PathWrongPU>:
+    title: "NOTICE!"
+    font_size: 50
+    size_hint: 0.5, 0.4
+    auto_dismiss: False
+    GridLayout:
+        cols:1
+        Label:
+            text: "Path without any mp3/wav files specified"
+            font_size: 18
+        Label:
+            text: "Please enter another path and try again"
+            font_size: 15
+        Button:
+            text:"Ok"
+            on_release:
+                root.dismiss()
+
+<invalidpathPU>:
+    title: "NOTICE!"
+    font_size: 50
+    size_hint: 0.5, 0.4
+    auto_dismiss: False
+    GridLayout:
+        cols:1
+        Label:
+            text: "Invalid path specified"
+            font_size: 18
+        Label:
+            text: "Please enter a valid path and try again"
+            font_size: 15
+        Button:
+            text:"Ok"
+            on_release:
+                root.dismiss()
+
+###########
+# SCREENS
+###########
 
 <Home>:
     name: "Home"
@@ -42,6 +87,7 @@ RootScreen:
                         hint_text: "Path to Folder containing the Music files"
                         pos_hint: {"x":0.2, "y":0.5}
                         size_hint_x: 0.6
+                        text: "/home/janis/Downloads"
                 Button:
                     text: "Start"
                     color: app.theme_cls.primary_color
@@ -52,11 +98,74 @@ RootScreen:
                         root.change_screen()
 
 <Main>:
+    on_pre_enter: root.initialize()
     name: "Main"
     GridLayout:
         cols: 1
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Next"
+                on_release:
+                    root.nextsong()
+            Button:
+                text: "Rewind"
+                on_release:
+                    root.rewindsong()
         Button:
-            text: "Back"
+            text: "Play"
+            id: pp_button
             on_release:
-                app.root.current = "Home"
+                root.playmusic()
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Back"
+                on_release:
+                    root.go_back()
+            Button:
+                text: "Showcase"
+                on_release:
+                    app.root.current = "Showcase"
+                    root.manager.transition.direction = "left"
 
+
+<ShowcaseS>:
+    on_pre_enter: root.screen_updater_start()
+    name: "Showcase"
+    md_bg_color: (0, 0, 0, 1)
+    FloatLayout:
+        Label:
+            text: "Currently Playing"
+            pos_hint: {"y": 0.4}
+            font_size: 35
+            color: app.theme_cls.primary_color
+        MDProgressBar:
+            orientation: "horizontal"
+            value: 100
+            pos_hint: {"y": 0.35}
+            color: app.theme_cls.primary_dark
+        Label:
+            id: current_song
+            text: "Currently playing Song will appear here"
+            pos_hint: {"y": 0.25}
+            font_size: 30
+            color: app.theme_cls.primary_color
+        Label:
+            text: "upcoming"
+            font_size: 25
+            color: app.theme_cls.primary_color
+        Label:
+            id: upcoming_songs
+            text: "Upcoming Songs will appear here"
+            pos_hint: {"y": -0.25}
+            font_size: 20
+            color: app.theme_cls.primary_color
+        Button:
+            text: "back"
+            font_size: 10
+            size_hint: 0.05, 0.05
+            background_color: app.theme_cls.accent_light
+            on_release:
+                app.root.current = "Main"
+                root.manager.transition.direction = "right"
