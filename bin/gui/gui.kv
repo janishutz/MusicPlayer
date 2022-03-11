@@ -103,10 +103,17 @@ RootScreen:
     md_bg_color: app.theme_cls.accent_color
     GridLayout:
         cols: 1
-        Label:
-            text: "MusicPlayer"
-            font_size: 40
-            color: app.theme_cls.primary_color
+        GridLayout:
+            cols: 1
+            Label:
+                text: "MusicPlayer"
+                font_size: 40
+                color: app.theme_cls.primary_color
+            Label:
+                text: "playing song will appear here"
+                id: current_song
+                font_size: 25
+                color: app.theme_cls.primary_dark
         FloatLayout:
             GridLayout:
                 size_hint: 0.8, 0.9
@@ -151,7 +158,6 @@ RootScreen:
                             root.manager.transition.direction = "left"
 
 <ShowcaseS>:
-    on_pre_enter: root.screen_updater_start()
     name: "Showcase"
     md_bg_color: (0, 0, 0, 1)
     FloatLayout:
@@ -195,3 +201,6 @@ RootScreen:
 
 <SettingsS>:
     name: "Settings"
+    md_bg_color: app.theme_cls.accent_color
+    ToggleButton:
+        text: "Songinfo = Filename"

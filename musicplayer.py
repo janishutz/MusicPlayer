@@ -12,7 +12,6 @@ from kivy.clock import Clock
 import bin.csv_parsers
 import bin.filepathanalysis
 import bin.player
-import sys
 
 
 pl = bin.player.Player()
@@ -103,17 +102,34 @@ class Main(MDScreen):
             self.rewindsong()
         elif self.key == "left":
             self.previoussong()
+        elif self.key == "escape":
+            self.back_here()
+        elif self.key == "s":
+            if self.manager.current == "Main":
+                self.manager.current = "Showcase"
+                self.manager.transition.direction = "left"
+            else:
+                pass
         else:
             pass
 
     def initialize(self):
         try:
-            if self.mplayer.is_alive() == True:
+            Clock.schedule_interval(self.screen_updating, 2)
+        except:
+            pass
+
+        try:
+            if self.mplayer.is_alive() is True:
                 pass
             else:
+                self.instructions = multiprocessing.Value('i', 0)
+                self.others = multiprocessing.Value('i', 0)
                 self.mplayer = multiprocessing.Process(name="player", target=pl.musicmanager, args=(self.instructions, self.others,))
                 self.mplayer.start()
         except:
+            self.instructions = multiprocessing.Value('i', 0)
+            self.others = multiprocessing.Value('i', 0)
             self.mplayer = multiprocessing.Process(name="player", target=pl.musicmanager, args=(self.instructions, self.others,))
             self.mplayer.start()
 
@@ -140,24 +156,9 @@ class Main(MDScreen):
             self.mplayer.kill()
         except:
             pass
+        self.ids.pp_button.text = "Play"
         self.manager.current = "Home"
         self.manager.transition.direction = "right"
-
-    def show_current_song(self):
-        self.__config = cvr.importing("./data/config.csv").pop(0)
-        self.__info = cvr.importing("./data/songtemp.csv")
-        self.__currents_imp = self.__info.pop(0)
-        self.__currents = int(self.__currents_imp.pop(0))
-        self.__upcoming = self.__info.pop(0)
-        self.__current = self.__upcoming.pop(self.__currents)
-        if self.__config == ["1"]:
-            self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
-        else:
-            self.ids.current_song.text = self.__current
-
-class ShowcaseS(MDScreen):
-    def screen_updater_start(self):
-        Clock.schedule_interval(self.screen_updating, 2)
 
     def screen_updating(self, waste):
         self.__config = cvr.importing("./data/config.csv").pop(0)
@@ -168,10 +169,12 @@ class ShowcaseS(MDScreen):
         self.__current = self.__upcoming.pop(self.__currents)
         if self.__config == ["1"]:
             self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
+            self.manager.get_screen("Showcase").ids.current_song.text = self.__current[:(len(self.__current) - 4)]
         else:
             self.ids.current_song.text = self.__current
+            self.manager.get_screen("Showcase").ids.current_song.text = self.__current
         if len(self.__upcoming) <= self.__currents:
-            self.ids.upcoming_songs.text = "No more songs in Queue"
+            self.manager.get_screen("Showcase").ids.upcoming_songs.text = "No more songs in Queue"
         else:
             self.__upcoming2 = str(self.__upcoming.pop(self.__currents))
             if self.__config == ["1"]:
@@ -190,7 +193,20 @@ class ShowcaseS(MDScreen):
                     else:
                         self.__upcoming_output += f"\n{self.__upcoming2}"
                     self.__length_output += 1
-            self.ids.upcoming_songs.text = self.__upcoming_output
+            self.manager.get_screen("Showcase").ids.upcoming_songs.text = self.__upcoming_output
+
+    def back_here(self):
+        if self.manager.current == "Showcase":
+            self.manager.current = "Main"
+            self.manager.transition.direction = "right"
+        elif self.manager.current == "Main":
+            self.go_back()
+        else:
+            pass
+
+
+class ShowcaseS(MDScreen):
+    pass
 
 
 class RootScreen(ScreenManager):
