@@ -83,6 +83,22 @@ class Player:
             elif other.value == 3:
                 self.__recent_change = 1000000
                 other.value = 0
+
+            elif other.value == 4:
+                other.value = 0
+                mx.music.unload()
+                self.playlist = copy.deepcopy(self.playlist_backup)
+                if self.current_playing_pos > 0:
+                    self.current_playing_pos -= 1
+                else:
+                    self.current_playing_pos = len(self.playlist_backup) - 1
+                for i in range(self.current_playing_pos):
+                    self.playlist.pop(0)
+                self.current_playing = self.playlist.pop(0)
+                mx.music.load(self.current_playing)
+                mx.music.play()
+                self.__recent_change = 10000000
+                self.infoupdater()
             else:
                 if inst.value == 1:
                     mx.music.unpause()

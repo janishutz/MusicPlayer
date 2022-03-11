@@ -87,7 +87,7 @@ RootScreen:
                         hint_text: "Path to Folder containing the Music files"
                         pos_hint: {"x":0.2, "y":0.5}
                         size_hint_x: 0.6
-                        text: "/home/janis/Downloads"
+                        text: "/home/janis/Downloads/KB"
                 Button:
                     text: "Start"
                     color: app.theme_cls.primary_color
@@ -100,34 +100,55 @@ RootScreen:
 <Main>:
     on_pre_enter: root.initialize()
     name: "Main"
+    md_bg_color: app.theme_cls.accent_color
     GridLayout:
         cols: 1
-        GridLayout:
-            cols: 2
-            Button:
-                text: "Next"
-                on_release:
-                    root.nextsong()
-            Button:
-                text: "Rewind"
-                on_release:
-                    root.rewindsong()
-        Button:
-            text: "Play"
-            id: pp_button
-            on_release:
-                root.playmusic()
-        GridLayout:
-            cols: 2
-            Button:
-                text: "Back"
-                on_release:
-                    root.go_back()
-            Button:
-                text: "Showcase"
-                on_release:
-                    app.root.current = "Showcase"
-                    root.manager.transition.direction = "left"
+        Label:
+            text: "MusicPlayer"
+            font_size: 40
+            color: app.theme_cls.primary_color
+        FloatLayout:
+            GridLayout:
+                size_hint: 0.8, 0.9
+                pos_hint: {"x": 0.1, "y": 0.1}
+                cols: 1
+                GridLayout:
+                    cols: 3
+                    Button:
+                        text: "Previous"
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.previoussong()
+                    Button:
+                        text: "Rewind"
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.rewindsong()
+                    Button:
+                        text: "Next"
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.nextsong()
+
+                Button:
+                    text: "Play"
+                    id: pp_button
+                    background_color: app.theme_cls.accent_dark
+                    on_release:
+                        root.playmusic()
+                GridLayout:
+                    cols: 2
+                    Button:
+                        text: "Back"
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.go_back()
+                    Button:
+                        text: "Showcase"
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            app.root.current = "Showcase"
+                            root.manager.transition.direction = "left"
 
 <ShowcaseS>:
     on_pre_enter: root.screen_updater_start()
@@ -171,3 +192,6 @@ RootScreen:
             on_release:
                 app.root.current = "Main"
                 root.manager.transition.direction = "right"
+
+<SettingsS>:
+    name: "Settings"

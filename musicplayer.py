@@ -99,8 +99,10 @@ class Main(MDScreen):
             self.playmusic()
         elif self.key == "right":
             self.nextsong()
-        elif self.key == "left":
+        elif self.key == "up":
             self.rewindsong()
+        elif self.key == "left":
+            self.previoussong()
         else:
             pass
 
@@ -130,6 +132,9 @@ class Main(MDScreen):
     def rewindsong(self):
         self.others.value = 2
 
+    def previoussong(self):
+        self.others.value = 4
+
     def go_back(self):
         try:
             self.mplayer.kill()
@@ -138,6 +143,17 @@ class Main(MDScreen):
         self.manager.current = "Home"
         self.manager.transition.direction = "right"
 
+    def show_current_song(self):
+        self.__config = cvr.importing("./data/config.csv").pop(0)
+        self.__info = cvr.importing("./data/songtemp.csv")
+        self.__currents_imp = self.__info.pop(0)
+        self.__currents = int(self.__currents_imp.pop(0))
+        self.__upcoming = self.__info.pop(0)
+        self.__current = self.__upcoming.pop(self.__currents)
+        if self.__config == ["1"]:
+            self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
+        else:
+            self.ids.current_song.text = self.__current
 
 class ShowcaseS(MDScreen):
     def screen_updater_start(self):

@@ -26,7 +26,12 @@ class InfoHandler:
             try:
                 self.__style = self.__infos.pop(0)
                 self.__outp1 += f" | {self.__style}"
-            except:
+            except IndexError:
+                pass
+            try:
+                self.__tempo = self.__infos.pop(0)
+                self.__outp1 += f" ({self.__tempo})"
+            except IndexError:
                 pass
             self.__output.append(self.__outp1)
         cvw.app_str("./data/songtemp.csv", self.__output)
