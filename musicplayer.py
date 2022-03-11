@@ -10,11 +10,6 @@ from kivy.clock import Clock
 import bin.csv_parsers
 import bin.filepathanalysis
 import bin.player
-import pygame
-import pygame.mixer as mx
-import copy
-import time
-
 
 
 pl = bin.player.Player()
@@ -150,6 +145,7 @@ class ShowcaseS(MDScreen):
         self.__currents_imp = self.__info.pop(0)
         self.__currents = int(self.__currents_imp.pop(0))
         self.__upcoming = self.__info.pop(0)
+        self.__upcoming.sort()
         self.__current = self.__upcoming.pop(self.__currents)
         self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
         if len(self.__upcoming) <= self.__currents:

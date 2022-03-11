@@ -3,7 +3,7 @@ import bin.csv_parsers
 import copy
 import bin.filepathanalysis
 import pygame
-import time
+import bin.info_handler
 
 pa = bin.filepathanalysis.PathAnalysis()
 cvr = bin.csv_parsers.CsvRead()
@@ -26,10 +26,13 @@ class Player:
         else:
             pygame.init()
             self.path = cvr.importing("./data/temp.csv").pop(0)
-            self.__imports = pa.validsonglistcreator(self.path.pop())
+            self.pathtr = self.path.pop(0)
+            self.__imports = pa.validsonglistcreator(self.pathtr)
             self.playlist = self.__imports.pop(0)
+            self.playlist.sort()
             self.playlist_backup = copy.deepcopy(self.playlist)
             self.information = self.__imports.pop(0)
+            self.information.sort()
             mx.init()
             self.current_playing = self.playlist.pop(0)
             mx.music.load(self.current_playing)
@@ -39,7 +42,12 @@ class Player:
     def infoupdater(self):
         self.transmission = []
         cvw.write_str("./data/songtemp.csv", [self.current_playing_pos])
-        cvw.app_str("./data/songtemp.csv", self.information)
+        self.__config = cvr.importing("./data/config.csv").pop(0)
+        if self.__config == ["1"]:
+            cvw.app_str("./data/songtemp.csv", self.information)
+        else:
+            print(self.path, "path")
+            bin.info_handler.InfoHandler().infohandler(self.information, self.pathtr)
 
     def musicmanager(self, inst, other):
         self.start_playing()
