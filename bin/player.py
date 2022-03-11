@@ -43,11 +43,14 @@ class Player:
         self.transmission = []
         cvw.write_str("./data/songtemp.csv", [self.current_playing_pos])
         self.__config = cvr.importing("./data/config.csv").pop(0)
+        self.listinfo = self.__config.pop(1)
         if self.__config == ["1"]:
             cvw.app_str("./data/songtemp.csv", self.information)
         else:
-            print(self.path, "path")
-            bin.info_handler.InfoHandler().infohandler(self.information, self.pathtr)
+            try:
+                bin.info_handler.InfoHandler().infohandler(self.listinfo, self.pathtr)
+            except FileNotFoundError:
+                cvw.app_str("./data/songtemp.csv", self.information)
 
     def musicmanager(self, inst, other):
         self.start_playing()
@@ -101,4 +104,3 @@ class Player:
                 self.infoupdater()
             else:
                 pass
-

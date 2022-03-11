@@ -1,5 +1,7 @@
 import multiprocessing
 import os
+import signal
+
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.screen import MDScreen
@@ -10,6 +12,7 @@ from kivy.clock import Clock
 import bin.csv_parsers
 import bin.filepathanalysis
 import bin.player
+import sys
 
 
 pl = bin.player.Player()
@@ -135,44 +138,62 @@ class Main(MDScreen):
         self.manager.current = "Home"
         self.manager.transition.direction = "right"
 
+
 class ShowcaseS(MDScreen):
     def screen_updater_start(self):
         Clock.schedule_interval(self.screen_updating, 2)
 
-
     def screen_updating(self, waste):
+        self.__config = cvr.importing("./data/config.csv").pop(0)
         self.__info = cvr.importing("./data/songtemp.csv")
         self.__currents_imp = self.__info.pop(0)
         self.__currents = int(self.__currents_imp.pop(0))
         self.__upcoming = self.__info.pop(0)
-        self.__upcoming.sort()
         self.__current = self.__upcoming.pop(self.__currents)
-        self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
+        if self.__config == ["1"]:
+            self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
+        else:
+            self.ids.current_song.text = self.__current
         if len(self.__upcoming) <= self.__currents:
             self.ids.upcoming_songs.text = "No more songs in Queue"
         else:
             self.__upcoming2 = str(self.__upcoming.pop(self.__currents))
-            self.__upcoming_output = self.__upcoming2[:(len(self.__upcoming2) - 4)]
+            if self.__config == ["1"]:
+                self.__upcoming_output = self.__upcoming2[:(len(self.__upcoming2) - 4)]
+            else:
+                self.__upcoming_output = self.__upcoming2
+
             self.__length_output = 0
             for i in range(len(self.__upcoming) - self.__currents):
                 if self.__length_output > 5:
                     pass
                 else:
                     self.__upcoming2 = str(self.__upcoming.pop(self.__currents))
-                    self.__upcoming_output += f"\n{self.__upcoming2[:(len(self.__upcoming2) - 4)]}"
+                    if self.__config == ["1"]:
+                        self.__upcoming_output += f"\n{self.__upcoming2[:(len(self.__upcoming2) - 4)]}"
+                    else:
+                        self.__upcoming_output += f"\n{self.__upcoming2}"
                     self.__length_output += 1
             self.ids.upcoming_songs.text = self.__upcoming_output
+
 
 class RootScreen(ScreenManager):
     pass
 
+
 class MusicPlayer(MDApp):
     def build(self):
+        Window.bind(on_request_close=self.on_request_close)
         self.title = "MusicPlayer"
         self.theme_cls.primary_palette = "Yellow"
         self.theme_cls.accent_palette = "BlueGray"
         # self.icon = "./BiogasControllerAppLogo.png"
         return Builder.load_file("./bin/gui/gui.kv")
+
+    def on_request_close(self, *args):
+        print("leaving...")
+        os.killpg(os.getpgid(0), signal.SIGKILL)
+
 
 if __name__ == "__main__":
     Config.set('graphics', 'width', '800')

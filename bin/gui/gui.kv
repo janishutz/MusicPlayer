@@ -136,23 +136,25 @@ RootScreen:
     FloatLayout:
         Label:
             text: "Currently Playing"
-            pos_hint: {"y": 0.4}
-            font_size: 35
+            pos_hint: {"y": 0.35}
+            font_size: 45
             color: app.theme_cls.primary_color
         MDProgressBar:
             orientation: "horizontal"
             value: 100
-            pos_hint: {"y": 0.35}
+            pos_hint: {"y": 0.3}
             color: app.theme_cls.primary_dark
         Label:
             id: current_song
             text: "Currently playing Song will appear here"
-            pos_hint: {"y": 0.25}
+            pos_hint: {"y": 0.22}
             font_size: 30
             color: app.theme_cls.primary_color
+            shorten: False
         Label:
             text: "upcoming"
             font_size: 25
+            pos_hint: {"y": -0.05}
             color: app.theme_cls.primary_color
         Label:
             id: upcoming_songs
@@ -160,6 +162,7 @@ RootScreen:
             pos_hint: {"y": -0.25}
             font_size: 20
             color: app.theme_cls.primary_color
+            shorten: False
         Button:
             text: "back"
             font_size: 10
