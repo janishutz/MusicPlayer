@@ -1,7 +1,7 @@
 import multiprocessing
 import os
 import signal
-
+# os.environ["KIVY_NO_CONSOLELOG"] = "1"
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.screen import MDScreen
@@ -12,6 +12,7 @@ from kivy.clock import Clock
 import bin.csv_parsers
 import bin.filepathanalysis
 import bin.player
+import math
 
 
 pl = bin.player.Player()
@@ -87,6 +88,7 @@ class Main(MDScreen):
         super().__init__(**kwargs)
         self.instructions = multiprocessing.Value('i', 0)
         self.others = multiprocessing.Value('i', 0)
+        self.backfeed = multiprocessing.Value('f', 0)
         self.keyboard = Window.request_keyboard(None, self)
         self.keyboard.bind(on_key_down=self.key_pressed)
         self.quit_requests = 0
@@ -123,14 +125,18 @@ class Main(MDScreen):
             if self.mplayer.is_alive() is True:
                 pass
             else:
+                cvw.chg_str("./data/config.csv", 0, 0, "0")
                 self.instructions = multiprocessing.Value('i', 0)
                 self.others = multiprocessing.Value('i', 0)
-                self.mplayer = multiprocessing.Process(name="player", target=pl.musicmanager, args=(self.instructions, self.others,))
+                self.backfeed = multiprocessing.Value('f', 0)
+                self.mplayer = multiprocessing.Process(name="player", target=pl.musicmanager, args=(self.instructions, self.others, self.backfeed,))
                 self.mplayer.start()
-        except:
+        except AttributeError:
+            cvw.chg_str("./data/config.csv", 0, 0, "0")
             self.instructions = multiprocessing.Value('i', 0)
             self.others = multiprocessing.Value('i', 0)
-            self.mplayer = multiprocessing.Process(name="player", target=pl.musicmanager, args=(self.instructions, self.others,))
+            self.backfeed = multiprocessing.Value('f', 0)
+            self.mplayer = multiprocessing.Process(name="player", target=pl.musicmanager, args=(self.instructions, self.others, self.backfeed,))
             self.mplayer.start()
 
     def playmusic(self):
@@ -161,11 +167,22 @@ class Main(MDScreen):
         self.manager.transition.direction = "right"
 
     def screen_updating(self, waste):
+        self.__windowsize = Window._get_size()
+        self.__windowsize_x = self.__windowsize[0]
+        self.__windowsize_y = self.__windowsize[1]
+        self.__text_size = round(math.sqrt(((self.__windowsize_x + self.__windowsize_y) / 2)), 0)
+        self.manager.get_screen("Showcase").ids.current_song.font_size = self.__text_size + 5
+        self.manager.get_screen("Showcase").ids.upcoming_songs.font_size = self.__text_size - 5
         self.__config = cvr.importing("./data/config.csv").pop(0)
+        self.__config.pop(1)
         self.__info = cvr.importing("./data/songtemp.csv")
         self.__currents_imp = self.__info.pop(0)
         self.__currents = int(self.__currents_imp.pop(0))
         self.__upcoming = self.__info.pop(0)
+        self.__songlinfo = self.__info.pop(0)
+        self.__songpos = self.backfeed.value
+        self.__songdisplay = int(self.__songpos / float(self.__songlinfo.pop(0)) * 100)
+        self.manager.get_screen("Showcase").ids.progressbars.value = self.__songdisplay
         self.__current = self.__upcoming.pop(self.__currents)
         if self.__config == ["1"]:
             self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
@@ -217,8 +234,8 @@ class MusicPlayer(MDApp):
     def build(self):
         Window.bind(on_request_close=self.on_request_close)
         self.title = "MusicPlayer"
-        self.theme_cls.primary_palette = "Yellow"
-        self.theme_cls.accent_palette = "BlueGray"
+        self.theme_cls.primary_palette = "Blue"
+        self.theme_cls.accent_palette = "Gray"
         # self.icon = "./BiogasControllerAppLogo.png"
         return Builder.load_file("./bin/gui/gui.kv")
 

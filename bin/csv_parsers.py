@@ -50,7 +50,7 @@ class CsvWrite:
 
 
     def chg_str(self, path, row, pos, new_value):
-        """Opens the csv-file in write mode to change a value, e.g. if a recipes is changed."""
+        """Opens the csv-file in write mode to change a value, e.g. if a recipe is changed."""
         self.__imp = open(path)
         self.__raw = csv.reader(self.__imp, delimiter=',')
         self.__impl = list(self.__raw)

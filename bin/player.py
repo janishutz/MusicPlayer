@@ -18,6 +18,7 @@ class Player:
         self.__imports = []
         self.information = []
         self.current_playing_pos = 0
+        self.__songlength = 0
 
     def start_playing(self):
         # initialize playing
@@ -40,6 +41,7 @@ class Player:
             mx.music.pause()
 
     def infoupdater(self):
+        self.__songlength = mx.Sound(self.current_playing).get_length()
         self.transmission = []
         cvw.write_str("./data/songtemp.csv", [self.current_playing_pos])
         self.__config = cvr.importing("./data/config.csv").pop(0)
@@ -50,12 +52,15 @@ class Player:
             try:
                 bin.info_handler.InfoHandler().infohandler(self.listinfo, self.pathtr)
             except FileNotFoundError:
+                cvw.chg_str("./data/config.csv", 0, 0, "1")
                 cvw.app_str("./data/songtemp.csv", self.information)
+        cvw.app_str("./data/songtemp.csv", [self.__songlength])
 
-    def musicmanager(self, inst, other):
+    def musicmanager(self, inst, other, backfeed):
         self.start_playing()
         self.infoupdater()
         while self.__running == 1:
+            backfeed.value = mx.music.get_pos() / 1000
             if self.__recent_change < 1:
                 pass
             else:
@@ -77,7 +82,9 @@ class Player:
                 self.infoupdater()
 
             elif other.value == 2:
-                mx.music.rewind()
+                mx.music.unload()
+                mx.music.load(self.current_playing)
+                mx.music.play()
                 other.value = 0
 
             elif other.value == 3:
