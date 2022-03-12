@@ -1,7 +1,7 @@
 import multiprocessing
 import os
 import signal
-# os.environ["KIVY_NO_CONSOLELOG"] = "1"
+os.environ["KIVY_NO_CONSOLELOG"] = "1"
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.screen import MDScreen
