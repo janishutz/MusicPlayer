@@ -210,7 +210,10 @@ RootScreen:
             on_release:
                 app.root.current = "Main"
                 root.manager.transition.direction = "right"
-
+        Label:
+            text: "Designed and developed by Janis Hutz"
+            font_size: 7
+            pos_hint: {"y": -0.48, "x": 0.48}
 <SettingsS>:
     name: "Settings"
     md_bg_color: app.theme_cls.accent_color
