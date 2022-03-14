@@ -9,4 +9,5 @@ FEATURES
 - Planned: App theming
 
 Installation:
-- You will need to install the following dependencies: kivy[full], kivymd, pygame
+- You will need to install the following dependencies: kivy[full], kivymd, pygame.
+- Kivy may actually also (if you are on a distro that uses apt) be installed by cloning an apt repository as follows (adapted from kivy documentation), as pip will most likely fail: 'sudo add-apt-repository ppa:kivy-team/kivy', then running 'sudo apt-get update' and then 'sudo apt-get install python3-kivy'
