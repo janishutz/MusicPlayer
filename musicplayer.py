@@ -117,7 +117,7 @@ class Main(MDScreen):
 
     def initialize(self):
         try:
-            Clock.schedule_interval(self.screen_updating, 2)
+            Clock.schedule_interval(self.screen_updating, 1)
         except:
             pass
 
