@@ -87,8 +87,10 @@ RootScreen:
                         hint_text: "Path to Folder containing the Music files"
                         pos_hint: {"x":0.2, "y":0.5}
                         size_hint_x: 0.6
+                        focus: True
                         text: ""
-                        on_text: root.autocomplete()
+                        on_text:
+                            root.autocomplete()
                     Label:
                         text: ""
                         pos_hint: {"x": 0.2, "y":1}
@@ -170,6 +172,7 @@ RootScreen:
     FloatLayout:
         Label:
             text: "Currently Playing"
+            id: titleinfo
             bold: True
             italic: True
             pos_hint: {"y": 0.35}
@@ -195,6 +198,7 @@ RootScreen:
             shorten: False
             halign: "center"
         Label:
+            id: upcoming_ind
             text: "upcoming"
             bold: True
             italic: True

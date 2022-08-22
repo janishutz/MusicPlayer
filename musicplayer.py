@@ -4,6 +4,7 @@ import signal
 # os.environ["KIVY_NO_CONSOLELOG"] = "1"
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
+from kivymd.uix.textfield import MDTextField
 from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
 from kivy.base import Builder
@@ -14,6 +15,7 @@ import bin.filepathanalysis
 import bin.player
 import math
 import bin.autocomplete
+import time
 
 
 pl = bin.player.Player()
@@ -90,10 +92,13 @@ class Home(MDScreen):
         if self.input == "\t":
             self.__ac = ac.autocomplete(self.text)
             self.ids.cmd_output.text = self.__ac.pop(0)
-            self.ids.filepath.text = self.__ac.pop(0)
+            self.output = self.__ac.pop(0)
+            Clock.schedule_once(self.reloadf, 0.1)
         else:
             pass
 
+    def reloadf(self, dt):
+        self.ids.filepath.text = self.output
 
 
 class Main(MDScreen):
@@ -102,6 +107,8 @@ class Main(MDScreen):
         self.instructions = multiprocessing.Value('i', 0)
         self.others = multiprocessing.Value('i', 0)
         self.backfeed = multiprocessing.Value('f', 0)
+        self.keyboard = Window.request_keyboard(None, self)
+        self.keyboard.bind(on_key_down=self.key_pressed)
         self.quit_requests = 0
 
     def key_pressed(self, keyboard, keycode, text, modifiers):
@@ -184,6 +191,8 @@ class Main(MDScreen):
         self.__text_size = round(math.sqrt(((self.__windowsize_x + self.__windowsize_y) / 2)), 0)
         self.manager.get_screen("Showcase").ids.current_song.font_size = self.__text_size + 5
         self.manager.get_screen("Showcase").ids.upcoming_songs.font_size = self.__text_size - 5
+        self.manager.get_screen("Showcase").ids.titleinfo.font_size = self.__text_size * 2.2
+        self.manager.get_screen("Showcase").ids.upcoming_ind.font_size = self.__text_size + 10
         self.__config = cvr.importing("./data/config.csv").pop(0)
         self.__config.pop(1)
         self.__info = cvr.importing("./data/songtemp.csv")
