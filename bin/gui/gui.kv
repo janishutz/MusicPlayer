@@ -46,7 +46,7 @@ RootScreen:
 <invalidpathPU>:
     title: "NOTICE!"
     font_size: 50
-    size_hint: 0.5, 0.4
+    size_hint: 0.7, 0.6
     auto_dismiss: False
     GridLayout:
         cols:1
@@ -56,6 +56,9 @@ RootScreen:
         Label:
             text: "Please enter a valid path and try again"
             font_size: 15
+        Label:
+            text: "Please be aware, that you cannot specify any other file type other than \"Directory\""
+            font_size: 12
         Button:
             text:"Ok"
             on_release:
@@ -71,7 +74,8 @@ RootScreen:
     GridLayout:
         cols: 1
         Label:
-            text: "MusicPlayer V1.0"
+            id: titleapp
+            text: root.initapp()
             color: app.theme_cls.primary_color
             font_size: 50
             bold: True

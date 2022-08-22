@@ -1,10 +1,9 @@
 import multiprocessing
 import os
 import signal
-# os.environ["KIVY_NO_CONSOLELOG"] = "1"
+os.environ["KIVY_NO_CONSOLELOG"] = "1"
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
-from kivymd.uix.textfield import MDTextField
 from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
 from kivy.base import Builder
@@ -15,7 +14,12 @@ import bin.filepathanalysis
 import bin.player
 import math
 import bin.autocomplete
-import time
+import configparser
+
+
+config = configparser.ConfigParser()
+config.read('./data/settings.ini')
+version_app = f"Music Player {config['Info']['version']}{config['Info']['subVersion']}"
 
 
 pl = bin.player.Player()
@@ -48,6 +52,9 @@ class invalidpathPU(Popup):
 
 
 class Home(MDScreen):
+    def initapp(self):
+        return version_app
+
     def change_screen(self):
         if self.ids.filepath.text != "":
             self.analyse_dir()
@@ -135,7 +142,12 @@ class Main(MDScreen):
 
     def initialize(self):
         try:
-            Clock.schedule_interval(self.screen_updating, 1)
+            self.refreshspeed = int(config["Performance"]["showcaseRefreshRate"])
+        except ValueError:
+            self.refreshspeed = 1
+
+        try:
+            Clock.schedule_interval(self.screen_updating, self.refreshspeed)
         except:
             pass
 
