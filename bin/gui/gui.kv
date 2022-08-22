@@ -87,7 +87,14 @@ RootScreen:
                         hint_text: "Path to Folder containing the Music files"
                         pos_hint: {"x":0.2, "y":0.5}
                         size_hint_x: 0.6
-                        text: "/home/janis/Downloads/KB"
+                        text: ""
+                        on_text: root.autocomplete()
+                    Label:
+                        text: ""
+                        pos_hint: {"x": 0.2, "y":1}
+                        size_hint: 0.6, 0.3
+                        text_size: self.size
+                        id: cmd_output
                 Button:
                     text: "Start"
                     color: app.theme_cls.primary_color

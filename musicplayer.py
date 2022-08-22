@@ -1,7 +1,7 @@
 import multiprocessing
 import os
 import signal
-os.environ["KIVY_NO_CONSOLELOG"] = "1"
+# os.environ["KIVY_NO_CONSOLELOG"] = "1"
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.screen import MDScreen
@@ -13,12 +13,14 @@ import bin.csv_parsers
 import bin.filepathanalysis
 import bin.player
 import math
+import bin.autocomplete
 
 
 pl = bin.player.Player()
 pa = bin.filepathanalysis.PathAnalysis()
 cvr = bin.csv_parsers.CsvRead()
 cvw = bin.csv_parsers.CsvWrite()
+ac = bin.autocomplete.AutoComplete()
 
 
 ###########
@@ -82,6 +84,17 @@ class Home(MDScreen):
         self.ivppu = invalidpathPU()
         self.ivppu.open()
 
+    def autocomplete(self):
+        self.text = self.ids.filepath.text
+        self.input = self.text[len(self.text) - 1:]
+        if self.input == "\t":
+            self.__ac = ac.autocomplete(self.text)
+            self.ids.cmd_output.text = self.__ac.pop(0)
+            self.ids.filepath.text = self.__ac.pop(0)
+        else:
+            pass
+
+
 
 class Main(MDScreen):
     def __init__(self, **kwargs):
@@ -89,8 +102,6 @@ class Main(MDScreen):
         self.instructions = multiprocessing.Value('i', 0)
         self.others = multiprocessing.Value('i', 0)
         self.backfeed = multiprocessing.Value('f', 0)
-        self.keyboard = Window.request_keyboard(None, self)
-        self.keyboard.bind(on_key_down=self.key_pressed)
         self.quit_requests = 0
 
     def key_pressed(self, keyboard, keycode, text, modifiers):
