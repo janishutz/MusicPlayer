@@ -1,7 +1,17 @@
-import multiprocessing
 import os
+import configparser
+
+config = configparser.ConfigParser()
+config.read('./data/settings.ini')
+co = config['Dev Settings']['verbose']
+
+if co == "True":
+    pass
+else:
+    os.environ["KIVY_NO_CONSOLELOG"] = "1"
+
 import signal
-os.environ["KIVY_NO_CONSOLELOG"] = "1"
+import multiprocessing
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.screen import MDScreen
@@ -14,12 +24,6 @@ import bin.filepathanalysis
 import bin.player
 import math
 import bin.autocomplete
-import configparser
-
-
-config = configparser.ConfigParser()
-config.read('./data/settings.ini')
-version_app = f"Music Player {config['Info']['version']}{config['Info']['subVersion']}"
 
 
 pl = bin.player.Player()
@@ -27,11 +31,16 @@ pa = bin.filepathanalysis.PathAnalysis()
 cvr = bin.csv_parsers.CsvRead()
 cvw = bin.csv_parsers.CsvWrite()
 ac = bin.autocomplete.AutoComplete()
+version_app = f"Music Player {config['Info']['version']}{config['Info']['subVersion']}"
 
 
 ###########
 # Popups
 ###########
+
+
+class QuitPU(Popup):
+    pass
 
 
 class PathMissingPU(Popup):
@@ -107,6 +116,9 @@ class Home(MDScreen):
     def reloadf(self, dt):
         self.ids.filepath.text = self.output
 
+    def quitapp(self):
+        QuitPU().open()
+
 
 class Main(MDScreen):
     def __init__(self, **kwargs):
@@ -137,6 +149,12 @@ class Main(MDScreen):
                 self.manager.transition.direction = "left"
             else:
                 pass
+        elif self.key == "f" and self.manager.current == "Showcase":
+            if Window.fullscreen == 'auto':
+                Window.fullscreen = False
+            else:
+                Window.fullscreen = 'auto'
+                Window.maximize()
         else:
             pass
 
@@ -255,7 +273,8 @@ class Main(MDScreen):
 
 
 class ShowcaseS(MDScreen):
-    pass
+    def disablefullscreen(self):
+        Window.fullscreen = False
 
 
 class RootScreen(ScreenManager):
@@ -277,12 +296,20 @@ class MusicPlayer(MDApp):
 
 
 if __name__ == "__main__":
+    if config['Display']['launchMaximized'] == "True":
+        Window.maximize()
+    else:
+        pass
+    try:
+        Window.size = (int(config['Display']['width']), int(config['Display']['height']))
+    except Exception as e:
+        print("Unvalid config string found for in Display settings")
+
     Config.set('graphics', 'width', '800')
     Config.set('graphics', 'height', '600')
     Config.set('graphics', 'resizable', True)
     Config.set('kivy', 'exit_on_escape', '0')
     Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
     Config.set('graphics', 'window_state', 'normal')
-    Config.set('graphics', 'fullscreen', False)
     Config.write()
     MusicPlayer().run()

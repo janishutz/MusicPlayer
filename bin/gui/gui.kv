@@ -6,6 +6,28 @@ RootScreen:
 ###########
 # POPUPS
 ###########
+<QuitPU>:
+    title: "BiogasControllerApp"
+    font_size: 50
+    size_hint: 0.5, 0.4
+    auto_dismiss: False
+    GridLayout:
+        cols:1
+        Label:
+            text: "Are you sure you want to leave?"
+            font_size: 20
+        GridLayout:
+            cols:2
+            Button:
+                text: "Yes"
+                font_size: 15
+                on_release:
+                    app.stop()
+            Button:
+                text: "No"
+                font_size: 15
+                on_press:
+                    root.dismiss()
 
 <PathMissingPU>:
     title: "NOTICE!"
@@ -95,20 +117,33 @@ RootScreen:
                         text: ""
                         on_text:
                             root.autocomplete()
+                        on_text_validate:
+                            root.change_screen()
                     Label:
                         text: ""
                         pos_hint: {"x": 0.2, "y":1}
                         size_hint: 0.6, 0.3
                         text_size: self.size
                         id: cmd_output
-                Button:
-                    text: "Start"
-                    color: app.theme_cls.primary_color
-                    font_size: 30
-                    bold: True
-                    background_color: (0.5, 0.5, 0.5, 1)
-                    on_release:
-                        root.change_screen()
+                GridLayout:
+                    cols: 2
+                    Button:
+                        text: "Start"
+                        color: app.theme_cls.primary_color
+                        font_size: 30
+                        bold: True
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.change_screen()
+                    Button:
+                        text: "Quit"
+                        color: app.theme_cls.primary_color
+                        font_size: 30
+                        bold: True
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.quitapp()
+
 
 <Main>:
     on_pre_enter: root.initialize()
@@ -171,6 +206,7 @@ RootScreen:
                             root.manager.transition.direction = "left"
 
 <ShowcaseS>:
+    on_leave: root.disablefullscreen()
     name: "Showcase"
     md_bg_color: (0, 0, 0, 1)
     FloatLayout:
@@ -229,6 +265,7 @@ RootScreen:
             text: "Designed and developed by Janis Hutz"
             font_size: 7
             pos_hint: {"y": -0.48}
+
 <SettingsS>:
     name: "Settings"
     md_bg_color: app.theme_cls.accent_color
