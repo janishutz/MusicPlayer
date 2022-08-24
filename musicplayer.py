@@ -167,7 +167,7 @@ class Main(MDScreen):
         try:
             Clock.schedule_interval(self.screen_updating, self.refreshspeed)
         except:
-            pass
+            print("Failed to schedule screen updating")
 
         try:
             if self.mplayer.is_alive() is True:
