@@ -4,10 +4,14 @@ import copy
 import bin.filepathanalysis
 import pygame
 import bin.info_handler
+import configparser
 
 pa = bin.filepathanalysis.PathAnalysis()
 cvr = bin.csv_parsers.CsvRead()
 cvw = bin.csv_parsers.CsvWrite()
+
+config = configparser.ConfigParser()
+config.read('./data/settings.ini')
 
 
 class Player:
@@ -114,16 +118,19 @@ class Player:
             # Main event-checking part
             if mx.music.get_busy() is False and inst.value == 1 and self.__recent_change == 0:
                 mx.music.unload()
-                if len(self.playlist) > 0:
+                if config["Playback"]["loopPlayback"] == "0":
                     pass
                 else:
-                    self.playlist = copy.deepcopy(self.playlist_backup)
-                    self.current_playing_pos = -1
-                self.current_playing = self.playlist.pop(0)
-                self.current_playing_pos += 1
-                mx.music.load(self.current_playing)
-                mx.music.play()
-                self.__recent_change = 10000000
-                self.infoupdater()
+                    if len(self.playlist) > 0:
+                        pass
+                    else:
+                        self.playlist = copy.deepcopy(self.playlist_backup)
+                        self.current_playing_pos = -1
+                    self.current_playing = self.playlist.pop(0)
+                    self.current_playing_pos += 1
+                    mx.music.load(self.current_playing)
+                    mx.music.play()
+                    self.__recent_change = 10000000
+                    self.infoupdater()
             else:
                 pass
