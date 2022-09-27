@@ -11,6 +11,7 @@ else:
     os.environ["KIVY_NO_CONSOLELOG"] = "1"
 
 import signal
+import time
 import multiprocessing
 from kivy.core.window import Window, Config
 from kivy.uix.screenmanager import ScreenManager
@@ -53,6 +54,17 @@ class PathWrongPU(Popup):
 
 class invalidpathPU(Popup):
     pass
+
+
+class LeavePU(Popup):
+    def check_pwd(self):
+        if self.ids.passw.text == config["Security"]["pwd"]:
+            self.manager.current = "Main"
+            self.manager.transition.direction = "right"
+            self.dismiss()
+        else:
+            time.sleep(2)
+            self.ids.output.text = "Password wrong, please try again!"
 
 
 ###########
@@ -264,12 +276,18 @@ class Main(MDScreen):
 
     def back_here(self):
         if self.manager.current == "Showcase":
-            self.manager.current = "Main"
-            self.manager.transition.direction = "right"
+            if config["Security"]["pwdFSExit"] == "True":
+                self.open_leave_popup()
+            else:
+                self.manager.current = "Main"
+                self.manager.transition.direction = "right"
         elif self.manager.current == "Main":
             self.go_back()
         else:
             pass
+
+    def open_leave_popup(self):
+        LeavePU().open()
 
 
 class ShowcaseS(MDScreen):
@@ -303,7 +321,7 @@ if __name__ == "__main__":
     try:
         Window.size = (int(config['Display']['width']), int(config['Display']['height']))
     except Exception as e:
-        print("Unvalid config string found for in Display settings")
+        print("Unvalid config string found in Display settings")
 
     Config.set('graphics', 'width', '800')
     Config.set('graphics', 'height', '600')

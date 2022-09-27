@@ -86,6 +86,32 @@ RootScreen:
             on_release:
                 root.dismiss()
 
+<LeavePU>:
+    title: "DISABLE FULLSCREEN AND LEAVE"
+    font_size: 50
+    size_hint: 0.5, 0.4
+    auto_dismiss: False
+    GridLayout:
+        cols:1
+        Label:
+            text: "Please enter the password to leave the fullscreen mode!"
+            font_size: 18
+        TextInput:
+            id: passw
+            multiline: False
+            input_filter: "string"
+        Label:
+            id: output
+            text: ""
+        Button:
+            text:"Ok"
+            on_release:
+                root.check_pwd()
+        Button:
+            text: "cancel"
+            on_release:
+                root.dismiss()
+
 ###########
 # SCREENS
 ###########
