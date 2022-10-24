@@ -1,0 +1,17 @@
+LoginWindow:
+    name: "Login"
+    md_bg_color: app.theme_cls.accent_color
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Welcome to the MusicPlayer Showcase Screen!"
+            font_size: 27
+            color: (0, 0, 0, 1)
+        Label:
+            text: "Server is currently not running! Please start it by clicking start server!"
+            id: statusbar
+            color: (0, 0, 0, 1)
+        Button:
+            text: "Start Server"
+            on_release:
+                root.startserver()

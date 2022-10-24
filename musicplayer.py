@@ -27,6 +27,7 @@ import math
 import bin.autocomplete
 
 
+returnOk = False
 pl = bin.player.Player()
 pa = bin.filepathanalysis.PathAnalysis()
 cvr = bin.csv_parsers.CsvRead()
@@ -59,12 +60,14 @@ class invalidpathPU(Popup):
 class LeavePU(Popup):
     def check_pwd(self):
         if self.ids.passw.text == config["Security"]["pwd"]:
-            self.manager.current = "Main"
-            self.manager.transition.direction = "right"
+            returnOk = true
             self.dismiss()
         else:
             time.sleep(2)
             self.ids.output.text = "Password wrong, please try again!"
+
+    def returnToFullscreen(self):
+        Window.fullscreen = True
 
 
 ###########
@@ -278,6 +281,8 @@ class Main(MDScreen):
         if self.manager.current == "Showcase":
             if config["Security"]["pwdFSExit"] == "True":
                 self.open_leave_popup()
+                if returnOk:
+                    Window.fullscreen = False
             else:
                 self.manager.current = "Main"
                 self.manager.transition.direction = "right"
@@ -291,8 +296,21 @@ class Main(MDScreen):
 
 
 class ShowcaseS(MDScreen):
+    def leave_screen(self):
+        if config["Security"]["pwdFSExit"] == "True":
+            self.disablefullscreen()
+            LeavePU().open()
+            if returnOk:
+                self.disablefullscreen()
+        else:
+            self.manager.current = "Main"
+            self.manager.transition.direction = "right"
+
     def disablefullscreen(self):
         Window.fullscreen = False
+
+    def reset(self):
+        returnOk = False
 
 
 class RootScreen(ScreenManager):

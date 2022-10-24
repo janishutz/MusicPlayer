@@ -99,7 +99,7 @@ RootScreen:
         TextInput:
             id: passw
             multiline: False
-            input_filter: "string"
+            on_text_validate: root.returnToFullscreen()
         Label:
             id: output
             text: ""
@@ -232,7 +232,7 @@ RootScreen:
                             root.manager.transition.direction = "left"
 
 <ShowcaseS>:
-    on_leave: root.disablefullscreen()
+    on_pre_enter: root.reset()
     name: "Showcase"
     md_bg_color: (0, 0, 0, 1)
     FloatLayout:
@@ -285,8 +285,7 @@ RootScreen:
             size_hint: 0.05, 0.05
             background_color: app.theme_cls.accent_light
             on_release:
-                app.root.current = "Main"
-                root.manager.transition.direction = "right"
+                root.leave_screen()
         Label:
             text: "Designed and developed by Janis Hutz"
             font_size: 7
