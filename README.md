@@ -19,7 +19,7 @@ Yet another Music Player but with one twist. It displays the Playlist beautifull
 **V2.0**
 *UPCOMING VERSION IN DEVELOPMENT RIGHT NOW*
 
-- Locked down mode only available when running second app --> Therefore mult-display support / even multi-PC-Support
+- Locked down mode only available when running second app --> Therefore multi-display support / even multi-PC-Support
 - Display app can now run on additional PC
 - Settings page
 - Backend optimisations to reduce CPU loads
