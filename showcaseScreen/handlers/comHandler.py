@@ -47,7 +47,7 @@ class Com:
 
     def checkiffullscreen(self, url):
         try: 
-            self.x = requests.get(f"{url}/currentsong")
+            self.x = requests.get(f"{url}/fullscreen")
         except Exception:
             return False
         if self.x.text == "True":

@@ -50,6 +50,7 @@ app.get('/currentsong', (request, response) => {
 })
 
 app.get('/fullscreen', (request, response) => {
+    console.log("getting fullscreen status")
     response.send(fullscreen)
 })
 
@@ -75,12 +76,14 @@ app.post('/postcurrentsong', (request, response) => {
     response.send("ok")
 })
 
-app.post('/changefullscreen', (request, response) => {
+app.get('/changefullscreen', (request, response) => {
+    console.log("fullscreenmod")
     if (fullscreen == "True") {
         fullscreen = "False"
     } else {
         fullscreen = "True"
     }
+    console.log(fullscreen)
     response.send("ok")
 })
 
