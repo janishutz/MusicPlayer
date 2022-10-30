@@ -72,6 +72,11 @@ class ShowcaseScreen(MDScreen):
         self.ids.progressbars.value = self.__songdisplay
         self.ids.current_song.text = self.__current
         self.ids.upcoming_songs.text = self.__upcoming
+        if comHandler.checkgo(address):
+            pass
+        else:
+            Window.fullscreen = False
+            screen_manager.current = "Login"
 
 
 class MusicPlayerShowcaseScreen(MDApp):

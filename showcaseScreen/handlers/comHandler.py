@@ -29,7 +29,7 @@ class Com:
             self.x = requests.get(f"{url}/songmaxlength")
         except Exception:
             return 100
-        return int(self.x.text)
+        return float(self.x.text)
 
     def getupcomingsongs(self, url):
         try: 
@@ -43,11 +43,21 @@ class Com:
             self.x = requests.get(f"{url}/playbackpos")
         except Exception:
             return 0
-        return int(self.x.text)
+        return float(self.x.text)
 
     def checkiffullscreen(self, url):
         try: 
             self.x = requests.get(f"{url}/currentsong")
+        except Exception:
+            return False
+        if self.x.text == "True":
+            return True
+        else:
+            return False
+
+    def checkgo(self, url):
+        try: 
+            self.x = requests.get(f"{url}/isrunning")
         except Exception:
             return False
         if self.x.text == "True":

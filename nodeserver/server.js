@@ -14,6 +14,7 @@ var upcomingsongs = "Test\nTest2\nTest3"
 var currentsong = "This is a song"
 var songmaxlength = "100"
 var fullscreen = "False"
+var isrunning = "False"
 
 
 // CONFIG FOR EXPRESS
@@ -36,6 +37,7 @@ app.get('/playbackpos', (request, response) => {
 })
 
 app.get('/upcomingsongs', (request, response) => {
+    console.log("getting upcoming songs")
     response.send(upcomingsongs)
 })
 
@@ -51,6 +53,10 @@ app.get('/fullscreen', (request, response) => {
     response.send(fullscreen)
 })
 
+app.get('/isrunning', (request, response) => {
+    response.send(isrunning)
+})
+
 
 // POST data (Interface for Player)
 app.post('/postplayback', (request, response) => {
@@ -58,7 +64,8 @@ app.post('/postplayback', (request, response) => {
     response.send("ok")
 })
 
-app.post('/postupcomingsogns', (request, response) => {
+app.post('/postupcomingsongs', (request, response) => {
+    console.log("updating upcomingsongs")
     upcomingsongs = request.body.songs
     response.send("ok")
 })
@@ -68,13 +75,23 @@ app.post('/postcurrentsong', (request, response) => {
     response.send("ok")
 })
 
-app.post('/postfullscreen', (request, response) => {
-    fullscreen = request.body.fullscreen
+app.post('/changefullscreen', (request, response) => {
+    if (fullscreen == "True") {
+        fullscreen = "False"
+    } else {
+        fullscreen = "True"
+    }
     response.send("ok")
 })
 
 app.post('/postsonglength', (request, response) => {
     songmaxlength = request.body.length
+    response.send("ok")
+})
+
+app.post('/poststatus', (request, response) => {
+    console.log("updating status " + request.body.status)
+    isrunning = request.body.status
     response.send("ok")
 })
 

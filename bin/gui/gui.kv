@@ -6,6 +6,19 @@ RootScreen:
 ###########
 # POPUPS
 ###########
+<AppQuitting>:
+    title: "App is quitting"
+    auto_dismiss: False
+    GridLayout:
+        cols: 1
+        Label:
+            text: "App is closing remaining processes..."
+            font_size: 30
+        Label:
+            text: "Please wait..."
+            font_size: 20
+
+
 <ConnectPU>:
     title: "Connect to Server"
     auto_dismiss: False
@@ -21,10 +34,16 @@ RootScreen:
             text: ""
             id: url
             hint_text: "Enter Server-IP"
-        Button:
-            text: "Connect"
-            on_release:
-                root.tryconnect()
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Connect"
+                on_release:
+                    root.tryconnect()
+            Button:
+                text: "Cancel"
+                on_release:
+                    root.dismiss()
 
 
 <QuitPU>:
@@ -43,6 +62,7 @@ RootScreen:
                 text: "Yes"
                 font_size: 15
                 on_release:
+                    root.quitapp()
                     app.stop()
             Button:
                 text: "No"
@@ -107,6 +127,24 @@ RootScreen:
             on_release:
                 root.dismiss()
 
+<NotConnected>:
+    title: "NOTICE!"
+    font_size: 50
+    size_hint: 0.5, 0.4
+    auto_dismiss: False
+    GridLayout:
+        cols:1
+        Label:
+            text: "You are not connected to a server!"
+            font_size: 18
+        Label:
+            text: "Therefore this function is not available!"
+            font_size: 15
+        Button:
+            text:"Ok"
+            on_release:
+                root.dismiss()
+
 <LeavePU>:
     title: "DISABLE FULLSCREEN AND LEAVE"
     font_size: 50
@@ -161,7 +199,7 @@ RootScreen:
                         pos_hint: {"x":0.2, "y":0.5}
                         size_hint_x: 0.6
                         focus: True
-                        text: ""
+                        text: "/mnt/storage/SORTED/Music"
                         on_text:
                             root.autocomplete()
                         on_text_validate:
@@ -173,7 +211,7 @@ RootScreen:
                         text_size: self.size
                         id: cmd_output
                 GridLayout:
-                    cols: 2
+                    cols: 3
                     Button:
                         text: "Start"
                         color: app.theme_cls.primary_color
@@ -182,6 +220,14 @@ RootScreen:
                         background_color: app.theme_cls.accent_dark
                         on_release:
                             root.change_screen()
+                    Button:
+                        text: "Connect to Server"
+                        color: app.theme_cls.primary_color
+                        font_size: 30
+                        bold: True
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.connectServer()
                     Button:
                         text: "Quit"
                         color: app.theme_cls.primary_color
@@ -246,16 +292,21 @@ RootScreen:
                         on_release:
                             root.go_back()
                     Button:
-                        text: "Connect to Server"
+                        text: "Fullscreen on client\n(Only available if connected)"
+                        id: fullscreenc
                         background_color: app.theme_cls.accent_dark
                         on_release:
-                            root.connectToServer()
+                            root.changeServerSettings()
                     Button:
                         text: "Showcase"
                         background_color: app.theme_cls.accent_dark
                         on_release:
                             app.root.current = "Showcase"
                             root.manager.transition.direction = "left"
+            Label:
+                text: "Test"
+                id: connectstatus
+                pos_hint: {"y": -0.45}
 
 <ShowcaseS>:
     on_pre_enter: root.reset()

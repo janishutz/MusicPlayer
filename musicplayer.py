@@ -1,3 +1,4 @@
+from audioop import add
 import os
 import configparser
 
@@ -45,8 +46,13 @@ address = ""
 # Popups
 ###########
 
+class AppQuitting(Popup):
+    pass
+
+
 class ConnectPU(Popup):
     def tryconnect(self):
+        print("trying to connect")
         self.url = self.ids.url.text
         self.containsPort = False
         for self.letter in self.url:
@@ -57,20 +63,26 @@ class ConnectPU(Popup):
         self.connectionurl = ""
         if self.url[:8] != "https://" and  self.url[:7] != "http://" and self.url[len(self.url) - 1:] == "/" and not self.containsPort and len(self.url) > 2:
             self.connectionurl = f"http://{self.url[:len(self.url) - 1]}:8000"
-            print(svc.connect(self.connectionurl))
-            self.dismiss()
+            if svc.connect(self.connectionurl):
+                self.dismiss()
+            else:
+                self.ids.output.text = "There was an error in connecting to the server! Please make sure that the ip is correct!"
         elif self.url[:8] != "https://" and self.url[:7] != "http://" and self.url[len(self.url) - 1:] != "/" and not self.containsPort and len(self.url) > 2:
             self.connectionurl = f"http://{self.url}:8000"
-            print(svc.connect(self.connectionurl))
-            self.dismiss()
+            if svc.connect(self.connectionurl):
+                self.dismiss()
+            else:
+                self.ids.output.text = "There was an error in connecting to the server! Please make sure that the ip is correct!"
         else:
-            self.ids.output = "Invalid address, please enter just the IP address!"
+            self.ids.output.text = "Invalid address, please enter just the IP address!"
         global address
         address = self.connectionurl
 
 
 class QuitPU(Popup):
-    pass
+    def quitapp(self):
+        svc.poststatus(address, False)
+        time.sleep(1)
 
 
 class PathMissingPU(Popup):
@@ -82,6 +94,10 @@ class PathWrongPU(Popup):
 
 
 class invalidpathPU(Popup):
+    pass
+
+
+class NotConnected(Popup):
     pass
 
 
@@ -123,7 +139,6 @@ class Home(MDScreen):
                     self.__good_files += 1
                 else:
                     pass
-            # self.__good_files = 1
             if self.__good_files > 0:
                 cvw.write_str("./data/temp.csv", [self.ids.filepath.text])
                 self.manager.current = "Main"
@@ -161,6 +176,9 @@ class Home(MDScreen):
 
     def quitapp(self):
         QuitPU().open()
+    
+    def connectServer(self):
+        ConnectPU().open()
 
 
 class Main(MDScreen):
@@ -172,6 +190,8 @@ class Main(MDScreen):
         self.keyboard = Window.request_keyboard(None, self)
         self.keyboard.bind(on_key_down=self.key_pressed)
         self.quit_requests = 0
+        self.__comparepos = 10000
+        global address
 
     def key_pressed(self, keyboard, keycode, text, modifiers):
         # print(keycode[1])
@@ -202,11 +222,19 @@ class Main(MDScreen):
             pass
 
     def initialize(self):
+        if address != "":
+            self.ids.connectstatus.text = f"Connected to: {address}"
+            svc.poststatus(address, True)
+            if svc.getfullscreeninfo == "True":
+                self.ids.fullscreenc.text = "Exit fullscreen on client display"
+            else:
+                self.ids.fullscreenc.text = 'Enter fullscreen on client display'
+        else:
+            self.ids.connectstatus.text = "not connected to any server"
         try:
             self.refreshspeed = int(config["Performance"]["showcaseRefreshRate"])
         except ValueError:
             self.refreshspeed = 1
-
         try:
             Clock.schedule_interval(self.screen_updating, self.refreshspeed)
         except:
@@ -253,6 +281,7 @@ class Main(MDScreen):
             self.mplayer.kill()
         except:
             pass
+        svc.poststatus(address, False)
         self.ids.pp_button.text = "Play"
         self.manager.current = "Home"
         self.manager.transition.direction = "right"
@@ -274,7 +303,8 @@ class Main(MDScreen):
         self.__upcoming = self.__info.pop(0)
         self.__songlinfo = self.__info.pop(0)
         self.__songpos = self.backfeed.value
-        self.__songdisplay = int(self.__songpos / float(self.__songlinfo.pop(0)) * 100)
+        self.__songlength = self.__songlinfo.pop(0)
+        self.__songdisplay = int(self.__songpos / float(self.__songlength) * 100)
         self.manager.get_screen("Showcase").ids.progressbars.value = self.__songdisplay
         self.__current = self.__upcoming.pop(self.__currents)
         if self.__config == ["1"]:
@@ -304,6 +334,18 @@ class Main(MDScreen):
                         self.__upcoming_output += f"\n{self.__upcoming2}"
                     self.__length_output += 1
         self.manager.get_screen("Showcase").ids.upcoming_songs.text = self.__upcoming_output
+        if address != "":
+            svc.postplaybackpos(address, self.__songpos)
+            if self.__comparepos > self.__songpos:
+                svc.postcurrentsong(address, self.__current_output)
+                svc.postsonglength(address, self.__songlength)
+                svc.postupcomingsongs(address, self.__upcoming_output)
+                # svc.postfullscreen(address, self.__current_output)
+            else:
+                pass
+            self.__comparepos = self.__songpos
+        else:
+            pass
 
     def back_here(self):
         if self.manager.current == "Showcase":
@@ -317,8 +359,16 @@ class Main(MDScreen):
     def open_leave_popup(self):
         LeavePU().open()
 
-    def connectToServer(self):
-        ConnectPU().open()
+    def changeServerSettings(self):
+        if address != "":
+            svc.changefullscreen(address)
+            if svc.getfullscreeninfo == "True":
+                self.ids.fullscreenc.text = "Exit fullscreen on client display"
+            else:
+                self.ids.fullscreenc.text = 'Enter fullscreen on client display'
+        else:
+            NotConnected().open()
+
 
 
 class ShowcaseS(MDScreen):
@@ -347,7 +397,11 @@ class MusicPlayer(MDApp):
         return Builder.load_file("./bin/gui/gui.kv")
 
     def on_request_close(self, *args):
+        global address
+        AppQuitting().open()
         print("leaving...")
+        svc.poststatus(address, False)
+        time.sleep(1)
         os.killpg(os.getpgid(0), signal.SIGKILL)
 
 

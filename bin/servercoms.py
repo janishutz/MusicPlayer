@@ -39,10 +39,24 @@ class ServerComs:
         except Exception:
             return False
 
-    def postfullscreen(self, url, data):
+    def changefullscreen(self, url):
         try:
-            self.x = requests.post(f"{url}/postfullscreen", {"fullscreen":data})
+            self.x = requests.get(f"{url}/changefullscreen")
             return True
         except Exception:
             return False
-    
+
+    def getfullscreeninfo(self, url):
+        try:
+            self.x = requests.get(f"{url}/changefullscreen")
+        except Exception:
+            pass
+        return self.x.text
+
+    def poststatus(self, url, isalive):
+        print("updating status")
+        try:
+            self.x = requests.post(f"{url}/poststatus", {"status":f"{isalive}"})
+            return True
+        except Exception:
+            return False

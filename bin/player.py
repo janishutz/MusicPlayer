@@ -27,10 +27,10 @@ class Player:
 
     def start_playing(self):
         # initialize playing
+        print("starting player")
         if pygame.get_init() == True:
             pass
         else:
-            pygame.init()
             self.path = cvr.importing("./data/temp.csv").pop(0)
             self.pathtr = self.path.pop(0)
             self.__imports = pa.validsonglistcreator(self.pathtr)
@@ -135,4 +135,4 @@ class Player:
                     self.infoupdater()
             else:
                 pass
-            time.sleep(0.25)
+            time.sleep(0.2)
