@@ -14,7 +14,12 @@ LoginWindow:
                 pos_hint: {'x': 0.25, 'y': 0.5}
                 size_hint: 0.5, 0.2
                 id: url
-        Button:
-            text: "connect"
-            on_release: 
-                root.connect()
+        GridLayout:
+            Button:
+                text: "connect"
+                on_release: 
+                    root.connect()
+            Button:
+                text: "Quit"
+                on_release: 
+                    app.stop()
