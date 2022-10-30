@@ -145,7 +145,8 @@ class Home(MDScreen):
                 self.manager.transition.direction = "left"
             else:
                 self.openpathfpu()
-        except:
+        except Exception as e:
+            print(e)
             self.ivpathpu()
 
     def openpathmpu(self):
@@ -225,7 +226,7 @@ class Main(MDScreen):
         if address != "":
             self.ids.connectstatus.text = f"Connected to: {address}"
             svc.poststatus(address, True)
-            if svc.getfullscreeninfo == "True":
+            if svc.getfullscreeninfo(address) == "True":
                 self.ids.fullscreenc.text = "Exit fullscreen on client display"
             else:
                 self.ids.fullscreenc.text = 'Enter fullscreen on client display'

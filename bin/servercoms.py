@@ -47,11 +47,13 @@ class ServerComs:
             return False
 
     def getfullscreeninfo(self, url):
+        print("fullscreencheck")
         try:
             self.x = requests.get(f"{url}/fullscreen")
-        except Exception:
-            pass
-        return self.x.text
+            return self.x.text
+        except Exception as e:
+            print(e)
+            return "False"
 
     def poststatus(self, url, isalive):
         print("updating status")
