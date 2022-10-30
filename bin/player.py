@@ -83,7 +83,7 @@ class Player:
                 self.current_playing_pos += 1
                 mx.music.load(self.current_playing)
                 mx.music.play()
-                self.__recent_change = 1000000
+                self.__recent_change = 20
                 self.infoupdater()
 
             elif other.value == 2:
@@ -93,7 +93,7 @@ class Player:
                 other.value = 0
 
             elif other.value == 3:
-                self.__recent_change = 1000000
+                self.__recent_change = 20
                 other.value = 0
 
             elif other.value == 4:
@@ -109,7 +109,7 @@ class Player:
                 self.current_playing = self.playlist.pop(0)
                 mx.music.load(self.current_playing)
                 mx.music.play()
-                self.__recent_change = 10000000
+                self.__recent_change = 20
                 self.infoupdater()
             else:
                 if inst.value == 1:
@@ -119,20 +119,23 @@ class Player:
             # Main event-checking part
             if mx.music.get_busy() is False and inst.value == 1 and self.__recent_change == 0:
                 mx.music.unload()
-                if config["Playback"]["loopPlayback"] == "0":
+                print("stopped playing")
+                if config["Playback"]["autoplay"] == "0":
                     pass
                 else:
+                    print("playing next song")
                     if len(self.playlist) > 0:
                         pass
-                    else:
+                    elif config["Playback"]["loopPlayback"] == "1":
                         self.playlist = copy.deepcopy(self.playlist_backup)
                         self.current_playing_pos = -1
+                    else:
+                        pass
                     self.current_playing = self.playlist.pop(0)
                     self.current_playing_pos += 1
                     mx.music.load(self.current_playing)
                     mx.music.play()
-                    self.__recent_change = 10000000
+                    self.__recent_change = 20
                     self.infoupdater()
             else:
-                pass
-            time.sleep(0.2)
+                time.sleep(0.2)
