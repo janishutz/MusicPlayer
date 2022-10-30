@@ -1,0 +1,58 @@
+ShowcaseScreen:
+    name: "ShowcaseScreen"
+    md_bg_color: (0, 0, 0, 1)
+    FloatLayout:
+        Label:
+            text: "Currently Playing"
+            id: titleinfo
+            bold: True
+            italic: True
+            pos_hint: {"y": 0.35}
+            font_size: 60
+            color: app.theme_cls.primary_color
+        MDProgressBar:
+            orientation: "horizontal"
+            value: 100
+            pos_hint: {"y": 0.3}
+            color: (1, 1, 1, 0.5)
+        MDProgressBar:
+            id: progressbars
+            orientation: "horizontal"
+            value: 0
+            pos_hint: {"y": 0.3}
+            color: app.theme_cls.primary_dark
+        Label:
+            id: current_song
+            text: "Currently playing Song will appear here"
+            pos_hint: {"y": 0.22}
+            font_size: 45
+            color: app.theme_cls.primary_color
+            shorten: False
+            halign: "center"
+        Label:
+            id: upcoming_ind
+            text: "upcoming"
+            bold: True
+            italic: True
+            font_size: 35
+            pos_hint: {"y": -0.05}
+            color: app.theme_cls.primary_color
+        Label:
+            id: upcoming_songs
+            text: "Upcoming Songs will appear here"
+            pos_hint: {"y": -0.25}
+            font_size: 30
+            color: app.theme_cls.primary_color
+            shorten: False
+            halign: "center"
+        Button:
+            text: "back"
+            font_size: 10
+            size_hint: 0.05, 0.05
+            background_color: app.theme_cls.accent_light
+            on_release:
+                root.leave_screen()
+        Label:
+            text: "Designed and developed by Janis Hutz"
+            font_size: 7
+            pos_hint: {"y": -0.48}

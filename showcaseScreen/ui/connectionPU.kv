@@ -1,0 +1,16 @@
+<ConnectionPU>:
+    title: "Connecting..."
+    font_size: 30
+    size_hint: 0.5, 0.4
+    auto_dismiss: False
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Invalid entry. Please ensure that you only type the IP!"
+            font_size: 20
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Ok"
+                on_release: 
+                    root.dismiss()

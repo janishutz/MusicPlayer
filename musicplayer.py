@@ -60,7 +60,7 @@ class invalidpathPU(Popup):
 class LeavePU(Popup):
     def check_pwd(self):
         if self.ids.passw.text == config["Security"]["pwd"]:
-            returnOk = true
+            returnOk = True
             self.dismiss()
         else:
             time.sleep(2)

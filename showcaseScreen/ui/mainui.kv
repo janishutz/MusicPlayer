@@ -7,11 +7,14 @@ LoginWindow:
             text: "Welcome to the MusicPlayer Showcase Screen!"
             font_size: 27
             color: (0, 0, 0, 1)
-        Label:
-            text: "Server is currently not running! Please start it by clicking start server!"
-            id: statusbar
-            color: (0, 0, 0, 1)
+        FloatLayout
+            TextInput:
+                text: ""
+                hint_text: "Type Server IP here..."
+                pos_hint: {'x': 0.25, 'y': 0.5}
+                size_hint: 0.5, 0.2
+                id: url
         Button:
-            text: "Start Server"
-            on_release:
-                root.startserver()
+            text: "connect"
+            on_release: 
+                root.connect()
