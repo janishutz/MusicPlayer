@@ -43,14 +43,16 @@ class LoginWindow(MDScreen):
 
 class ShowcaseScreen(MDScreen):
     def beginUpdating(self):
-        Clock.schedule_interval(self.updateScreen, 0.5)
+        global address
+        Clock.schedule_interval(self.updateScreen, 1)
         self.lastsongpos = 200
         self.__current = comHandler.getcurrentsong(address)
         self.__upcoming = comHandler.getupcomingsongs(address)
         self.songlength = comHandler.getsonglength(address)
+        self.songpos = comHandler.getsongpos(address)
+        Clock.schedule_interval(self.updateProgressbar, 0.1)
 
     def updateScreen(self, dmp):
-        global address
         Window.fullscreen = comHandler.checkiffullscreen(address)
         Window.maximize()
         self.__windowsize = Window._get_size()
@@ -69,8 +71,6 @@ class ShowcaseScreen(MDScreen):
         else:
             pass
         self.lastsongpos = self.songpos
-        self.__songdisplay = int(self.songpos / float(self.songlength) * 100)
-        self.ids.progressbars.value = self.__songdisplay
         self.ids.current_song.text = self.__current
         self.ids.upcoming_songs.text = self.__upcoming
         if comHandler.checkgo(address):
@@ -79,6 +79,10 @@ class ShowcaseScreen(MDScreen):
             Window.fullscreen = False
             screen_manager.current = "Login"
 
+    def updateProgressbar(self, dmp):
+        self.__songdisplay = float(self.songpos / float(self.songlength) * 100)
+        self.songpos += 0.1
+        self.ids.progressbars.value = self.__songdisplay
 
 class MusicPlayerShowcaseScreen(MDApp):
     global screen_manager
