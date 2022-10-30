@@ -48,7 +48,7 @@ class ServerComs:
 
     def getfullscreeninfo(self, url):
         try:
-            self.x = requests.get(f"{url}/changefullscreen")
+            self.x = requests.get(f"{url}/fullscreen")
         except Exception:
             pass
         return self.x.text
