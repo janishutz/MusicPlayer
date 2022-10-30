@@ -27,7 +27,6 @@ class Player:
 
     def start_playing(self):
         # initialize playing
-        print("starting player")
         if pygame.get_init() == True:
             pass
         else:
@@ -119,11 +118,9 @@ class Player:
             # Main event-checking part
             if mx.music.get_busy() is False and inst.value == 1 and self.__recent_change == 0:
                 mx.music.unload()
-                print("stopped playing")
                 if config["Playback"]["autoplay"] == "0":
                     pass
                 else:
-                    print("playing next song")
                     if len(self.playlist) > 0:
                         pass
                     elif config["Playback"]["loopPlayback"] == "1":
