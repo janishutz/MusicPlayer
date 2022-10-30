@@ -1,0 +1,1 @@
+# NOTE: Launch this app with `nohup python3 musiplayer_showcase_screen.py` in order for the terminal window to be closed (and therefore preventing anybody from closing the app! (Well except if they manage to get the pid but yeah lol))
