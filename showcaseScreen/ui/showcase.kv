@@ -1,5 +1,6 @@
 ShowcaseScreen:
     name: "ShowcaseScreen"
+    on_pre_enter: root.beginUpdating()
     md_bg_color: (0, 0, 0, 1)
     FloatLayout:
         Label:
@@ -45,13 +46,6 @@ ShowcaseScreen:
             color: app.theme_cls.primary_color
             shorten: False
             halign: "center"
-        Button:
-            text: "back"
-            font_size: 10
-            size_hint: 0.05, 0.05
-            background_color: app.theme_cls.accent_light
-            on_release:
-                root.leave_screen()
         Label:
             text: "Designed and developed by Janis Hutz"
             font_size: 7

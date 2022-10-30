@@ -5,6 +5,7 @@ import bin.filepathanalysis
 import pygame
 import bin.info_handler
 import configparser
+import time
 
 pa = bin.filepathanalysis.PathAnalysis()
 cvr = bin.csv_parsers.CsvRead()
@@ -134,3 +135,4 @@ class Player:
                     self.infoupdater()
             else:
                 pass
+            time.sleep(0.25)

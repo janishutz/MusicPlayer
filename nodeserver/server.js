@@ -9,8 +9,14 @@ console.log("Use this IP address when connecting to this server from the player 
 
 // INITIALIZE VARIABLES
 var app = express();
+var playbackpos = "1"
+var upcomingsongs = "Test\nTest2\nTest3"
+var currentsong = "This is a song"
+var songmaxlength = "100"
+var fullscreen = "False"
 
 
+// CONFIG FOR EXPRESS
 app.use(bodyParser.urlencoded({extended : true}))
 
 
@@ -26,31 +32,50 @@ app.get('/tryconnect', (request, response) => {
 
 // Get data (Interface for Screen)
 app.get('/playbackpos', (request, response) => {
-    response.send(1)
+    response.send(playbackpos)
 })
 
 app.get('/upcomingsongs', (request, response) => {
-    response.send("This is a song")
+    response.send(upcomingsongs)
 })
 
 app.get('/songmaxlength', (request, response) => {
-    response.send(100)
+    response.send(songmaxlength)
 })
 
 app.get('/currentsong', (request, response) => {
-    response.send("Test\nTest2\nTest3")
+    response.send(currentsong)
 })
 
-
+app.get('/fullscreen', (request, response) => {
+    response.send(fullscreen)
+})
 
 
 // POST data (Interface for Player)
-app.post('/posplayback', (request, response) => {
-
+app.post('/postplayback', (request, response) => {
+    playbackpos = request.body.pos
+    response.send("ok")
 })
 
 app.post('/postupcomingsogns', (request, response) => {
+    upcomingsongs = request.body.songs
+    response.send("ok")
+})
 
+app.post('/postcurrentsong', (request, response) => {
+    currentsong = request.body.songname
+    response.send("ok")
+})
+
+app.post('/postfullscreen', (request, response) => {
+    fullscreen = request.body.fullscreen
+    response.send("ok")
+})
+
+app.post('/postsonglength', (request, response) => {
+    songmaxlength = request.body.length
+    response.send("ok")
 })
 
 

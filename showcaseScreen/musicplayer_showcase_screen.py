@@ -1,3 +1,4 @@
+from audioop import add
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.screen import MDScreen
@@ -7,11 +8,11 @@ from kivy.uix.popup import Popup
 from kivy.clock import Clock
 import handlers.comHandler
 import math
-import bin.csv_parsers
+import handlers.csv_parsers
 Builder.load_file('./ui/connectionPU.kv')
 
 comHandler = handlers.comHandler.Com()
-cvr = bin.csv_parsers.CsvRead()
+cvr = handlers.csv_parsers.CsvRead()
 
 class ConnectionPU(Popup):
     pass
@@ -27,21 +28,30 @@ class LoginWindow(MDScreen):
             else:
                 pass
         self.connectionurl = ""
-        if self.url[:8] != "https://" and  self.url[:7] != "http://" and self.url[len(self.url) - 1:] == "/" and not self.containsPort:
+        if self.url[:8] != "https://" and  self.url[:7] != "http://" and self.url[len(self.url) - 1:] == "/" and not self.containsPort and len(self.url) > 2:
             self.connectionurl = f"http://{self.url[:len(self.url) - 1]}:8000"
             print(comHandler.connect(self.connectionurl))
-        elif self.url[:8] != "https://" and self.url[:7] != "http://" and self.url[len(self.url) - 1:] != "/" and not self.containsPort:
+        elif self.url[:8] != "https://" and self.url[:7] != "http://" and self.url[len(self.url) - 1:] != "/" and not self.containsPort and len(self.url) > 2:
             self.connectionurl = f"http://{self.url}:8000"
             print(comHandler.connect(self.connectionurl))
         else:
             ConnectionPU().open()
         global address
-        address = self.url
+        address = self.connectionurl
+        screen_manager.current = "ShowcaseScreen"
 
 
 class ShowcaseScreen(MDScreen):
-    def updateScreen(self):
+    def beginUpdating(self):
+        Clock.schedule_interval(self.updateScreen, 0.5)
+        self.lastsongpos = 200
+        self.__current = comHandler.getcurrentsong(address)
+        self.__upcoming = comHandler.getupcomingsongs(address)
+        self.songlength = comHandler.getsonglength(address)
+
+    def updateScreen(self, dmp):
         global address
+        Window.fullscreen = comHandler.checkiffullscreen(address)
         self.__windowsize = Window._get_size()
         self.__windowsize_x = self.__windowsize[0]
         self.__windowsize_y = self.__windowsize[1]
@@ -50,33 +60,18 @@ class ShowcaseScreen(MDScreen):
         self.ids.upcoming_songs.font_size = self.__text_size - 5
         self.ids.titleinfo.font_size = self.__text_size * 2.2
         self.ids.upcoming_ind.font_size = self.__text_size + 10
-        self.__current = comHandler.getcurrentsong(address)
-        self.__upcoming = comHandler.getupcomingsongs(address)
-        self.__songdisplay = int(comHandler.getsonglength(address) / float(comHandler.getsongpos(address)) * 100)
+        self.songpos = comHandler.getsongpos(address)
+        if self.songpos < self.lastsongpos:
+            self.__current = comHandler.getcurrentsong(address)
+            self.__upcoming = comHandler.getupcomingsongs(address)
+            self.songlength = comHandler.getsonglength(address)
+        else:
+            pass
+        self.lastsongpos = self.songpos
+        self.__songdisplay = int(self.songpos / float(self.songlength) * 100)
         self.ids.progressbars.value = self.__songdisplay
-        if self.__config == ["1"]:
-            self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
-        else:
-            self.ids.current_song.text = self.__current
-        if len(self.__upcoming) <= self.__currents:
-            self.ids.upcoming_songs.text = "No more songs in Queue"
-        else:
-            if self.__config == ["1"]:
-                self.__upcoming_output = self.__upcoming[:(len(self.__upcoming) - 4)]
-            else:
-                self.__upcoming_output = self.__upcoming
-
-            self.__length_output = 0
-            for i in range(len(self.__upcoming) - self.__currents):
-                if self.__length_output > 5:
-                    pass
-                else:
-                    if self.__config == ["1"]:
-                        self.__upcoming_output += f"\n{self.__upcoming[:(len(self.__upcoming) - 4)]}"
-                    else:
-                        self.__upcoming_output += f"\n{self.__upcoming}"
-                    self.__length_output += 1
-            self.ids.upcoming_songs.text = self.__upcoming_output
+        self.ids.current_song.text = self.__current
+        self.ids.upcoming_songs.text = self.__upcoming
 
 
 class MusicPlayerShowcaseScreen(MDApp):

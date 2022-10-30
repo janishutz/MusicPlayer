@@ -6,8 +6,29 @@ RootScreen:
 ###########
 # POPUPS
 ###########
+<ConnectPU>:
+    title: "Connect to Server"
+    auto_dismiss: False
+    size_hint: 0.8, 0.8
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Please enter the Server's IP address below!"
+        Label:
+            text: ""
+            id: output
+        TextInput:
+            text: ""
+            id: url
+            hint_text: "Enter Server-IP"
+        Button:
+            text: "Connect"
+            on_release:
+                root.tryconnect()
+
+
 <QuitPU>:
-    title: "BiogasControllerApp"
+    title: "MusicPlayer"
     font_size: 50
     size_hint: 0.5, 0.4
     auto_dismiss: False
@@ -218,12 +239,17 @@ RootScreen:
                     on_release:
                         root.playmusic()
                 GridLayout:
-                    cols: 2
+                    cols: 3
                     Button:
                         text: "Back"
                         background_color: app.theme_cls.accent_dark
                         on_release:
                             root.go_back()
+                    Button:
+                        text: "Connect to Server"
+                        background_color: app.theme_cls.accent_dark
+                        on_release:
+                            root.connectToServer()
                     Button:
                         text: "Showcase"
                         background_color: app.theme_cls.accent_dark

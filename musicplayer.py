@@ -25,6 +25,7 @@ import bin.filepathanalysis
 import bin.player
 import math
 import bin.autocomplete
+import bin.servercoms
 
 
 returnOk = False
@@ -33,12 +34,39 @@ pa = bin.filepathanalysis.PathAnalysis()
 cvr = bin.csv_parsers.CsvRead()
 cvw = bin.csv_parsers.CsvWrite()
 ac = bin.autocomplete.AutoComplete()
+svc = bin.servercoms.ServerComs()
 version_app = f"Music Player {config['Info']['version']}{config['Info']['subVersion']}"
+
+global address
+address = ""
 
 
 ###########
 # Popups
 ###########
+
+class ConnectPU(Popup):
+    def tryconnect(self):
+        self.url = self.ids.url.text
+        self.containsPort = False
+        for self.letter in self.url:
+            if self.letter == ":":
+                self.containsPort = True
+            else:
+                pass
+        self.connectionurl = ""
+        if self.url[:8] != "https://" and  self.url[:7] != "http://" and self.url[len(self.url) - 1:] == "/" and not self.containsPort and len(self.url) > 2:
+            self.connectionurl = f"http://{self.url[:len(self.url) - 1]}:8000"
+            print(svc.connect(self.connectionurl))
+            self.dismiss()
+        elif self.url[:8] != "https://" and self.url[:7] != "http://" and self.url[len(self.url) - 1:] != "/" and not self.containsPort and len(self.url) > 2:
+            self.connectionurl = f"http://{self.url}:8000"
+            print(svc.connect(self.connectionurl))
+            self.dismiss()
+        else:
+            self.ids.output = "Invalid address, please enter just the IP address!"
+        global address
+        address = self.connectionurl
 
 
 class QuitPU(Popup):
@@ -250,13 +278,13 @@ class Main(MDScreen):
         self.manager.get_screen("Showcase").ids.progressbars.value = self.__songdisplay
         self.__current = self.__upcoming.pop(self.__currents)
         if self.__config == ["1"]:
-            self.ids.current_song.text = self.__current[:(len(self.__current) - 4)]
-            self.manager.get_screen("Showcase").ids.current_song.text = self.__current[:(len(self.__current) - 4)]
+            self.__current_output = self.__current[:(len(self.__current) - 4)]
         else:
-            self.ids.current_song.text = self.__current
-            self.manager.get_screen("Showcase").ids.current_song.text = self.__current
+            self.__current_output = self.__current
+        self.ids.current_song.text = self.__current_output
+        self.manager.get_screen("Showcase").ids.current_song.text = self.__current_output
         if len(self.__upcoming) <= self.__currents:
-            self.manager.get_screen("Showcase").ids.upcoming_songs.text = "No more songs in Queue"
+            self.__upcoming_output = "No more songs in Queue"
         else:
             self.__upcoming2 = str(self.__upcoming.pop(self.__currents))
             if self.__config == ["1"]:
@@ -275,17 +303,12 @@ class Main(MDScreen):
                     else:
                         self.__upcoming_output += f"\n{self.__upcoming2}"
                     self.__length_output += 1
-            self.manager.get_screen("Showcase").ids.upcoming_songs.text = self.__upcoming_output
+        self.manager.get_screen("Showcase").ids.upcoming_songs.text = self.__upcoming_output
 
     def back_here(self):
         if self.manager.current == "Showcase":
-            if config["Security"]["pwdFSExit"] == "True":
-                self.open_leave_popup()
-                if returnOk:
-                    Window.fullscreen = False
-            else:
-                self.manager.current = "Main"
-                self.manager.transition.direction = "right"
+            self.manager.current = "Main"
+            self.manager.transition.direction = "right"
         elif self.manager.current == "Main":
             self.go_back()
         else:
@@ -294,17 +317,14 @@ class Main(MDScreen):
     def open_leave_popup(self):
         LeavePU().open()
 
+    def connectToServer(self):
+        ConnectPU().open()
+
 
 class ShowcaseS(MDScreen):
     def leave_screen(self):
-        if config["Security"]["pwdFSExit"] == "True":
-            self.disablefullscreen()
-            LeavePU().open()
-            if returnOk:
-                self.disablefullscreen()
-        else:
-            self.manager.current = "Main"
-            self.manager.transition.direction = "right"
+        self.manager.current = "Main"
+        self.manager.transition.direction = "right"
 
     def disablefullscreen(self):
         Window.fullscreen = False
