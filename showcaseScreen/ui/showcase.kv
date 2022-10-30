@@ -3,6 +3,7 @@ ShowcaseScreen:
     on_pre_enter: root.beginUpdating()
     md_bg_color: (0, 0, 0, 1)
     FloatLayout:
+        size: root.width, root.height
         Label:
             text: "Currently Playing"
             id: titleinfo
@@ -14,13 +15,13 @@ ShowcaseScreen:
         MDProgressBar:
             orientation: "horizontal"
             value: 100
-            pos_hint: {"y": 0.3}
+            pos_hint: {"top": 0.8}
             color: (1, 1, 1, 0.5)
         MDProgressBar:
             id: progressbars
             orientation: "horizontal"
             value: 0
-            pos_hint: {"y": 0.3}
+            pos_hint: {"top": 0.8}
             color: app.theme_cls.primary_dark
         Label:
             id: current_song
