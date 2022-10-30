@@ -363,7 +363,7 @@ class Main(MDScreen):
     def changeServerSettings(self):
         if address != "":
             svc.changefullscreen(address)
-            if svc.getfullscreeninfo == "True":
+            if svc.getfullscreeninfo(address) == "True":
                 self.ids.fullscreenc.text = "Exit fullscreen on client display"
             else:
                 self.ids.fullscreenc.text = 'Enter fullscreen on client display'

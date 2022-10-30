@@ -83,7 +83,6 @@ app.get('/changefullscreen', (request, response) => {
     } else {
         fullscreen = "True"
     }
-    console.log(fullscreen)
     response.send("ok")
 })
 
