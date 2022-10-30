@@ -51,7 +51,7 @@ class Com:
         except Exception:
             return False
         if self.x.text == "True":
-            return True
+            return 'auto'
         else:
             return False
 

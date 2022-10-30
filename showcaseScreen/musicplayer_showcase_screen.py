@@ -91,5 +91,4 @@ class MusicPlayerShowcaseScreen(MDApp):
         screen_manager.add_widget(Builder.load_file('./ui/showcase.kv'))
         return screen_manager
 
-
 MusicPlayerShowcaseScreen().run()
