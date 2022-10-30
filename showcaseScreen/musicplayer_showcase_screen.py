@@ -52,6 +52,7 @@ class ShowcaseScreen(MDScreen):
     def updateScreen(self, dmp):
         global address
         Window.fullscreen = comHandler.checkiffullscreen(address)
+        Window.maximize()
         self.__windowsize = Window._get_size()
         self.__windowsize_x = self.__windowsize[0]
         self.__windowsize_y = self.__windowsize[1]
