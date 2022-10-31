@@ -223,6 +223,7 @@ class Main(MDScreen):
             pass
 
     def initialize(self):
+        self.__comparepos = 10000
         if address != "":
             self.ids.connectstatus.text = f"Connected to: {address}"
             svc.poststatus(address, True)
