@@ -70,13 +70,12 @@ class ShowcaseScreen(MDScreen):
             self.__current = comHandler.getcurrentsong(address)
             self.__upcoming = comHandler.getupcomingsongs(address)
             self.songlength = comHandler.getsonglength(address)
+        elif self.songpos > self.lastsongpos:
+            self.isplaying = True
+        elif self.songpos == self.lastsongpos:
+            self.isplaying = False
         else:
-            if self.songpos > self.lastsongpos:
-                self.isplaying = True
-            elif self.songpos == self.lastsongpos:
-                self.isplaying = False
-            else:
-                pass
+            pass
         self.lastsongpos = self.songpos
         self.ids.current_song.text = self.__current
         self.ids.upcoming_songs.text = self.__upcoming
