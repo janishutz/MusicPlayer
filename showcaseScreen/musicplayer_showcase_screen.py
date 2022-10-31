@@ -21,6 +21,7 @@ class ConnectionPU(Popup):
 
 class LoginWindow(MDScreen):
     def connect(self):
+        global address
         self.url = self.ids.url.text
         self.containsPort = False
         for self.letter in self.url:
@@ -31,15 +32,20 @@ class LoginWindow(MDScreen):
         self.connectionurl = ""
         if self.url[:8] != "https://" and  self.url[:7] != "http://" and self.url[len(self.url) - 1:] == "/" and not self.containsPort and len(self.url) > 2:
             self.connectionurl = f"http://{self.url[:len(self.url) - 1]}:8000"
-            print(comHandler.connect(self.connectionurl))
+            if comHandler.connect(self.connectionurl):
+                address = self.connectionurl
+                screen_manager.current = "ShowcaseScreen"
+            else:
+                ConnectionPU().open()
         elif self.url[:8] != "https://" and self.url[:7] != "http://" and self.url[len(self.url) - 1:] != "/" and not self.containsPort and len(self.url) > 2:
             self.connectionurl = f"http://{self.url}:8000"
-            print(comHandler.connect(self.connectionurl))
+            if comHandler.connect(self.connectionurl):
+                address = self.connectionurl
+                screen_manager.current = "ShowcaseScreen"
+            else:
+                ConnectionPU().open()
         else:
-            ConnectionPU().open()
-        global address
-        address = self.connectionurl
-        screen_manager.current = "ShowcaseScreen"
+            ConnectionPU().open()        
 
 
 class ShowcaseScreen(MDScreen):

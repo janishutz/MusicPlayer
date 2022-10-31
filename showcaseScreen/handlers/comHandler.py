@@ -3,18 +3,21 @@ import requests
 
 class Com:
     def __init__(self):
-        pass
+        self.connectok = True
 
     def connect(self, url):
         try: 
             self.x = requests.get(f"{url}/tryconnect")
         except Exception:
+            self.connectok = False
             return False
-        print(self.x.text)
-        if self.x.text == "ok":
-            return True
+        if self.connectok:
+            if self.x.text == "ok":
+                return True
+            else:
+                return False
         else:
-            return False
+            pass
 
     def getcurrentsong(self, url):
         try: 
