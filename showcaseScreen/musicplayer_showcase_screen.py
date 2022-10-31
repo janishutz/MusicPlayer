@@ -1,4 +1,5 @@
 from audioop import add
+from calendar import isleap
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.screen import MDScreen
@@ -50,6 +51,7 @@ class ShowcaseScreen(MDScreen):
         self.__upcoming = comHandler.getupcomingsongs(address)
         self.songlength = comHandler.getsonglength(address)
         self.songpos = comHandler.getsongpos(address)
+        self.isplaying = False
         Clock.schedule_interval(self.updateProgressbar, 0.1)
 
     def updateScreen(self, dmp):
@@ -68,6 +70,10 @@ class ShowcaseScreen(MDScreen):
             self.__current = comHandler.getcurrentsong(address)
             self.__upcoming = comHandler.getupcomingsongs(address)
             self.songlength = comHandler.getsonglength(address)
+        elif self.songpos > self.lastsongpos:
+            self.isplaying = True
+        elif self.songpos == self.lastsongpos:
+            self.isplaying = False
         else:
             pass
         self.lastsongpos = self.songpos
@@ -80,9 +86,10 @@ class ShowcaseScreen(MDScreen):
             screen_manager.current = "Login"
 
     def updateProgressbar(self, dmp):
-        self.__songdisplay = float(self.songpos / float(self.songlength) * 100)
-        self.songpos += 0.1
-        self.ids.progressbars.value = self.__songdisplay
+        if self.isplaying:
+            self.__songdisplay = float(self.songpos / float(self.songlength) * 100)
+            self.songpos += 0.1
+            self.ids.progressbars.value = self.__songdisplay
 
 class MusicPlayerShowcaseScreen(MDApp):
     global screen_manager
