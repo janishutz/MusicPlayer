@@ -255,6 +255,20 @@ RootScreen:
                 id: current_song
                 font_size: 25
                 color: app.theme_cls.primary_dark
+            FloatLayout:
+                MDProgressBar:
+                    orientation: "horizontal"
+                    value: 100
+                    pos_hint: {"top": 0.5, "x": 0.1}
+                    color: (1, 1, 1, 0.5)
+                    size_hint: 0.8, 0.2
+                MDProgressBar:
+                    orientation: "horizontal"
+                    value: 0
+                    pos_hint: {"top": 0.5, "x": 0.1}
+                    color: app.theme_cls.primary_dark
+                    id: progressbars
+                    size_hint: 0.8, 0.025
         FloatLayout:
             GridLayout:
                 size_hint: 0.8, 0.9

@@ -308,6 +308,7 @@ class Main(MDScreen):
         self.__songlength = self.__songlinfo.pop(0)
         self.__songdisplay = int(self.__songpos / float(self.__songlength) * 100)
         self.manager.get_screen("Showcase").ids.progressbars.value = self.__songdisplay
+        self.ids.progressbars.value = self.__songdisplay
         self.__current = self.__upcoming.pop(self.__currents)
         if self.__config == ["1"]:
             self.__current_output = self.__current[:(len(self.__current) - 4)]
