@@ -81,7 +81,7 @@ class ConnectPU(Popup):
 
 class QuitPU(Popup):
     def quitapp(self):
-        svc.poststatus(address, False)
+        svc.poststatus(address, "stopped")
         time.sleep(1)
 
 
@@ -192,6 +192,7 @@ class Main(MDScreen):
         self.keyboard.bind(on_key_down=self.key_pressed)
         self.quit_requests = 0
         self.__comparepos = 10000
+        self.__updateui = False
         global address
 
     def key_pressed(self, keyboard, keycode, text, modifiers):
@@ -226,7 +227,7 @@ class Main(MDScreen):
         self.__comparepos = 10000
         if address != "":
             self.ids.connectstatus.text = f"Connected to: {address}"
-            svc.poststatus(address, True)
+            svc.poststatus(address, "paused")
             if svc.getfullscreeninfo(address) == "True":
                 self.ids.fullscreenc.text = "Exit fullscreen on client display"
             else:
@@ -261,21 +262,27 @@ class Main(MDScreen):
             self.mplayer.start()
 
     def playmusic(self):
+        self.updateremoteUI()
         self.others.value = 3
         if self.instructions.value == 0:
+            svc.poststatus(address, "playing")
             self.instructions.value = 1
             self.ids.pp_button.text = "Pause"
         else:
+            svc.poststatus(address, "paused")
             self.instructions.value = 0
             self.ids.pp_button.text = "Play"
 
     def nextsong(self):
+        self.updateremoteUI()
         self.others.value = 1
 
     def rewindsong(self):
+        self.updateremoteUI()
         self.others.value = 2
 
     def previoussong(self):
+        self.updateremoteUI()
         self.others.value = 4
 
     def go_back(self):
@@ -283,7 +290,7 @@ class Main(MDScreen):
             self.mplayer.kill()
         except:
             pass
-        svc.poststatus(address, False)
+        svc.poststatus(address, "stopped")
         self.ids.pp_button.text = "Play"
         self.manager.current = "Home"
         self.manager.transition.direction = "right"
@@ -338,12 +345,12 @@ class Main(MDScreen):
                     self.__length_output += 1
         self.manager.get_screen("Showcase").ids.upcoming_songs.text = self.__upcoming_output
         if address != "":
-            svc.postplaybackpos(address, self.__songpos)
-            if self.__comparepos > self.__songpos:
+            if self.__comparepos > self.__songpos or self.__updateui:
+                svc.postplaybackpos(address, self.__songpos)
                 svc.postcurrentsong(address, self.__current_output)
                 svc.postsonglength(address, self.__songlength)
                 svc.postupcomingsongs(address, self.__upcoming_output)
-                # svc.postfullscreen(address, self.__current_output)
+                self.__updateui = False
             else:
                 pass
             self.__comparepos = self.__songpos
@@ -358,6 +365,10 @@ class Main(MDScreen):
             self.go_back()
         else:
             pass
+
+    def updateremoteUI(self):
+        self.__updateui = True
+        svc.requestUIupdate(address)
 
     def open_leave_popup(self):
         LeavePU().open()
@@ -403,7 +414,7 @@ class MusicPlayer(MDApp):
         global address
         AppQuitting().open()
         print("leaving...")
-        svc.poststatus(address, False)
+        svc.poststatus(address, "stopped")
         time.sleep(1)
         os.killpg(os.getpgid(0), signal.SIGKILL)
 

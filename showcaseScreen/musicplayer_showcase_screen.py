@@ -57,11 +57,24 @@ class ShowcaseScreen(MDScreen):
         self.__upcoming = comHandler.getupcomingsongs(address)
         self.songlength = comHandler.getsonglength(address)
         self.songpos = comHandler.getsongpos(address)
+        self.ids.current_song.text = self.__current
+        self.ids.upcoming_songs.text = self.__upcoming
+        self.ids.progressbars.value = float(self.songpos / float(self.songlength) * 100)
         self.isplaying = False
         Clock.schedule_interval(self.updateProgressbar, 0.1)
 
     def updateScreen(self, dmp):
         Window.fullscreen = comHandler.checkiffullscreen(address)
+        self.status = comHandler.checkgo(address)
+        if self.status == "playing":
+            self.isplaying = True
+        elif self.status == "paused":
+            self.isplaying = False
+        elif self.status == "stopped":
+            Window.fullscreen = False
+            screen_manager.current = "Login"
+        else:
+            print("ERROR in Status. Please check connection!")
         Window.maximize()
         self.__windowsize = Window._get_size()
         self.__windowsize_x = self.__windowsize[0]
@@ -71,29 +84,19 @@ class ShowcaseScreen(MDScreen):
         self.ids.upcoming_songs.font_size = self.__text_size - 5
         self.ids.titleinfo.font_size = self.__text_size * 2.2
         self.ids.upcoming_ind.font_size = self.__text_size + 10
-        self.songpos = comHandler.getsongpos(address)
-        if self.songpos < self.lastsongpos:
+        self.__doupdateUI = comHandler.getuiupdate(address)
+        if self.__doupdateUI:
+            self.songpos = comHandler.getsongpos(address)
             self.__current = comHandler.getcurrentsong(address)
             self.__upcoming = comHandler.getupcomingsongs(address)
             self.songlength = comHandler.getsonglength(address)
-        elif self.songpos > self.lastsongpos:
-            self.isplaying = True
-        elif self.songpos == self.lastsongpos:
-            self.isplaying = False
-        else:
-            pass
-        self.lastsongpos = self.songpos
-        self.ids.current_song.text = self.__current
-        self.ids.upcoming_songs.text = self.__upcoming
-        if comHandler.checkgo(address):
-            pass
-        else:
-            Window.fullscreen = False
-            screen_manager.current = "Login"
+            self.ids.progressbars.value = float(self.songpos / float(self.songlength) * 100)
+            self.ids.current_song.text = self.__current
+            self.ids.upcoming_songs.text = self.__upcoming
 
     def updateProgressbar(self, dmp):
         if self.isplaying:
-            self.__songdisplay = float(self.songpos / float(self.songlength) * 100)
+            self.__songdisplay = float(self.songpos / float(self.songlength) * 100) - 1
             self.songpos += 0.1
             self.ids.progressbars.value = self.__songdisplay
 

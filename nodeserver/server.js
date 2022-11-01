@@ -14,7 +14,9 @@ var upcomingsongs = "Test\nTest2\nTest3"
 var currentsong = "This is a song"
 var songmaxlength = "100"
 var fullscreen = "False"
-var isrunning = "False"
+var status = "n/a"
+var doupdateUI = "False"
+var isplaying = "False"
 
 
 // CONFIG FOR EXPRESS
@@ -50,29 +52,40 @@ app.get('/currentsong', (request, response) => {
 })
 
 app.get('/fullscreen', (request, response) => {
-    console.log("getting fullscreen status")
     response.send(fullscreen)
 })
 
 app.get('/isrunning', (request, response) => {
-    response.send(isrunning)
+    response.send(status)
 })
+
+app.get('/uiupdate', (request, response) => {
+    response.send(doupdateUI)
+    doupdateUI = "False"
+})
+
+app.get('/isplaying', (request, response) => {
+    response.send(isplaying)
+})
+
 
 
 // POST data (Interface for Player)
 app.post('/postplayback', (request, response) => {
     playbackpos = request.body.pos
+    doupdateUI = "True"
     response.send("ok")
 })
 
 app.post('/postupcomingsongs', (request, response) => {
-    console.log("updating upcomingsongs")
     upcomingsongs = request.body.songs
+    doupdateUI = "True"
     response.send("ok")
 })
 
 app.post('/postcurrentsong', (request, response) => {
     currentsong = request.body.songname
+    doupdateUI = "True"
     response.send("ok")
 })
 
@@ -88,12 +101,19 @@ app.get('/changefullscreen', (request, response) => {
 
 app.post('/postsonglength', (request, response) => {
     songmaxlength = request.body.length
+    console.log(songmaxlength)
+    doupdateUI = "True"
     response.send("ok")
 })
 
 app.post('/poststatus', (request, response) => {
-    console.log("updating status " + request.body.status)
-    isrunning = request.body.status
+    status = request.body.status
+    doupdateUI = "True"
+    response.send("ok")
+})
+
+app.get('/requestuiupdate', (request, response) => {
+    doupdateUI = "True"
     response.send("ok")
 })
 

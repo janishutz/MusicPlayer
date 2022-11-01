@@ -63,6 +63,13 @@ class Com:
             self.x = requests.get(f"{url}/isrunning")
         except Exception:
             return False
+        return self.x.text
+
+    def getuiupdate(self, url):
+        try: 
+            self.x = requests.get(f"{url}/uiupdate")
+        except Exception:
+            return False
         if self.x.text == "True":
             return True
         else:

@@ -1,3 +1,4 @@
+import stat
 import requests
 
 class ServerComs:
@@ -47,7 +48,6 @@ class ServerComs:
             return False
 
     def getfullscreeninfo(self, url):
-        print("fullscreencheck")
         try:
             self.x = requests.get(f"{url}/fullscreen")
             return self.x.text
@@ -55,10 +55,16 @@ class ServerComs:
             print(e)
             return "False"
 
-    def poststatus(self, url, isalive):
-        print("updating status")
+    def poststatus(self, url, statuscode):
         try:
-            self.x = requests.post(f"{url}/poststatus", {"status":f"{isalive}"})
+            self.x = requests.post(f"{url}/poststatus", {"status":statuscode})
+            return True
+        except Exception:
+            return False
+
+    def requestUIupdate(self, url):
+        try:
+            self.x = requests.get(f"{url}/requestuiupdate")
             return True
         except Exception:
             return False
