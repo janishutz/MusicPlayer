@@ -193,6 +193,7 @@ class Main(MDScreen):
         self.quit_requests = 0
         self.__comparepos = 10000
         self.__updateui = False
+        self.__recently_updated = 0
         global address
 
     def key_pressed(self, keyboard, keycode, text, modifiers):
@@ -344,12 +345,19 @@ class Main(MDScreen):
                         self.__upcoming_output += f"\n{self.__upcoming2}"
                     self.__length_output += 1
         self.manager.get_screen("Showcase").ids.upcoming_songs.text = self.__upcoming_output
+        if self.__recently_updated < 10:
+            svc.postplaybackpos(address, self.__songpos)
+            self.__recently_updated += 1
+        print(self.__songpos % 60)
+        if self.__songpos % 60 < 5:
+            svc.postplaybackpos(address, self.__songpos)
         if address != "":
             if self.__comparepos > self.__songpos or self.__updateui:
                 svc.postplaybackpos(address, self.__songpos)
                 svc.postcurrentsong(address, self.__current_output)
                 svc.postsonglength(address, self.__songlength)
                 svc.postupcomingsongs(address, self.__upcoming_output)
+                self.__recently_updated = 0
                 self.__updateui = False
             else:
                 pass

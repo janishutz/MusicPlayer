@@ -10,6 +10,7 @@ from kivy.clock import Clock
 import handlers.comHandler
 import math
 import handlers.csv_parsers
+import time
 Builder.load_file('./ui/connectionPU.kv')
 
 comHandler = handlers.comHandler.Com()
@@ -61,6 +62,8 @@ class ShowcaseScreen(MDScreen):
         self.ids.upcoming_songs.text = self.__upcoming
         self.ids.progressbars.value = float(self.songpos / float(self.songlength) * 100)
         self.isplaying = False
+        self.averagedelatation = 0
+        self.passcount = 0
         Clock.schedule_interval(self.updateProgressbar, 0.1)
 
     def updateScreen(self, dmp):
@@ -90,15 +93,17 @@ class ShowcaseScreen(MDScreen):
             self.__current = comHandler.getcurrentsong(address)
             self.__upcoming = comHandler.getupcomingsongs(address)
             self.songlength = comHandler.getsonglength(address)
+            print(self.songlength)
             self.ids.progressbars.value = float(self.songpos / float(self.songlength) * 100)
             self.ids.current_song.text = self.__current
             self.ids.upcoming_songs.text = self.__upcoming
 
     def updateProgressbar(self, dmp):
         if self.isplaying:
-            self.__songdisplay = float(self.songpos / float(self.songlength) * 100) - 1
+            self.__songdisplay = float(self.songpos / float(self.songlength) * 100)
             self.songpos += 0.1
             self.ids.progressbars.value = self.__songdisplay
+
 
 class MusicPlayerShowcaseScreen(MDApp):
     global screen_manager

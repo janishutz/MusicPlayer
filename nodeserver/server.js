@@ -44,6 +44,7 @@ app.get('/upcomingsongs', (request, response) => {
 })
 
 app.get('/songmaxlength', (request, response) => {
+    console.log(songmaxlength)
     response.send(songmaxlength)
 })
 
