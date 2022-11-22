@@ -194,6 +194,7 @@ class Main(MDScreen):
         self.__comparepos = 10000
         self.__updateui = False
         self.__recently_updated = 0
+        self.__current_output = ""
         global address
 
     def key_pressed(self, keyboard, keycode, text, modifiers):
