@@ -22,10 +22,4 @@ Yet another Music Player but with one twist. It displays the Playlist beautifull
 - Kivy may actually also (if you are on ubuntu or derivative) be installed by cloning an apt repository as follows (adapted from kivy documentation), as the version on pip is inferior to the apt version and leads to breakage: 'sudo add-apt-repository ppa:kivy-team/kivy', then running 'sudo apt-get update' and then 'sudo apt-get install python3-kivy'
 
 ## Roadmap
-**V2.0**
-*UPCOMING VERSION IN DEVELOPMENT RIGHT NOW*
-
-- Locked down mode only available when running second app --> Therefore multi-display support / even multi-PC-Support -- done
-- Display app can now run on additional PC -- done
-- Backend optimisations to reduce CPU loads -- done
-- UI Styling -- under development for remote app only
+This App here will be deprecated with the release of the next version. The new version will be migrated to fully utilize JavaScript (with Node.JS backend in an Electron App) and HTML & CSS for the user interface. You can connect remotely over an IP through a new App with lockdown mode (Framework tbd). 
