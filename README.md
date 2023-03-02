@@ -1,3 +1,6 @@
+# Deprecated
+This app will most likely not see any further development and will be deprecated. You can find a new version of it in the future in my other repo, myevent, where it can be fully integrated with that system or used standalone.
+
 # MusicPlayer
 Yet another Music Player but with one twist. It displays the Playlist beautifully on a second display.
 
