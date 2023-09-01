@@ -1,5 +1,5 @@
 # Deprecated
-This app will most likely not see any further development and will be deprecated. You can find a new version of it in the future in my other repo, myevent, where it can be fully integrated with that system or used standalone.
+This app will not see any more development. It has been fully deprecated on March 2nd 2023. A replacement for it is in development [here](https://github.com/simplePCBuilding/MusicPlayerV2).
 
 # MusicPlayer
 Yet another Music Player but with one twist. It displays the Playlist beautifully on a second display.
