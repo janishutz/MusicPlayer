@@ -21,6 +21,12 @@
     <img alt="App Version" src="https://img.shields.io/github/package-json/v/simplePCBuilding/MusicPlayerV2.svg?label=Development Version">
 </div>
 
+# Development Branch
+This branch is for the upcoming version 4 of Music Player and is in early stages of development
+
+
+# MusicPlayer
+
 A music player, specifically created for displaying song information on multiple different displays that are connected to the same network, just from the browser. 
 
 The [hosted version](https://music.janishutz.com) of this MusicPlayer, which is fully set up for you is subscription-based and can be paid for on my [store](https://store.janishutz.com/product/com.janishutz).

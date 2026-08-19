@@ -1,0 +1,193 @@
+{
+    "ages": {
+        "below": "Orange",
+        "16-18": "Yellow",
+        "18+": "Turquoise"
+    },
+    "offering": {
+        "big-bar": {
+            "offering": {
+                "softdrinks": {
+                    "name": "Softdrinks",
+                    "price": 400,
+                    "id": "softdrinks"
+                },
+                "energy": {
+                    "name": "Energy",
+                    "price": 400,
+                    "id": "energy"
+                },
+                "mate": {
+                    "name": "Mate",
+                    "price": 500,
+                    "id": "mate",
+                    "depot": 200
+                },
+                "sparkly-water": {
+                    "name": "Mineralwasser mit",
+                    "price": 300,
+                    "id": "sparkly-water",
+                    "showLine": true
+                },
+                "rose": {
+                    "name": "Rosé",
+                    "price": 1500,
+                    "id": "rose",
+                    "depot": 200
+                },
+                "red": {
+                    "name": "Rotwein",
+                    "price": 2000,
+                    "id": "red",
+                    "depot": 200
+                },
+                "wine-glasses": {
+                    "name": "Weingläser",
+                    "price": 0,
+                    "id": "wine-glasses",
+                    "depot": 200
+                },
+                "appenzeller": {
+                    "name": "Appenzeller Vollmond",
+                    "price": 500,
+                    "id": "appenzeller",
+                    "depot": 200
+                },
+                "feldschloesschen": {
+                    "name": "Feldschlösschen",
+                    "price": 500,
+                    "id": "feldschloesschen",
+                    "depot": 200
+                },
+                "sommersby": {
+                    "name": "Sommersby",
+                    "price": 500,
+                    "id": "sommersby",
+                    "depot": 200
+                },
+                "jever-fun": {
+                    "name": "Jever Fun",
+                    "price": 400,
+                    "id": "jever-fun",
+                    "depot": 200
+                },
+                "trojka-ice": {
+                    "name": "Trojka Ice",
+                    "price": 600,
+                    "id": "trojka-ice",
+                    "depot": 200,
+                    "showLine": true
+                },
+                "vodka-red-energy": {
+                    "name": "Vodka Rot Energy",
+                    "price": 800,
+                    "id": "vodka-red-energy"
+                },
+                "vodka-green-citro": {
+                    "name": "Vodka Grün Citro",
+                    "price": 800,
+                    "id": "vodka-green-citro"
+                },
+                "vodka-white-energy": {
+                    "name": "Vodka White Energy",
+                    "price": 900,
+                    "id": "vodka-white-energy"
+                },
+                "gin-tonic": {
+                    "name": "Gin Tonic",
+                    "price": 900,
+                    "id": "gin-tonic"
+                },
+                "rum-cola": {
+                    "name": "Rum Cola",
+                    "price": 900,
+                    "id": "rum-cola"
+                },
+                "whiskey-cola": {
+                    "name": "Whiskey Cola",
+                    "price": 900,
+                    "id": "whiskey-cola"
+                },
+                "mate-mit-schuss": {
+                    "name": "Mate mit Schuss",
+                    "price": 1200,
+                    "id": "mate-mit-schuss",
+                    "depot": 200,
+                    "showLine": true
+                },
+                "poseidon": {
+                    "name": "Poseidon",
+                    "price": 900,
+                    "id": "poseidon"
+                },
+                "arielle": {
+                    "name": "Arielle",
+                    "price": 900,
+                    "id": "arielle"
+                },
+                "pearl-driver": {
+                    "name": "Pearl Driver",
+                    "price": 400,
+                    "id": "pearl-driver"
+                }
+            },
+            "name": "Poseidon's Quelle",
+            "id": "big-bar"
+        },
+        "small-bar": {
+            "offering": {
+                "softdrinks": {
+                    "name": "Softdrinks (Alle)",
+                    "price": 300,
+                    "id": "softdrinks",
+                    "showLine": true
+                },
+                "appenzeller": {
+                    "name": "Appenzeller Vollmond",
+                    "price": 500,
+                    "id": "appenzeller",
+                    "depot": 200
+                },
+                "feldschloesschen": {
+                    "name": "Feldschlösschen",
+                    "price": 500,
+                    "id": "feldschloesschen",
+                    "depot": 200
+                },
+                "sommersby": {
+                    "name": "Sommersby",
+                    "price": 500,
+                    "id": "sommersby",
+                    "depot": 200
+                },
+                "jever-fun": {
+                    "name": "Jever Fun",
+                    "price": 400,
+                    "id": "jever-fun",
+                    "depot": 200,
+                    "showLine": true
+                },
+                "rose": {
+                    "name": "Rosé",
+                    "price": 1500,
+                    "id": "rose",
+                    "depot": 200
+                },
+                "red": {
+                    "name": "Rotwein",
+                    "price": 2000,
+                    "id": "red",
+                    "depot": 200
+                },
+                "wine-glasses": {
+                    "name": "Weingläser",
+                    "price": 0,
+                    "id": "wine-glasses",
+                    "depot": 200
+                }
+            },
+            "name": "Seepferdchenbar",
+            "id": "small-bar"
+        }
+    }
+}
