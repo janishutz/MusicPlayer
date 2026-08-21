@@ -1,7 +1,10 @@
 <template>
-    <div class="home-view">
-        <img src="https://github.com/simplePCBuilding/MusicPlayerV2/raw/master/assets/logo.png" alt="MusicPlayer Logo" class="logo">
+    <div class="not-found-view">
         <h1>404</h1>
+        <p>Page not found</p>
+        <RouterLink to="/" class="button primary">
+            Home
+        </RouterLink>
     </div>
 </template>
 
@@ -10,15 +13,11 @@
 </script>
 
 <style scoped>
-    .home-view {
+    .not-found-view {
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-    }
-
-    .logo {
-        height: 50vh;
     }
 </style>
