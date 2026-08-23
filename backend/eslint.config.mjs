@@ -1,15 +1,15 @@
-import vue from 'eslint-plugin-vue';
 import eslint from '@eslint/js';
 import globals from 'globals';
-import typescript from '@typescript-eslint/eslint-plugin';
 import stylistic from '@stylistic/eslint-plugin';
 import tseslint from 'typescript-eslint';
+import typescript from '@typescript-eslint/eslint-plugin';
+import vue from 'eslint-plugin-vue';
 
 const style = {
     'plugins': {
         '@stylistic': stylistic,
         '@stylistic/js': stylistic,
-        '@stylistic/ts': stylistic,
+        '@stylistic/ts': stylistic
     },
     'files': [
         '**/*.ts',
@@ -20,11 +20,26 @@ const style = {
         '**/*.jsx'
     ],
     'rules': {
+        'sort-imports': [
+            'warn',
+            {
+                'ignoreCase': false,
+                'ignoreDeclarationSort': false,
+                'ignoreMemberSort': false,
+                'memberSyntaxSortOrder': [
+                    'none',
+                    'all',
+                    'multiple',
+                    'single'
+                ],
+                'allowSeparatedGroups': false
+            }
+        ],
         // Formatting
         '@stylistic/array-bracket-newline': [
             'error',
             {
-                'multiline': true,
+                'multiline': false,
                 'minItems': 2
             }
         ],
@@ -35,7 +50,8 @@ const style = {
         '@stylistic/array-element-newline': [
             'error',
             {
-                'multiline': true,
+                'consistent': false,
+                'multiline': false,
                 'minItems': 2
             }
         ],
@@ -56,7 +72,14 @@ const style = {
         ],
         '@stylistic/brace-style': [
             'error',
-            '1tbs'
+            '1tbs',
+            {
+                'allowSingleLine': false
+            }
+        ],
+        '@stylistic/comma-dangle': [
+            'error',
+            'never'
         ],
         '@stylistic/comma-spacing': [
             'error',
@@ -73,9 +96,9 @@ const style = {
             'error',
             'property'
         ],
-        '@stylistic/eol-last': [
+        '@stylistic/function-call-argument-newline': [
             'error',
-            'always'
+            'consistent'
         ],
         '@stylistic/function-call-spacing': [
             'error',
@@ -83,17 +106,17 @@ const style = {
         ],
         '@stylistic/function-paren-newline': [
             'error',
-            'multiline'
-        ],
-        '@stylistic/function-call-argument-newline': [
-            'error',
-            'consistent'
+            'multiline-arguments'
         ],
         '@stylistic/implicit-arrow-linebreak': [
             'error',
             'beside'
         ],
         '@stylistic/indent': [
+            'error',
+            4
+        ],
+        '@stylistic/indent-binary-ops': [
             'error',
             4
         ],
@@ -118,18 +141,31 @@ const style = {
         '@stylistic/max-len': [
             'warn',
             {
-                'code': 90,
-                'comments': 100,
+                'code': 140,
+                'comments': 160,
                 'ignoreComments': false,
                 'ignoreUrls': true,
-                'ignoreStrings': false
+                'ignoreStrings': true,
+                'ignoreTemplateLiterals': true,
+                'ignoreRegExpLiterals': true
             }
+        ],
+        '@stylistic/max-statements-per-line': [
+            'error',
+            {
+                'max': 1
+            }
+        ],
+        '@stylistic/multiline-ternary': [
+            'error',
+            'always-multiline'
         ],
         '@stylistic/new-parens': [
             'error',
             'always'
         ],
-        '@stylistic/newline-per-chained-call': [ 'error' ],
+        '@stylistic/newline-per-chained-call': 'error',
+        '@stylistic/no-confusing-arrow': 'error',
         '@stylistic/no-extra-parens': [
             'error',
             'all',
@@ -167,17 +203,17 @@ const style = {
             'always'
         ],
         '@stylistic/object-property-newline': 'error',
+        '@stylistic/one-var-declaration-per-line': 'error',
         '@stylistic/operator-linebreak': [
             'error',
             'before'
         ],
-        '@stylistic/one-var-declaration-per-line': 'error',
         '@stylistic/padded-blocks': [
             'error',
             {
                 'blocks': 'never',
                 'classes': 'always',
-                'switches': 'never',
+                'switches': 'never'
             }
         ],
 
@@ -561,7 +597,7 @@ const style = {
                 'blankLine': 'always',
                 'prev': 'class',
                 'next': '*'
-            },
+            }
         ],
         '@stylistic/quote-props': [
             'error',
@@ -613,17 +649,23 @@ const style = {
             'error',
             'always'
         ],
+        '@stylistic/switch-colon-spacing': 'error',
         '@stylistic/template-curly-spacing': [
             'error',
             'always'
         ],
-        '@stylistic/switch-colon-spacing': 'error',
+        '@stylistic/template-tag-spacing': [
+            'error',
+            'always'
+        ],
+        '@stylistic/type-generic-spacing': 'error',
+        '@stylistic/type-named-tuple-spacing': 'error',
         '@stylistic/wrap-iife': [
             'error',
             'inside'
         ],
         '@stylistic/wrap-regex': 'error',
-        '@stylistic/ts/type-annotation-spacing': 'error',
+        '@stylistic/ts/type-annotation-spacing': 'error'
     }
 };
 
@@ -642,15 +684,15 @@ export default tseslint.config(
             'ecmaVersion': 'latest',
             'globals': globals.browser,
             'parserOptions': {
-                'parser': tseslint.parser,
-            },
+                'parser': tseslint.parser
+            }
         },
         'plugins': {
             'vue': vue,
             '@stylistic': stylistic,
             '@stylistic/js': stylistic,
             '@stylistic/ts': stylistic,
-            '@typescript-eslint': typescript,
+            '@typescript-eslint': typescript
         },
         'extends': [
             eslint.configs.recommended,
@@ -694,9 +736,9 @@ export default tseslint.config(
                 'error',
                 {
                     'singleline': 3,
-                    'multiline': 1,
+                    'multiline': 1
                 }
-            ],
-        },
-    },
+            ]
+        }
+    }
 );
