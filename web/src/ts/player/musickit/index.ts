@@ -7,7 +7,7 @@ export const useMusicKit = ( storefront: string = 'ch' ) => {
         if ( res.status === 200 ) {
             const token = await res.text();
 
-            window.MusicKit.configure( {
+            await window.MusicKit.configure( {
                 'developerToken': token,
                 'app': {
                     'name': 'MusicPlayer',
