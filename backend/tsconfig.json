@@ -1,13 +1,18 @@
 {
-  "compilerOptions": {
-    "outDir": "./dist",
-    "allowJs": true,
-    "target": "ES6",
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "types": ["node"],
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext"
-  },
-  "include": [ "./src/**/*" ],
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "allowJs": true,
+        "target": "ES6",
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "types": [
+            "node"
+        ],
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext"
+    },
+    "include": [
+        "./src/**/*"
+    ]
 }

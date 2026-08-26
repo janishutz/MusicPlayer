@@ -44,7 +44,7 @@ const configure = ( location: 'stderr' | 'file', minLevel: LogLevel, file?: stri
         throw new Error( 'File parameter required when location is "file"' );
     }
 
-    loc = location === 'stderr' ? 'stderr' : file;
+    loc = location === 'stderr' ? 'stderr' : ( file ?? 'musicplayer.log' );
     lev = levels.indexOf( minLevel );
 };
 
