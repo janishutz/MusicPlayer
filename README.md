@@ -25,6 +25,9 @@ A music player, specifically created for displaying song information on multiple
 
 The [hosted version](https://music.janishutz.com) of this MusicPlayer, which is fully set up for you is subscription-based and can be paid for on my [store](https://store.janishutz.com/product/com.janishutz).
 
+## Version 4
+A completely new version of MusicPlayer is currently [in development](https://github.com/janishutz/MusicPlayer/tree/dev) and will be ready by November 2026.
+
 <div id="donate" align="center">
     <a href="https://store.janishutz.com/donate" target="_blank"><img src="https://store-cdn.janishutz.com/static/support-me.jpg" width="150px"></a>
 </div>
