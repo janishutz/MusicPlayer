@@ -13,9 +13,14 @@ export interface Song {
     'source': 'local' | 'applemusic';
 
     /**
-     * The identifier for the song so it can be found again (such as Apple Music ID or filename)
+     * The identifier for the song so it can be found again (such as Apple Music ID or URL for playback)
      */
     'identifier': string;
+
+    /**
+     * Any additional identifiers (such as filename, etc) to associate
+     */
+    'additional-identifier'?: string;
 
     /**
      * Additional info, such as dance type to be displayed on remote screens

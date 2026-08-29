@@ -24,6 +24,8 @@
 # Development Branch
 This branch is for the upcoming version 4 of Music Player and is in early stages of development
 
+It uses my manually created [types for MusicKitJS](https://github.com/janishutz/musickit-v3-types)
+
 
 # MusicPlayer
 
