@@ -22,7 +22,7 @@ export interface PlayerSourcePlugin {
     'login'?: () => Promise<boolean>;
 
     /**
-     * Play a song by its ID
+     * Play a song by its ID. Should start playing it immediately
      */
     'playSong': ( id: string ) => Promise<void>;
 

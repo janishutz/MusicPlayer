@@ -3,8 +3,20 @@ import {
     ref
 } from 'vue';
 import type {
+    PlayerSourcePlugin
+} from './plugins/interface';
+import type {
     Playlist
 } from '../dtype/playlist';
+import type {
+    RepeatMode
+} from '../dtype/player';
+
+export const sources: {
+    [key: string]: PlayerSourcePlugin
+} = {};
+
+export const currentSource = ref( '' );
 
 export const queueIdx = ref( 0 );
 
@@ -14,7 +26,7 @@ export const isPlaying = ref( false );
 
 export const shuffle = ref( false );
 
-export const repeat: Ref<'off' | 'one' | 'all'> = ref( 'off' );
+export const repeat: Ref<RepeatMode> = ref( 'off' );
 
 export const playbackPercentage = ref( 0 );
 
