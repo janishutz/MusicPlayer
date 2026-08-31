@@ -5,7 +5,7 @@
         useTemplateRef
     } from 'vue';
 
-    const queue = defineModel<T[]>( {
+    const array = defineModel<T[]>( {
         'required': true
     } );
 
@@ -68,7 +68,7 @@
 
         // Determine current index to insert
         const percentage = ( relToContainer + scrollContainer.value!.scrollTop ) / scrollContainer.value!.scrollHeight;
-        const newIdx = Math.min( Math.max( Math.round( percentage * queue.value.length ), 0 ), queue.value.length - 1 );
+        const newIdx = Math.min( Math.max( Math.round( percentage * array.value.length ), 0 ), array.value.length - 1 );
 
         if ( newIdx !== movingIdx.value )
             movingCurrentIdx.value = newIdx;
@@ -86,20 +86,28 @@
 
     const end = () => {
         offset.value = -1;
-        movingIdx.value = -1;
 
-        // TODO: Actually do the move
         try {
             clearInterval( mover );
             mover = -1;
         } catch { /* empty */ }
+
+        const before = array.value.slice( 0, movingIdx.value );
+        const after = array.value.slice( movingIdx.value + 1 );
+        const el = array.value[ movingIdx.value ]!;
+        const arr = before.concat( after );
+
+        arr.splice( movingCurrentIdx.value, 0, el );
+        array.value = arr;
+        movingIdx.value = -1;
+        movingCurrentIdx.value = -1;
 
         emit( 'dropped' );
     };
 
     const style = computed( () => {
         return ( index: number ) => {
-            if ( movingIdx.value === queue.value.length - 1 && movingIdx.value === index + 1
+            if ( movingIdx.value === array.value.length - 1 && movingIdx.value === index + 1
                 && movingCurrentIdx.value === movingIdx.value )
                 return `margin-bottom: ${ movableSize.value }px;`;
 
@@ -109,7 +117,7 @@
                     return `top: ${ offset.value }px;`;
                 } else {
                     // Current item is not moved
-                    if ( movingCurrentIdx.value === queue.value.length - 1 && index === movingCurrentIdx.value ) {
+                    if ( movingCurrentIdx.value === array.value.length - 1 && index === movingCurrentIdx.value ) {
                         // Create gap below
                         return `margin-bottom: ${ movableSize.value }px;`;
                     } else if ( movingCurrentIdx.value === index
@@ -136,7 +144,7 @@
         >
         </div>
         <div
-            v-for="(item, index) in queue"
+            v-for="(item, index) in array"
             :id="'movable-' + index"
             :key="index"
             :class="[ 'movable', movingIdx === index ? 'moving' : undefined ]"
