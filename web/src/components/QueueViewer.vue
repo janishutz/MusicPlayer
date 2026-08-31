@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import SortableList from './SortableList.vue';
     import {
         beautifyTime
     } from '@/ts/util/time';
@@ -32,7 +33,7 @@
             </button>
         </div>
         <div>
-            <div v-for="(song, index) in queue" :key="index">
+            <SortableList v-slot="{ item: song, index }" v-model="queue">
                 <div class="song-cover-wrapper">
                     <img
                         v-if="song.cover"
@@ -58,9 +59,8 @@
                 <div>
                     <i class="fa-solid fa-trash-can"></i>
                     <i class="fa-solid fa-pen-to-square"></i>
-                    <i class="fa-solid fa-grip-vertical"></i>
                 </div>
-            </div>
+            </SortableList>
         </div>
     </div>
 </template>

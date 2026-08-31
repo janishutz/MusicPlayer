@@ -1,0 +1,25 @@
+.sortable-list {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+  position: relative;
+
+  >.grip-target {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    cursor: grabbing;
+  }
+
+  >.movable {
+    &.moving {
+      position: fixed;
+    }
+
+    >i {
+      cursor: move;
+    }
+  }
+}
