@@ -44,10 +44,18 @@
 
         // Scrolling up and down
         if ( relToContainer < 50 ) {
-            moveSpeed = -Math.ceil( Math.max( 1, Math.min( 5 / relToContainer, 10 ) ) );
+            if ( relToContainer < 0 )
+                moveSpeed = -20;
+            else
+                moveSpeed = -Math.ceil( Math.max( 1, Math.min( 5 / relToContainer, 10 ) ) );
+
             startTracker();
         } else if ( relToContainer > height - 50 ) {
-            moveSpeed = Math.ceil( Math.max( 1, Math.min( 5 / ( height - relToContainer ), 10 ) ) );
+            if ( height - relToContainer < 0 )
+                moveSpeed = 20;
+            else
+                moveSpeed = Math.ceil( Math.max( 1, Math.min( 5 / ( height - relToContainer ), 10 ) ) );
+
             startTracker();
         } else {
             if ( mover >= 0 ) {
