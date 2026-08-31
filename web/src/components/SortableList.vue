@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T">
     import {
+        computed,
         ref,
         useTemplateRef
     } from 'vue';
@@ -39,25 +40,27 @@
 
         offset.value = ev.y - ( movableSize.value / 2 );
         const relToContainer = ev.y - scrollContainer.value!.offsetTop;
-        // const height = scrollContainer.value!.offsetHeight;
-        //
-        // // Scrolling up and down
-        // if ( relToContainer < 50 ) {
-        //     moveSpeed = Math.ceil( Math.min( 10 / relToContainer, 10 ) );
-        //     startTracker();
-        // } else if ( relToContainer > height - 50 ) {
-        //     moveSpeed = Math.ceil( Math.min( 10 / ( height - relToContainer ), 10 ) );
-        //     startTracker();
-        // } else {
-        //     if ( mover >= 0 ) {
-        //         try {
-        //             clearInterval( mover );
-        //         } catch { /* empty */ }
-        //     }
-        // }
+        const height = scrollContainer.value!.offsetHeight;
+
+        // Scrolling up and down
+        if ( relToContainer < 50 ) {
+            moveSpeed = -Math.ceil( Math.max( 1, Math.min( 5 / relToContainer, 10 ) ) );
+            startTracker();
+        } else if ( relToContainer > height - 50 ) {
+            moveSpeed = Math.ceil( Math.max( 1, Math.min( 5 / ( height - relToContainer ), 10 ) ) );
+            startTracker();
+        } else {
+            if ( mover >= 0 ) {
+                try {
+                    clearInterval( mover );
+                    mover = -1;
+                } catch { /* empty */ }
+            }
+        }
+
         // Determine current index to insert
-        const percentage = ( relToContainer - scrollContainer.value!.scrollTop ) / scrollContainer.value!.scrollHeight;
-        const newIdx = Math.min( Math.max( Math.floor( percentage * queue.value.length ), 0 ), queue.value.length - 1 );
+        const percentage = ( relToContainer + scrollContainer.value!.scrollTop ) / scrollContainer.value!.scrollHeight;
+        const newIdx = Math.min( Math.max( Math.round( percentage * queue.value.length ), 0 ), queue.value.length - 1 );
 
         if ( newIdx !== movingIdx.value )
             movingCurrentIdx.value = newIdx;
@@ -80,10 +83,38 @@
         // TODO: Actually do the move
         try {
             clearInterval( mover );
+            mover = -1;
         } catch { /* empty */ }
 
         emit( 'dropped' );
     };
+
+    const style = computed( () => {
+        return ( index: number ) => {
+            if ( movingIdx.value === queue.value.length - 1 && movingIdx.value === index + 1
+                && movingCurrentIdx.value === movingIdx.value )
+                return `margin-bottom: ${ movableSize.value }px;`;
+
+            if ( movingIdx.value >= 0 ) {
+                if ( movingIdx.value === index ) {
+                    // Current item is moved
+                    return `top: ${ offset.value }px;`;
+                } else {
+                    // Current item is not moved
+                    if ( movingCurrentIdx.value === queue.value.length - 1 && index === movingCurrentIdx.value ) {
+                        // Create gap below
+                        return `margin-bottom: ${ movableSize.value }px;`;
+                    } else if ( movingCurrentIdx.value === index
+                        || ( movingCurrentIdx.value === index - 1 && movingIdx.value == index - 1 ) ) {
+                        // Create a gap above
+                        return `margin-top: ${ movableSize.value }px;`;
+                    }
+                }
+            }
+
+            return '';
+        };
+    } );
 </script>
 
 <template>
@@ -101,16 +132,7 @@
             :id="'movable-' + index"
             :key="index"
             :class="[ 'movable', movingIdx === index ? 'moving' : undefined ]"
-            :style="
-                movingIdx >= 0
-                    && ((movingCurrentIdx === index && movingIdx !== index)
-                        || (movingCurrentIdx === index - 1 && index - 1 === movingIdx)
-                    )
-                    ? `margin-top: ${ movableSize }px;`
-                    : (movingIdx === index
-                        ? `top: ${offset}px;`
-                        : ''
-                    )"
+            :style="style(index)"
         >
             <slot :item="item" :index="index"></slot>
             <i class="fa-solid fa-grip-vertical" @mousedown="( e ) => start( e, index )"></i>
