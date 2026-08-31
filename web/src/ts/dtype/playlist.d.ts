@@ -45,5 +45,5 @@ export interface Song {
     /**
      * Song duration
      */
-    'duration': string;
+    'duration': number;
 }

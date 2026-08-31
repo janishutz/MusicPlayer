@@ -18,6 +18,8 @@ export const sources: {
 
 export const currentSource = ref( '' );
 
+export const rawQueue: Ref<Playlist> = ref( [] );
+
 export const queueIdx = ref( 0 );
 
 export const queue: Ref<Playlist> = ref( [] );
@@ -27,7 +29,3 @@ export const isPlaying = ref( false );
 export const shuffle = ref( false );
 
 export const repeat: Ref<RepeatMode> = ref( 'off' );
-
-export const playbackPercentage = ref( 0 );
-
-export const duration = ref( 0 );

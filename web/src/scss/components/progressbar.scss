@@ -1,0 +1,37 @@
+.progressbar {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+
+  >.back {
+    width: 100%;
+    background-color: var(--accent-background);
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    >div {
+      background-color: var(--accent-color);
+      height: 10px;
+    }
+  }
+
+  >.click-target {
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    &.active {
+      cursor: grabbing;
+      width: 100vw;
+      height: 100vh;
+      transition: none;
+      position: fixed;
+      z-index: 10000;
+    }
+  }
+}

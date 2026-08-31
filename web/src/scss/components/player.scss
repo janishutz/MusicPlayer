@@ -1,0 +1,110 @@
+.mp-player {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .fa-solid {
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: font-size ease 0.5s;
+    user-select: none;
+
+    &:hover {
+      font-size: 2.7rem;
+    }
+  }
+
+  >.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    >.play-pause {
+      cursor: pointer;
+
+      &.paused {
+        >.fa-pause {
+          display: none;
+        }
+
+        >.fa-play {
+          display: unset;
+        }
+      }
+    }
+
+    >.quick-seek {
+      position: relative;
+
+      &::after {
+        content: "10";
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 40%;
+        position: absolute;
+        left: 0;
+        top: 5%;
+        height: 95%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  >.time {
+    display: flex;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+
+    >.duration {
+      margin-left: auto;
+    }
+  }
+
+  .progress {
+    width: 95%;
+  }
+
+  >.bottom-bar {
+    >.fa-shuffle {
+      &.active {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        border-radius: 10px;
+      }
+    }
+
+    >.repeat {
+      position: relative;
+      padding: 5px;
+
+      &.once,
+      &.all {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        border-radius: 10px;
+      }
+
+      &.once::after {
+        position: absolute;
+        content: "1";
+        font-size: 40%;
+        font-family: sans-serif;
+        top: 5px;
+        right: 5px;
+        background-color: var(--accent-color);
+        width: 1.5em;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1em;
+        line-height: 100%;
+      }
+    }
+  }
+}

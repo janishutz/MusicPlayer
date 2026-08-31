@@ -1,20 +1,26 @@
 import {
+    addSongList,
+    shuffleList
+} from './playlists/add';
+import {
     currentSource,
+    isPlaying,
+    queue,
     queueIdx,
+    rawQueue,
     repeat,
     shuffle,
     sources
 } from './state';
 import {
+    duration,
+    playbackPercentage,
     startTracking,
     stopTracking
 } from './status-tracking';
 import type {
     RepeatMode
 } from '../dtype/player';
-import {
-    addSongList
-} from './playlists/add';
 import {
     playIndex
 } from './playlists';
@@ -31,12 +37,16 @@ const prev = () => {
 const play = () => {
     if ( currentSource.value === '' ) return;
 
+    isPlaying.value = true;
+
     sources[currentSource.value]?.play();
     startTracking();
 };
 
 const pause = () => {
     if ( currentSource.value === '' ) return;
+
+    isPlaying.value = false;
 
     sources[currentSource.value]?.pause();
     stopTracking();
@@ -70,11 +80,34 @@ const back10 = () => {
     seekTo( ( ( ( source?.getPlaybackPos() ?? 0 ) * duration ) - 10 ) / duration );
 };
 
+/**
+ * Turn on or off shuffle
+ * @param enabled - Whether to enable or disable shuffle
+ */
 const setShuffle = ( enabled: boolean ) => {
-    // TODO: Shuffle the order
     shuffle.value = enabled;
+
+    if ( enabled ) {
+        shuffleList();
+        queueIdx.value = 0;
+    } else {
+        const curr = queue.value[queueIdx.value];
+
+        queue.value = [];
+
+        for ( let i = 0; i < rawQueue.value.length; i++ ) {
+            if ( rawQueue.value[i] === curr )
+                queueIdx.value = i;
+
+            queue.value.push( rawQueue.value[i]! );
+        }
+    }
 };
 
+/**
+ * Change the repeat mode
+ * @param mode - The repeat mode to switch into
+ */
 const setRepeat = ( mode: RepeatMode ) => {
     repeat.value = mode;
 };
@@ -99,5 +132,12 @@ export default {
     getSources,
     addSongFromSource,
     next,
-    prev
+    prev,
+    queue,
+    queueIdx,
+    duration,
+    playbackPercentage,
+    repeat,
+    shuffle,
+    isPlaying
 };
