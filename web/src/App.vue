@@ -57,7 +57,7 @@
         --secondary-color: white;
         --background-color: rgb(221, 221, 221);
         --nav-background: white;
-        --hover-color: #00457a;
+        --accent-color: #00457a;
         --popup-color: rgb(224, 224, 224);
         --overlay-color: rgba(0, 0, 0, 0.7);
         --PI: 3.14159265358979;
@@ -74,7 +74,7 @@
         --background-color: rgb(32, 32, 32);
         --nav-background: rgb(54, 54, 54);
         --popup-color: rgb(58, 58, 58);
-        --hover-color: #007ddd;
+        --accent-color: #007ddd;
         --overlay-color: rgba(104, 104, 104, 0.575);
         --gray-color: rgb(207, 207, 207);
         --footer-background: rgb(53, 53, 53);
@@ -90,7 +90,7 @@
             --background-color: rgb(32, 32, 32);
             --nav-background: rgb(54, 54, 54);
             --popup-color: rgb(58, 58, 58);
-            --hover-color: #007ddd;
+            --accent-color: #007ddd;
             --overlay-color: rgba(104, 104, 104, 0.575);
             --gray-color: rgb(207, 207, 207);
             --footer-background: rgb(53, 53, 53);

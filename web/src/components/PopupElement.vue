@@ -22,7 +22,7 @@
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
     .popup-backdrop {
         width: 100vw;
         height: 100vh;
@@ -37,29 +37,29 @@
         transition: all 0.5s;
         transform: scale(1);
         z-index: 99;
-    }
 
-    .hidden {
-        transform: scale(0);
-    }
+        &.hidden {
+            transform: scale(0);
+        }
 
-    .popup-main {
-        width: 40%;
-        height: 50%;
-        background-color: var( --secondary-color );
-        padding: 2.5%;
-        border-radius: 20px;
-        position: relative;
-        overflow-y: scroll;
-        display: block;
-    }
+        >.popup-main {
+            width: 40%;
+            height: 50%;
+            background-color: var( --secondary-color );
+            padding: 2.5%;
+            border-radius: 20px;
+            position: relative;
+            overflow-y: scroll;
+            display: block;
 
-    .close-icon {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 2rem;
-        cursor: pointer;
-        user-select: none;
+            >.close-icon {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                font-size: 2rem;
+                cursor: pointer;
+                user-select: none;
+            }
+        }
     }
 </style>
