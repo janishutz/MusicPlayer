@@ -1,21 +1,45 @@
 <script setup lang="ts">
+    import {
+        type Ref,
+        type WritableComputedRef,
+        computed,
+        ref
+    } from 'vue';
     import AddSong from './AddSong.vue';
+    import type {
+        Song
+    } from '@/ts/dtype/playlist';
+    import SongEditor from './SongEditor.vue';
     import SortableList from './SortableList.vue';
     import {
         beautifyTime
     } from '@/ts/util/time';
     import player from '@/ts/player';
-    import {
-        ref
-    } from 'vue';
 
-    const queue = player.queue;
-    const queueIndex = player.queueIdx;
+    const queue: WritableComputedRef<Song[]> = computed( {
+        get () {
+            return player.queue.value.slice( player.queueIdx.value );
+        },
+        set ( val ) {
+            player.queue.value = player.queue.value.slice( 0, player.queueIdx.value ).concat( val );
+        }
+    } );
     const isPlaying = player.isPlaying;
     const showAddSong = ref( false );
+    const showEditSong = ref( false );
+    const editingSong: Ref<null | Song> = ref( null );
 
     const addSong = () => {
         showAddSong.value = true;
+    };
+
+    const editSong = ( idx: number ) => {
+        showEditSong.value = true;
+        editingSong.value = player.queue.value[ idx ]!;
+    };
+
+    const deleteSong = ( idx: number ) => {
+        player.removeSong( idx );
     };
 </script>
 
@@ -40,6 +64,7 @@
                 Transmit
             </button>
         </div>
+        <SongEditor v-model="showEditSong" editing-song="" />
         <AddSong v-model="showAddSong" />
         <div>
             <SortableList v-slot="{ item: song, index }" v-model="queue">
@@ -52,7 +77,7 @@
                             class="song-cover"
                         >
                         <i v-else class="fa-solid fa-music song-cover"></i>
-                        <div v-if="index === queueIndex" class="play-overlay">
+                        <div v-if="index === 0" class="play-overlay">
                             <div v-if="isPlaying" class="playing-symbols">
                                 <div id="bar-1" class="playing-bar"></div>
                                 <div id="bar-2" class="playing-bar"></div>
@@ -67,15 +92,15 @@
                             <i class="fa-solid fa-play" @click="() => player.playIndex( index )"></i>
                         </div>
                     </div>
-                    <div>
+                    <div class="song-details">
                         <h3>{{ song.name }}</h3>
                         <p>{{ song.artist }}</p>
-                        <p>{{ beautifyTime( song.duration ) }}</p>
                         <p>{{ song['additional-info'] }}</p>
                     </div>
-                    <div>
-                        <i v-if="index !== queueIndex" class="fa-solid fa-trash-can"></i>
-                        <i class="fa-solid fa-pen-to-square"></i>
+                    <div class="song-actions">
+                        <p>{{ beautifyTime( song.duration ) }}</p>
+                        <i v-if="index !== 0" class="fa-solid fa-trash-can" @click="() => deleteSong( index )"></i>
+                        <i class="fa-solid fa-pen-to-square" @click="() => editSong( index )"></i>
                     </div>
                 </div>
             </SortableList>

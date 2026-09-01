@@ -34,6 +34,10 @@ export const musicKitPlayback = ( musickitInstance: MusicKitInstance ) => {
         return musickitInstance.currentPlaybackDuration;
     };
 
+    const getLoggedIn = (): boolean => {
+        return musickitInstance.isAuthorized;
+    };
+
     return {
         play,
         pause,
@@ -41,6 +45,7 @@ export const musicKitPlayback = ( musickitInstance: MusicKitInstance ) => {
         playSong,
         stop,
         getPlaybackPos,
-        getDuration
+        getDuration,
+        getLoggedIn
     };
 };

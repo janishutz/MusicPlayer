@@ -35,7 +35,6 @@ export const removeSong = ( idx: number ) => {
 
     const removed = queue.value.splice( idx, 1 )[0];
 
-    // TODO: Check that this works
     for ( let i = 0; i < rawQueue.value.length; i++ ) {
         if ( rawQueue.value[ i ] === removed ) {
             rawQueue.value.splice( i, 1 );

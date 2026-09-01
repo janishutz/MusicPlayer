@@ -15,7 +15,9 @@
     const results: Ref<Song[]> = ref( [] );
     const query = ref( '' );
     const isSearching = ref( false );
+    const addedIndex = ref( -1 );
 
+    let addedTimeout = -1;
     let timeout = -1;
     let searchedForQuery = '';
 
@@ -46,7 +48,15 @@
     };
 
     const add = ( idx: number ) => {
+        try {
+            clearTimeout( addedTimeout );
+        } catch { /* empty */ }
+
+        addedIndex.value = idx;
         searchOpts.value?.addSelected( idx );
+        addedTimeout = setTimeout( () => {
+            addedIndex.value = -1;
+        }, 2000 );
     };
 </script>
 
@@ -63,11 +73,14 @@
             <div v-if="!isSearching" class="search-results-wrapper">
                 <div v-for="(result, index) in results" :key="index" @click="() => add(index)">
                     <img :src="result.artwork" :alt="'Album artwork of ' + result.name + ' by ' + result.artist">
-                    <h4>{{ result.name }}</h4>
-                    <p>{{ result.artist }}</p>
+                    <div>
+                        <h4>{{ result.name }}</h4>
+                        <p>{{ result.artist }}</p>
+                    </div>
+                    <i v-if="addedIndex === index" class="fa-solid fa-check"></i>
                 </div>
             </div>
-            <div v-else class="search-results-wrapper">
+            <div v-else class="search-results-wrapper placeholder">
                 Searching...
             </div>
         </PopupElement>

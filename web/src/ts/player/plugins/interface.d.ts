@@ -91,6 +91,11 @@ export interface PlayerSourcePlugin {
     'getDuration': () => number;
 
     /**
+     * Check if source is available for playback
+     */
+    'available': () => boolean;
+
+    /**
      * Called when user adds another song to the playlist via this source.
      * You may use the provided interface elements (search bar and popups) to e.g. ask if user wants to use a playlist, album, etc
      */

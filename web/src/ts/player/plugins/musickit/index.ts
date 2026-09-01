@@ -43,6 +43,7 @@ export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string =
                 };
 
                 return {
+                    'available': controls.getLoggedIn,
                     'play': controls.play,
                     'pause': controls.pause,
                     'stop': controls.stop,

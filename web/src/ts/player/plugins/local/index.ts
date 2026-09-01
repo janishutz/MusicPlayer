@@ -12,6 +12,7 @@ export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<P
     };
 
     return {
+        'available': () => true,
         'id': 'local',
         'name': 'Local Disk',
         'play': player.play,

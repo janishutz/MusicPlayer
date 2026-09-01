@@ -29,6 +29,8 @@
     let moveSpeed = 0;
 
     const start = ( ev: MouseEvent, idx: number ) => {
+        if ( array.value.length < 2 ) return;
+
         movableSize.value = document.getElementById( 'movable-' + idx )!.scrollHeight;
         offset.value = ev.y - ( movableSize.value / 2 );
         movingIdx.value = idx;

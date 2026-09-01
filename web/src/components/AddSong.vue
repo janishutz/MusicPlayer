@@ -50,6 +50,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
 
         >.fa-solid {
             font-size: 1.5rem;

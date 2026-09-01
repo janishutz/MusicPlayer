@@ -1,6 +1,7 @@
 import {
     addSongList,
     clearQueue,
+    removeSong,
     shuffleList
 } from './playlists/add';
 import {
@@ -27,12 +28,12 @@ import {
 } from './playlists';
 
 const next = () => {
-    playIndex( queueIdx.value + 1 );
+    playIndex( ( queueIdx.value + 1 ) % queue.value.length );
 };
 
 const prev = () => {
     // TODO: Back to beginning if more than some seconds have passed?
-    playIndex( queueIdx.value - 1 );
+    playIndex( ( queueIdx.value - 1 + queue.value.length ) % queue.value.length );
 };
 
 const play = () => {
@@ -117,6 +118,10 @@ const getSources = (): string[] => {
     return Object.keys( sources );
 };
 
+/**
+ * Add songs to the playlist from given source
+ * @param source - The ID of the source to add from
+ */
 const addSongFromSource = async ( source: string ) => {
     sources[source]!.addSongsFromThisSource( addSongList );
 };
@@ -135,6 +140,7 @@ export default {
     next,
     prev,
     clearQueue,
+    removeSong,
     queue,
     queueIdx,
     duration,

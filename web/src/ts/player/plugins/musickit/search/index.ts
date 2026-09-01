@@ -8,11 +8,15 @@ import {
     openImportTypePicker
 } from '@/composables/importTypePicker';
 import {
+    searchPlaylists
+} from './playlists';
+import {
     searchSongs
 } from './songs';
 
 export const addFromAppleMusic = async ( instance: MusicKitInstance, cb: ( songs: Song[] ) => void ): Promise<void> => {
     const songs = await searchSongs( instance, cb );
+    const playlists = await searchPlaylists( instance, cb );
 
     openImportTypePicker( [
         {
@@ -24,8 +28,8 @@ export const addFromAppleMusic = async ( instance: MusicKitInstance, cb: ( songs
         {
             'name': 'Playlists',
             'type': 'cloud',
-            'addSelected': songs.addSelected,
-            'search': songs.search
+            'addSelected': playlists.addSelected,
+            'search': playlists.search
         }
     ] );
 };

@@ -3,10 +3,42 @@
   height: 60vh;
   overflow-x: hidden;
   overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  &.placeholder {
+    justify-content: center;
+  }
 
   >div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    width: 75%;
+    cursor: pointer;
+
+    >div {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      height: 100%;
+
+      >* {
+        margin: 5px;
+      }
+    }
+
     >img {
-      width: 10%;
+      height: 7rem;
+      width: 7rem;
+      margin-right: 20px;
+    }
+
+    >.fa-solid {
+      margin-left: auto;
+      font-size: 2rem;
     }
   }
 }
