@@ -9,7 +9,7 @@ const run = () => {
     const app = express();
 
     app.use( expressSession( {
-        'secret': '',
+        'secret': 'dev',
         'resave': true,
         'saveUninitialized': false
     } ) );
