@@ -14,6 +14,9 @@
     "@fortawesome/fontawesome-free": "^7.3.1",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
+    "@globalhive/vuejs-tour": "^3.0.1",
+    "@kyvg/vue3-notification": "^3.4.2",
+    "nprogress": "^0.2.0",
     "pinia": "^4.0.2",
     "vue": "^3.5.40",
     "vue-router": "^5.2.0"
@@ -27,7 +30,7 @@
     "@vue/tsconfig": "^0.9.1",
     "eslint-plugin-vue": "^10.10.0",
     "globals": "^17.11.0",
-    "musickitjs-v3-types": "^1.0.0",
+    "musickitjs-v3-types": "^1.1.1",
     "npm-run-all2": "^9.0.2",
     "sass-embedded": "^1.103.1",
     "typescript": "~6.0.0",

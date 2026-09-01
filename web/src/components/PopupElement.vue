@@ -55,7 +55,7 @@
             position: relative;
             overflow-y: scroll;
             display: block;
-            transition: transform 0.5s ease, opacity 0.5s ease;
+            transition: transform 0.25s ease, opacity 0.25s ease;
 
             >.close-icon {
                 position: absolute;
@@ -74,6 +74,7 @@
             .popup-main {
                 transform: scale(1.25);
                 opacity: 0;
+                transition: transform 0.15s ease, opacity 0.15s ease;
             }
 
             .popup-backdrop {

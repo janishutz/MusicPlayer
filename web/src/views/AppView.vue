@@ -1,7 +1,5 @@
 <script setup lang="ts">
     import QueueViewer from '@/components/QueueViewer.vue';
-
-
 </script>
 
 <template>

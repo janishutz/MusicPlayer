@@ -1,20 +1,28 @@
 <script setup lang="ts">
+    import AddSong from './AddSong.vue';
     import SortableList from './SortableList.vue';
     import {
         beautifyTime
     } from '@/ts/util/time';
     import player from '@/ts/player';
+    import {
+        ref
+    } from 'vue';
 
     const queue = player.queue;
     const idx = player.queueIdx;
     const isPlaying = player.isPlaying;
+    const showAddSong = ref( false );
 
+    const addSong = () => {
+        showAddSong.value = true;
+    };
 </script>
 
 <template>
     <div>
         <div>
-            <button>
+            <button @click="addSong">
                 <i class="fa-solid fa-plus"></i>
                 Add
             </button>
@@ -32,6 +40,7 @@
                 Transmit
             </button>
         </div>
+        <AddSong v-model="showAddSong" />
         <div>
             <SortableList v-slot="{ item: song, index }" v-model="queue">
                 <div class="song-cover-wrapper">

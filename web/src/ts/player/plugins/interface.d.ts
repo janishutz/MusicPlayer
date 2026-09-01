@@ -17,6 +17,38 @@ export interface PlayerSourcePlugin {
     'id': string;
 
     /**
+     * Font-Awesome icon name (without fa and needs to be of free icons
+     */
+    'icon'?: string;
+
+    /**
+     * Describe how files are loaded here
+     */
+    'loading': {
+        /**
+         * Set to true if the user needs to load files
+         */
+        'requiresLocalFiles': true;
+
+        /**
+         * The allowed MIME types for loading associated files
+         */
+        'MIMETypes': string;
+
+        /**
+         * Function used to associate the file to the songs of the playlist
+         * @param files - The files that were picked by the user
+         * @returns A promise resolving to an array of song identifiers (corresponding to Song.identifier, for association)
+         */
+        'association': ( files: File[] ) => Promise<string[]>;
+    } | {
+        /**
+         * Set to true if the user needs to load files
+         */
+        'requiresLocalFiles': false;
+    };
+
+    /**
      * Implement any login flow here. Optional
      */
     'login'?: () => Promise<boolean>;

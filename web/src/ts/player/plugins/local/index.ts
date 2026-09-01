@@ -22,6 +22,12 @@ export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<P
         'pause': player.pause,
         'stop': () => player.src = '',
         // TODO: Implement
-        'addSongsFromThisSource': async () => []
+        'addSongsFromThisSource': async () => [],
+        'loading': {
+            'requiresLocalFiles': true,
+            'MIMETypes': 'audio/mp3,audio/wav',
+            // TODO: Implement
+            'association': async () => []
+        }
     };
 };

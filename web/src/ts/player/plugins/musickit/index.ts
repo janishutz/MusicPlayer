@@ -4,6 +4,9 @@ import type {
     PlayerSourcePluginInitializer
 } from '../interface';
 import {
+    addFromAppleMusic
+} from './search';
+import {
     musicKitPlayback
 } from './playback';
 
@@ -49,7 +52,10 @@ export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string =
                     'seekTo': controls.seekTo,
                     'login': login,
                     // TODO: Implement
-                    'addSongsFromThisSource': async () => []
+                    'addSongsFromThisSource': async () => await addFromAppleMusic(),
+                    'loading': {
+                        'requiresLocalFiles': false
+                    }
                 };
             } else {
                 throw new Error( 'ERR_AUTH' );
