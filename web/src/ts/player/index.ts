@@ -23,6 +23,9 @@ import {
 import type {
     RepeatMode
 } from '../dtype/player';
+import type {
+    Song
+} from '../dtype/playlist';
 import {
     playIndex
 } from './playlists';
@@ -118,12 +121,29 @@ const getSources = (): string[] => {
     return Object.keys( sources );
 };
 
+const addToSongList = ( songs: Song[] ) => {
+    addSongList( songs );
+
+    if ( currentSource.value === '' ) {
+        playIndex( 0 );
+    }
+};
+
 /**
  * Add songs to the playlist from given source
  * @param source - The ID of the source to add from
  */
-const addSongFromSource = async ( source: string ) => {
-    sources[source]!.addSongsFromThisSource( addSongList );
+const addSongFromSource = async ( source: string ): Promise<boolean> => {
+    if ( sources[source]!.authorized.value ) {
+        sources[source]!.addSongsFromThisSource( addToSongList );
+    } else {
+        // TODO: Make this interact with user
+        sources[source]!.login!();
+
+        return false;
+    }
+
+    return true;
 };
 
 export default {

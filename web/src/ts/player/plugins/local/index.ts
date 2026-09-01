@@ -2,6 +2,9 @@ import type {
     PlayerSourcePlugin,
     PlayerSourcePluginInitializer
 } from '../interface';
+import {
+    ref
+} from 'vue';
 
 export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<PlayerSourcePlugin> => {
     const player = document.createElement( 'audio' );
@@ -12,7 +15,7 @@ export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<P
     };
 
     return {
-        'available': () => true,
+        'authorized': ref( true ),
         'id': 'local',
         'name': 'Local Disk',
         'play': player.play,

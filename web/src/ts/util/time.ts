@@ -10,13 +10,13 @@ export const beautifyTime = ( time: number ): string => {
         else if ( Math.floor( t / 60 ) > 0 )
             return `${ helper( Math.floor( t / 60 ), depth + 1 ) }:${ t % 60 < 10 ? '0' : '' }${ Math.floor( t % 60 ) }`;
         else
-            return `${ t % 60 < 10 ? '0' : '' }${ Math.floor( t % 60 ) }`;
+            return `${ depth === 1 ? '00:' : '' }${ t % 60 < 10 ? '0' : '' }${ Math.floor( t % 60 ) }`;
     };
 
-    if ( time < 0 ) {
-        return '-:--';
+    if ( time < 0 || isNaN( time ) ) {
+        return '--:--';
     } else if ( time == 0 ) {
-        return '0:00';
+        return '00:00';
     }
 
     return helper( Math.round( time ), 1 );

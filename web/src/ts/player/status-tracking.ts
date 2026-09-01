@@ -24,12 +24,15 @@ export const startTracking = () => {
     }
 
     duration.value = sources[currentSource.value]?.getDuration() ?? -1;
+    setTimeout( () => {
+        duration.value = sources[currentSource.value]?.getDuration() ?? -1;
+    }, 2000 );
 };
 
 const tracker = () => {
     playbackPercentage.value = sources[currentSource.value]?.getPlaybackPos() ?? -1;
 
-    if ( playbackPercentage.value > duration.value ) {
+    if ( playbackPercentage.value > 0.995 && duration.value > 0 ) {
         if ( repeat.value === 'one' ) {
             sources[currentSource.value]?.seekTo( 0 );
         } else {
@@ -42,8 +45,9 @@ const tracker = () => {
 export const stopTracking = () => {
     try {
         clearInterval( interval );
-        interval = -1;
     } catch {
         // empty
     }
+
+    interval = -1;
 };

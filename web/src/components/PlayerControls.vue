@@ -3,10 +3,12 @@
     import {
         beautifyTime
     } from '@/ts/util/time';
+    import {
+        computed
+    } from 'vue';
     import player from '@/ts/player';
 
     const playbackPercentage = player.playbackPercentage;
-    const duration = player.duration;
     const repeatMode = player.repeat;
     const shuffleMode = player.shuffle;
 
@@ -31,6 +33,14 @@
         alert( 'Share menu not yet implemented' );
     };
 
+    const current = computed( () => {
+        return beautifyTime( player.playbackPercentage.value * player.duration.value );
+    } );
+    const duration = computed( () => {
+        return beautifyTime( player.duration.value );
+    } );
+
+
     // TODO: Button availability
 </script>
 
@@ -39,7 +49,7 @@
         <div class="controls">
             <i class="fa-solid fa-backward-step" @click="player.prev"></i>
             <i class="fa-solid fa-arrow-rotate-left quick-seek" @click="player.back10"></i>
-            <div :class="['play-pause', 'paused']">
+            <div :class="['play-pause', player.isPlaying.value ? undefined : 'paused']">
                 <i class="fa-solid fa-play" @click="player.play"></i>
                 <i class="fa-solid fa-pause" @click="player.pause"></i>
             </div>
@@ -48,12 +58,11 @@
         </div>
 
         <div class="time">
-            <!-- TODO: Probably needs to be a computed -->
             <p class="current">
-                {{ beautifyTime( playbackPercentage * duration ) }}
+                {{ current }}
             </p>
             <p class="duration">
-                {{ beautifyTime( duration ) }}
+                {{ duration }}
             </p>
         </div>
         <ProgressBar v-model="playbackPercentage" @move-end="seek" />

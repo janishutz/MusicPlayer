@@ -1,5 +1,6 @@
 import {
     currentSource,
+    isPlaying,
     queue,
     queueIdx,
     repeat,
@@ -21,9 +22,15 @@ export const playIndex = async ( idx: number ) => {
         idx = repeat.value === 'all' ? queue.value.length - 1 : -1;
     }
 
-    if ( idx < 0 ) return false;
-
     sources[currentSource.value]?.stop();
+
+    if ( idx < 0 ) {
+        isPlaying.value = false;
+        currentSource.value = '';
+
+        return false;
+    }
+
     stopTracking();
 
     const nextSong = queue.value[ idx ]!;
@@ -33,4 +40,6 @@ export const playIndex = async ( idx: number ) => {
     sources[currentSource.value]?.playSong( nextSong.identifier );
 
     startTracking();
+
+    isPlaying.value = true;
 };

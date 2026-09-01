@@ -18,9 +18,19 @@ export interface AppleMusicSongData {
     'attributes': {
         'albumName': string;
         'artistName': string;
-        'artwork': Artwork,
+        'artwork': Artwork;
         'name': string;
         'genreNames': string[];
         'durationInMillis': number;
+    }
+}
+
+export interface AppleMusicPlaylistData {
+    'id': string;
+    'type': string;
+    'href': string;
+    'attributes': {
+        'artwork': Artwork;
+        'name': string;
     }
 }

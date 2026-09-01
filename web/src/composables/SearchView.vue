@@ -70,15 +70,18 @@
                 placeholder="Search..."
                 @keypress="search"
             >
-            <div v-if="!isSearching" class="search-results-wrapper">
+            <div v-if="!isSearching && results.length > 0" class="search-results-wrapper">
                 <div v-for="(result, index) in results" :key="index" @click="() => add(index)">
-                    <img :src="result.artwork" :alt="'Album artwork of ' + result.name + ' by ' + result.artist">
+                    <img v-if="result.artwork" :src="result.artwork" :alt="'Album artwork of ' + result.name + ' by ' + result.artist">
                     <div>
                         <h4>{{ result.name }}</h4>
                         <p>{{ result.artist }}</p>
                     </div>
                     <i v-if="addedIndex === index" class="fa-solid fa-check"></i>
                 </div>
+            </div>
+            <div v-else-if="!isSearching && results.length === 0" class="search-results-wrapper placeholder">
+                No results found
             </div>
             <div v-else class="search-results-wrapper placeholder">
                 Searching...

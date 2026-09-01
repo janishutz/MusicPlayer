@@ -33,6 +33,7 @@
         align-items: center;
         z-index: 1000;
         transition-delay: 0;
+        overflow: hidden;
 
         .popup-backdrop {
             width: 100vw;
@@ -42,7 +43,7 @@
             top: 0;
             left: 0;
             overflow: hidden;
-            transition: all 0.5s;
+            transition: all 0.25s;
         }
 
         .popup-main {
@@ -53,7 +54,7 @@
             border-radius: 20px;
             transform: scale(1);
             position: relative;
-            overflow-y: scroll;
+            overflow: hidden;
             display: block;
             transition: transform 0.25s ease, opacity 0.25s ease;
 
@@ -69,7 +70,7 @@
 
         &.hidden {
             top: -100vh;
-            transition-delay: 0.5s;
+            transition-delay: 0.25s;
 
             .popup-main {
                 transform: scale(1.25);

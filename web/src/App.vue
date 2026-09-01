@@ -6,38 +6,37 @@
         ref
     } from 'vue';
 
-    const theme = ref( '&#9788;' );
+    const theme = ref( 'dark' );
 
     const changeTheme = () => {
-        if ( theme.value === '&#9789;' ) {
+        if ( theme.value === 'moon' ) {
             document.documentElement.classList.remove( 'dark' );
             document.documentElement.classList.add( 'light' );
-            localStorage.setItem( 'theme', '&#9788;' );
-            theme.value = '&#9788;';
-        } else if ( theme.value === '&#9788;' ) {
+            localStorage.setItem( 'theme', 'light' );
+            theme.value = 'sun';
+        } else if ( theme.value === 'sun' ) {
             document.documentElement.classList.remove( 'light' );
             document.documentElement.classList.add( 'dark' );
-            localStorage.setItem( 'theme', '&#9789;' );
-            theme.value = '&#9789;';
+            localStorage.setItem( 'theme', 'dark' );
+            theme.value = 'moon';
         }
     };
 
     theme.value = localStorage.getItem( 'theme' ) ?? '';
 
-    if ( window.matchMedia( '(prefers-color-scheme: dark)' ).matches || theme.value === '&#9789;' ) {
+    if ( window.matchMedia( '(prefers-color-scheme: dark)' ).matches || theme.value === 'dark' ) {
         document.documentElement.classList.add( 'dark' );
-        theme.value = '&#9789;';
+        theme.value = 'moon';
     } else {
         document.documentElement.classList.add( 'light' );
-        theme.value = '&#9788;';
+        theme.value = 'sun';
     }
 </script>
 
 <template>
     <div>
         <button id="themeSelector" title="Toggle between light and dark mode" @click="changeTheme();">
-            <!-- eslint-disable-next-line vue/no-v-html -->
-            <span class="material-symbols-outlined" v-html="theme"></span>
+            <i :class="['fa-solid', 'fa-' + theme]"></i>
         </button>
         <router-view id="main-view" v-slot="{ Component, route }">
             <transition :name="route.meta.transition ? String( route.meta.transition ) : 'fade'" mode="out-in">

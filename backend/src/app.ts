@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import expressSession from 'express-session';
 import fs from 'fs';
@@ -29,7 +30,11 @@ const run = () => {
         __dirname,
         '/config/apple-music-api.config.secret.json'
     ) ).toString() );
-    app.get( '/dev-token', ( _request: express.Request, response: express.Response ) => {
+
+    app.get( '/dev-token', cors( {
+        'origin': 'http://localhost:8081',
+        'credentials': true
+    } ), ( _request: express.Request, response: express.Response ) => {
         // sign dev token
         const now = new Date().getTime();
         const tomorrow = now + ( 24 * 3600 * 1000 );

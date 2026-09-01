@@ -1,9 +1,16 @@
 import {
+    currentSource,
+    isPlaying,
     queue,
     queueIdx,
     rawQueue,
-    shuffle
+    shuffle,
+    sources
 } from '../state';
+import {
+    duration,
+    playbackPercentage
+} from '../status-tracking';
 import type {
     Song
 } from '@/ts/dtype/playlist';
@@ -23,6 +30,10 @@ export const addSongList = ( songs: Song[], first: boolean = false ) => {
 export const clearQueue = () => {
     queue.value = [];
     rawQueue.value = [];
+    sources[currentSource.value]?.stop();
+    duration.value = -1;
+    playbackPercentage.value = 1;
+    isPlaying.value = false;
 };
 
 /**

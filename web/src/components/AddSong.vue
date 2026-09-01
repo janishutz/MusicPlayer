@@ -10,9 +10,10 @@
         'required': true
     } );
 
-    const addSong = ( source: string ) => {
-        player.addSongFromSource( source );
-        showPopup.value = false;
+    const addSong = async ( source: string ) => {
+        if ( await player.addSongFromSource( source ) ) {
+            showPopup.value = false;
+        }
     };
 </script>
 
@@ -20,11 +21,19 @@
     <div>
         <ImportTypePicker />
         <PopupElement v-model="showPopup" show-close>
-            <h1>Add Song</h1>
+            <div class="title">
+                <h1>Add Song(s)</h1>
+                <p>Pick the source of your songs</p>
+            </div>
             <div class="song-sources">
                 <div v-for="(source, index) in sources" :key="index" @click="() => addSong( source.id )">
-                    <i v-if="source.icon" :class="['fa-solid', 'fa-' + source.icon]"></i>
-                    <p>{{ source.name }}</p>
+                    <div>
+                        <i v-if="source.icon" :class="['fa-solid', 'fa-' + source.icon]"></i>
+                        <p>{{ source.name }}</p>
+                    </div>
+                    <p v-if="!source.authorized.value" class="not-auth-notice">
+                        You have not yet logged into this source. Clicking this will start login
+                    </p>
                 </div>
             </div>
         </PopupElement>
@@ -32,11 +41,20 @@
 </template>
 
 <style lang="scss" scoped>
+.title {
+    >h1 {
+        margin-bottom: 5px;
+    }
+    >p {
+        margin: 0;
+        margin-bottom: 10px;
+    }
+}
 .song-sources {
     display: flex;
     flex-wrap: wrap;
     width: 50vw;
-    height: 35vh;
+    height: 40vh;
     justify-content: center;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -51,9 +69,21 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        flex-direction: column;
 
-        >.fa-solid {
-            font-size: 1.5rem;
+        >div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            >.fa-solid {
+                font-size: 1.5rem;
+            }
+        }
+
+        >.not-auth-notice {
+            font-size: 0.6rem;
+            margin: 0;
         }
     }
 }

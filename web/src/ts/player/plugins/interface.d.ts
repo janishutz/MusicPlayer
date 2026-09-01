@@ -1,4 +1,7 @@
 import type {
+    Ref
+} from 'vue';
+import type {
     Song
 } from '@/ts/dtype/playlist';
 
@@ -91,9 +94,9 @@ export interface PlayerSourcePlugin {
     'getDuration': () => number;
 
     /**
-     * Check if source is available for playback
+     * Check if source is authorized
      */
-    'available': () => boolean;
+    'authorized': Ref<boolean>;
 
     /**
      * Called when user adds another song to the playlist via this source.

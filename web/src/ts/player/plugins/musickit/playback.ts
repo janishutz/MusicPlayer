@@ -1,6 +1,9 @@
 import type {
     MusicKitInstance
 } from 'musickitjs-v3-types/MusicKitInstance';
+import {
+    ref
+} from 'vue';
 
 export const musicKitPlayback = ( musickitInstance: MusicKitInstance ) => {
     const play = () => {
@@ -27,16 +30,18 @@ export const musicKitPlayback = ( musickitInstance: MusicKitInstance ) => {
     };
 
     const getPlaybackPos = (): number => {
-        return musickitInstance.currentPlaybackProgress;
+        return musickitInstance.currentPlaybackTime / musickitInstance.currentPlaybackDuration;
     };
 
     const getDuration = (): number => {
         return musickitInstance.currentPlaybackDuration;
     };
 
-    const getLoggedIn = (): boolean => {
-        return musickitInstance.isAuthorized;
-    };
+    const loggedIn = ref( musickitInstance.isAuthorized );
+
+    musickitInstance.addEventListener( 'authorizationStatusDidChange', () => {
+        loggedIn.value = musickitInstance.isAuthorized;
+    } );
 
     return {
         play,
@@ -46,6 +51,6 @@ export const musicKitPlayback = ( musickitInstance: MusicKitInstance ) => {
         stop,
         getPlaybackPos,
         getDuration,
-        getLoggedIn
+        loggedIn
     };
 };

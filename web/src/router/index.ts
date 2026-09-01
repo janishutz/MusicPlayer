@@ -1,9 +1,10 @@
 import {
+    createRouter,
+    createWebHistory
+} from 'vue-router';
+import {
     useAuthStore
 } from '@/stores/authstore';
-import {
-    createRouter, createWebHistory
-} from 'vue-router';
 
 const router = createRouter( {
     'history': createWebHistory( import.meta.env.BASE_URL ),
@@ -38,16 +39,16 @@ const router = createRouter( {
     ]
 } );
 
-router.beforeEach( ( to, from ) => {
+router.beforeEach( to => {
     const store = useAuthStore();
 
-    if ( to.meta.authRequired && !store.isAuth ) {
+    if ( to.meta.auth && !store.isAuth ) {
         return {
-            'name': 'login'
+            'name': 'home'
         };
-    } else if ( ( to.name === 'login' && store.isAuth ) || ( to.name === 'signup' && store.isAuth ) ) {
+    } else if ( to.name === 'home' && store.isAuth ) {
         return {
-            'name': 'app-home'
+            'name': 'app'
         };
     }
 } );

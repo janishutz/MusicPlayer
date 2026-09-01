@@ -1,5 +1,6 @@
 import type {
-    AppleMusicApiSearchResult
+    AppleMusicApiSearchResult,
+    AppleMusicSongData
 } from './dtype';
 import type {
     MusicKitInstance
@@ -16,7 +17,16 @@ export const searchSongs = async ( instance: MusicKitInstance, cb: ( songs: Song
             'term': term,
             'types': [ 'songs' ]
         };
-        const results = ( ( await instance.api.music( '/v1/catalog/{{storefrontId}}/search', params ) ).data as AppleMusicApiSearchResult ).results.songs.data;
+
+        let results: AppleMusicSongData[] = [];
+
+        try {
+            results = ( ( await instance.api.music( '/v1/catalog/{{storefrontId}}/search', params ) ).data as AppleMusicApiSearchResult ).results.songs.data;
+        } catch {
+            console.debug( 'Failed results: got', results );
+
+            return [];
+        }
 
         songs = [];
 

@@ -15,16 +15,18 @@
         beautifyTime
     } from '@/ts/util/time';
     import player from '@/ts/player';
+    import {
+        queueIdx
+    } from '@/ts/player/state';
 
     const queue: WritableComputedRef<Song[]> = computed( {
         get () {
-            return player.queue.value.slice( player.queueIdx.value );
+            return player.queue.value.slice( player.queueIdx.value + 1 );
         },
         set ( val ) {
-            player.queue.value = player.queue.value.slice( 0, player.queueIdx.value ).concat( val );
+            player.queue.value = player.queue.value.slice( 0, player.queueIdx.value + 1 ).concat( val );
         }
     } );
-    const isPlaying = player.isPlaying;
     const showAddSong = ref( false );
     const showEditSong = ref( false );
     const editingSong: Ref<null | Song> = ref( null );
@@ -35,16 +37,16 @@
 
     const editSong = ( idx: number ) => {
         showEditSong.value = true;
-        editingSong.value = player.queue.value[ idx ]!;
+        editingSong.value = player.queue.value[ idx + queueIdx.value + 1 ]!;
     };
 
     const deleteSong = ( idx: number ) => {
-        player.removeSong( idx );
+        player.removeSong( idx + queueIdx.value + 1 );
     };
 </script>
 
 <template>
-    <div>
+    <div class="queue-viewer">
         <div>
             <button @click="addSong">
                 <i class="fa-solid fa-plus"></i>
@@ -54,6 +56,7 @@
                 <i class="fa-solid fa-xmark"></i>
                 Clear
             </button>
+            <!-- TODO: On save, copy the current queue into rawQueue! -->
             <button>
                 <i class="fa-solid fa-save"></i>
                 Save
@@ -66,7 +69,7 @@
         </div>
         <SongEditor v-model="showEditSong" editing-song="" />
         <AddSong v-model="showAddSong" />
-        <div>
+        <div v-if="queue.length > 0" class="queue-container">
             <SortableList v-slot="{ item: song, index }" v-model="queue">
                 <div class="song-list-element">
                     <div class="song-cover-wrapper">
@@ -77,19 +80,8 @@
                             class="song-cover"
                         >
                         <i v-else class="fa-solid fa-music song-cover"></i>
-                        <div v-if="index === 0" class="play-overlay">
-                            <div v-if="isPlaying" class="playing-symbols">
-                                <div id="bar-1" class="playing-bar"></div>
-                                <div id="bar-2" class="playing-bar"></div>
-                                <div id="bar-3" class="playing-bar"></div>
-                            </div>
-                            <i
-                                v-else
-                                class="fa-solid fa-pause"
-                            ></i>
-                        </div>
-                        <div v-else class="play-overlay hover">
-                            <i class="fa-solid fa-play" @click="() => player.playIndex( index )"></i>
+                        <div class="play-overlay hover">
+                            <i class="fa-solid fa-play" @click="() => player.playIndex( index + queueIdx + 1 )"></i>
                         </div>
                     </div>
                     <div class="song-details">
@@ -104,6 +96,16 @@
                     </div>
                 </div>
             </SortableList>
+        </div>
+        <div v-else class="queue-container">
+            <p>
+                No more songs in queue
+            </p>
+
+            <button @click="addSong">
+                <i class="fa-solid fa-plus"></i>
+                Add
+            </button>
         </div>
     </div>
 </template>

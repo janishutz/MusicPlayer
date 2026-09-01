@@ -9,22 +9,27 @@
         'default': 0.5
     } );
     const offset = ref( -1 );
+    const isMoving = ref( false );
     const bar = useTemplateRef( 'bar' );
 
     const start = ( ev: MouseEvent ) => {
-        offset.value = ev.x - bar.value!.offsetLeft;
-        val.value = offset.value / bar.value!.clientWidth;
+        offset.value = bar.value!.getBoundingClientRect().x;
+        isMoving.value = true;
+        val.value = ( ev.x - offset.value ) / bar.value!.clientWidth;
         emit( 'move-start' );
     };
 
     const move = ( ev: MouseEvent ) => {
-        if ( offset.value > -1 ) {
-            val.value = Math.max( 0, Math.min( ev.x / bar.value!.clientWidth, 1 ) );
+        if ( isMoving.value ) {
+            val.value = Math.max( 0, Math.min( ( ev.x - offset.value ) / bar.value!.clientWidth, 1 ) );
         }
     };
 
     const end = () => {
+        if ( !isMoving.value ) return;
+
         offset.value = -1;
+        isMoving.value = false;
         emit( 'move-end' );
     };
 
