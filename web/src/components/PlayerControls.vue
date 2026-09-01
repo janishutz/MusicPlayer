@@ -79,5 +79,5 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '@/scss/components/player.scss';
+    @use '@/scss/components/player.scss';
 </style>

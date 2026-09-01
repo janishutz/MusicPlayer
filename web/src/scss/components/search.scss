@@ -1,0 +1,12 @@
+.search-results-wrapper {
+  width: 70vw;
+  height: 60vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  >div {
+    >img {
+      width: 10%;
+    }
+  }
+}

@@ -29,9 +29,8 @@ const run = () => {
         __dirname,
         '/config/apple-music-api.config.secret.json'
     ) ).toString() );
-
-    app.get( '/dev-token', ( request: express.Request, response: express.Response ) => {
-    // sign dev token
+    app.get( '/dev-token', ( _request: express.Request, response: express.Response ) => {
+        // sign dev token
         const now = new Date().getTime();
         const tomorrow = now + ( 24 * 3600 * 1000 );
         const jwtToken = jwt.sign( {

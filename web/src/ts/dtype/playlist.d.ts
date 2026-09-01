@@ -40,7 +40,7 @@ export interface Song {
     /**
      * The cover image as a URL
      */
-    'cover': string;
+    'artwork': string;
 
     /**
      * Song duration

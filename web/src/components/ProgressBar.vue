@@ -50,5 +50,5 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '@/scss/components/progressbar.scss';
+    @use '@/scss/components/progressbar.scss';
 </style>

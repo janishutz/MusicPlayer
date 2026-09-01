@@ -1,8 +1,10 @@
-import 'musickitjs-v3-types';
 import type {
     PlayerSourcePlugin,
     PlayerSourcePluginInitializer
 } from '../interface';
+import type {
+    Song
+} from '@/ts/dtype/playlist';
 import {
     addFromAppleMusic
 } from './search';
@@ -13,7 +15,7 @@ import {
 export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string = 'ch' ): Promise<PlayerSourcePlugin> => {
     return new Promise( ( resolve, reject ) => {
         const init = async ( storefront: string ): Promise<PlayerSourcePlugin> => {
-            const res = await fetch( import.meta.env.VITE_BACKEND_URL + '/', {
+            const res = await fetch( import.meta.env.VITE_BACKEND_URL + '/dev-token', {
                 'credentials': 'include'
             } );
 
@@ -23,8 +25,8 @@ export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string =
                     'developerToken': token,
                     'app': {
                         'name': 'MusicPlayer',
-                        'build': '4',
-                        'icon': 'https://music.janishutz.com/logo.jpg'
+                        'build': '4'
+                        // 'icon': 'https://music.janishutz.com/logo.jpg'
                     },
                     'storefrontId': storefront.toUpperCase()
                 } );
@@ -51,8 +53,7 @@ export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string =
                     'name': 'Apple Music',
                     'seekTo': controls.seekTo,
                     'login': login,
-                    // TODO: Implement
-                    'addSongsFromThisSource': async () => await addFromAppleMusic(),
+                    'addSongsFromThisSource': ( cb: ( songs: Song[] ) => void ) => addFromAppleMusic( instance, cb ),
                     'loading': {
                         'requiresLocalFiles': false
                     }

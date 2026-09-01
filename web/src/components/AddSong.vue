@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import ImportTypePicker from '@/composables/ImportTypePicker.vue';
     import PopupElement from '@/components/PopupElement.vue';
     import player from '@/ts/player';
     import {
@@ -17,6 +18,7 @@
 
 <template>
     <div>
+        <ImportTypePicker />
         <PopupElement v-model="showPopup" show-close>
             <h1>Add Song</h1>
             <div class="song-sources">

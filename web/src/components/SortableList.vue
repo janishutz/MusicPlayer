@@ -95,9 +95,10 @@
         const before = array.value.slice( 0, movingIdx.value );
         const after = array.value.slice( movingIdx.value + 1 );
         const el = array.value[ movingIdx.value ]!;
+        const arr = before.concat( after );
 
-        array.value = before.concat( after );
-        array.value.splice( movingCurrentIdx.value, 0, el );
+        arr.splice( movingCurrentIdx.value, 0, el );
+        array.value = arr;
         movingIdx.value = -1;
         movingCurrentIdx.value = -1;
 
@@ -156,5 +157,5 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '@/scss/components/sortablelist.scss'
+    @use '@/scss/components/sortablelist.scss'
 </style>

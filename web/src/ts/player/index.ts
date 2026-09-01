@@ -1,5 +1,6 @@
 import {
     addSongList,
+    clearQueue,
     shuffleList
 } from './playlists/add';
 import {
@@ -117,7 +118,7 @@ const getSources = (): string[] => {
 };
 
 const addSongFromSource = async ( source: string ) => {
-    addSongList( await sources[source]!.addSongsFromThisSource() );
+    sources[source]!.addSongsFromThisSource( addSongList );
 };
 
 export default {
@@ -133,6 +134,7 @@ export default {
     addSongFromSource,
     next,
     prev,
+    clearQueue,
     queue,
     queueIdx,
     duration,
