@@ -16,6 +16,7 @@
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@globalhive/vuejs-tour": "^3.0.1",
     "@kyvg/vue3-notification": "^3.4.2",
+    "music-metadata": "^11.15.0",
     "nprogress": "^0.2.0",
     "pinia": "^4.0.2",
     "vue": "^3.5.40",

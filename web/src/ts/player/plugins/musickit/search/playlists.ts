@@ -1,21 +1,22 @@
 import type {
-    AppleMusicPlaylistData
+    AppleMusicPlaylistData,
+    AppleMusicSongData
 } from './dtype';
-import type {
-    MusicKitInstance
-} from 'musickitjs-v3-types/MusicKitInstance';
 import type {
     Song
 } from '@/ts/dtype/playlist';
 
-export const searchPlaylists = async ( instance: MusicKitInstance, cb: ( songs: Song[] ) => void ) => {
+export const searchPlaylists = async ( cb: ( songs: Song[] ) => void ) => {
     let playlists: Song[] = [];
     let filtered: Song[] = [];
 
-    const search = async ( term: string ): Promise<Song[]> => {
+    const instance = window.MusicKit.getInstance();
+
+    const search = async ( term: string, offset: number = 0 ): Promise<Song[]> => {
         if ( playlists.length === 0 ) {
             playlists = ( ( await instance.api.music( '/v1/me/library/playlists', {
-                'limit': 100
+                'limit': 100,
+                'offset': offset
             } ) ).data as {
                 'data': AppleMusicPlaylistData[]
             } ).data.map( val => {
@@ -31,16 +32,36 @@ export const searchPlaylists = async ( instance: MusicKitInstance, cb: ( songs: 
             } );
         }
 
+        term = term.toLocaleLowerCase();
         filtered = playlists.filter( val => {
-            return val.name.includes( term );
+            return val.name.toLocaleLowerCase().includes( term );
         } );
 
         return filtered;
     };
 
     const addSelected = async ( idx: number ) => {
-        // TODO: Implement
-        cb( [] );
+        try {
+            const results = ( await instance.api.music( '/v1/me/library/playlists/' + filtered[idx]!.identifier + '/tracks' ) ).data as {
+                'data': AppleMusicSongData[]
+            };
+            const songs: Song[] = results.data
+                .map( val => {
+                    return {
+                        'identifier': val.id,
+                        'additional-info': '',
+                        'artist': val.attributes.artistName,
+                        'name': val.attributes.name,
+                        'artwork': window.MusicKit.formatArtworkURL( val.attributes.artwork, 1000, 1000 ),
+                        'duration': val.attributes.durationInMillis * 1000,
+                        'source': 'applemusic'
+                    };
+                } );
+
+            cb( songs );
+        } catch ( error ) {
+            console.error( '[ADD PLAYLIST] Failed to add playlist due to error', error );
+        }
     };
 
     return {

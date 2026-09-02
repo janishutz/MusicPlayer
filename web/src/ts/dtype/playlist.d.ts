@@ -18,7 +18,8 @@ export interface Song {
     'identifier': string;
 
     /**
-     * Any additional identifiers (such as filename, etc) to associate
+     * Any additional identifiers (such as filename, etc) to associate.
+     * Even if this is not used, set this value if local files are needed
      */
     'additional-identifier'?: string;
 

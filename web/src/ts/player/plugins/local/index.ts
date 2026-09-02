@@ -3,11 +3,18 @@ import type {
     PlayerSourcePluginInitializer
 } from '../interface';
 import {
+    associate,
+    updateIdentifiers
+} from './association';
+import {
+    load
+} from './loader';
+import {
     ref
 } from 'vue';
 
 export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<PlayerSourcePlugin> => {
-    const player = document.createElement( 'audio' );
+    const player = new Audio();
 
     const playSong = async ( id: string ) => {
         player.src = id;
@@ -18,20 +25,19 @@ export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<P
         'authorized': ref( true ),
         'id': 'local',
         'name': 'Local Disk',
-        'play': player.play,
+        'play': () => player.play(),
         'getPlaybackPos': () => player.currentTime / player.duration,
         'getDuration': () => player.duration,
         playSong,
-        'seekTo': pos => player.currentTime = pos,
-        'pause': player.pause,
+        'seekTo': pos => player.currentTime = pos * player.duration,
+        'pause': () => player.pause(),
         'stop': () => player.src = '',
-        // TODO: Implement
-        'addSongsFromThisSource': async () => [],
+        'addSongsFromThisSource': load,
         'loading': {
             'requiresLocalFiles': true,
-            'MIMETypes': 'audio/mp3,audio/wav',
-            // TODO: Implement
-            'association': async () => []
+            'association': associate,
+            'updateIdentifiers': updateIdentifiers,
+            'mime': 'audio/aac,audio/mpeg,audio/wav,audio/mp4,audio/ogg'
         }
     };
 };

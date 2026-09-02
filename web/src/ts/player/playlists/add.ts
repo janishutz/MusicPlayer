@@ -15,16 +15,9 @@ import type {
     Song
 } from '@/ts/dtype/playlist';
 
-export const addSongList = ( songs: Song[], first: boolean = false ) => {
-    if ( first ) {
-        // FIXME: Needs to insert at current index in queue, but where for rawQueue?
-        // Probably at end if shuffled, else insert into queue, then copy
-        rawQueue.value = songs.concat( rawQueue.value );
-        queue.value = songs.concat( queue.value );
-    } else {
-        rawQueue.value = rawQueue.value.concat( songs );
-        queue.value = queue.value.concat( songs );
-    }
+export const addSongList = ( songs: Song[] ) => {
+    rawQueue.value = rawQueue.value.concat( songs );
+    queue.value = queue.value.concat( songs );
 };
 
 export const clearQueue = () => {

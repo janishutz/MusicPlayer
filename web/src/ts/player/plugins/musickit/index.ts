@@ -54,7 +54,7 @@ export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string =
                     'name': 'Apple Music',
                     'seekTo': controls.seekTo,
                     'login': login,
-                    'addSongsFromThisSource': ( cb: ( songs: Song[] ) => void ) => addFromAppleMusic( instance, cb ),
+                    'addSongsFromThisSource': addFromAppleMusic,
                     'loading': {
                         'requiresLocalFiles': false
                     }

@@ -1,46 +1,17 @@
 import type {
-    AppleMusicApiSearchResult,
-    AppleMusicSongData
-} from './dtype';
-import type {
-    MusicKitInstance
-} from 'musickitjs-v3-types/MusicKitInstance';
-import type {
     Song
 } from '@/ts/dtype/playlist';
+import {
+    initAppleMusicApiSearch
+} from '@/ts/util/search';
 
-export const searchSongs = async ( instance: MusicKitInstance, cb: ( songs: Song[] ) => void ) => {
+export const searchSongs = async ( cb: ( songs: Song[] ) => void ) => {
     let songs: Song[] = [];
 
-    const search = async ( term: string ): Promise<Song[]> => {
-        const params = {
-            'term': term,
-            'types': [ 'songs' ]
-        };
+    const searchFunc = initAppleMusicApiSearch();
 
-        let results: AppleMusicSongData[] = [];
-
-        try {
-            results = ( ( await instance.api.music( '/v1/catalog/{{storefrontId}}/search', params ) ).data as AppleMusicApiSearchResult ).results.songs.data;
-        } catch {
-            console.debug( 'Failed results: got', results );
-
-            return [];
-        }
-
-        songs = [];
-
-        for ( const result of results ) {
-            songs.push( {
-                'duration': Math.round( result.attributes.durationInMillis / 1000 ),
-                'name': result.attributes.name,
-                'additional-info': '',
-                'artist': result.attributes.artistName,
-                'artwork': window.MusicKit.formatArtworkURL( result.attributes.artwork, 1000, 1000 ),
-                'identifier': result.id,
-                'source': 'applemusic'
-            } );
-        }
+    const search = async ( term: string, offset: number = 0 ) => {
+        songs = await searchFunc( term, 15, offset );
 
         return songs;
     };

@@ -27,6 +27,9 @@ import type {
     Song
 } from '../dtype/playlist';
 import {
+    load
+} from './playlists/loader';
+import {
     playIndex
 } from './playlists';
 
@@ -137,7 +140,6 @@ const addSongFromSource = async ( source: string ): Promise<boolean> => {
     if ( sources[source]!.authorized.value ) {
         sources[source]!.addSongsFromThisSource( addToSongList );
     } else {
-        // TODO: Make this interact with user
         sources[source]!.login!();
 
         return false;
@@ -145,6 +147,7 @@ const addSongFromSource = async ( source: string ): Promise<boolean> => {
 
     return true;
 };
+
 
 export default {
     play,
@@ -167,5 +170,6 @@ export default {
     playbackPercentage,
     repeat,
     shuffle,
-    isPlaying
+    isPlaying,
+    'loadPlaylist': load
 };

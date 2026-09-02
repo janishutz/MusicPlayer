@@ -32,5 +32,12 @@ export interface AppleMusicPlaylistData {
     'attributes': {
         'artwork': Artwork;
         'name': string;
+    },
+    'relationships'?: {
+        'tracks': {
+            'href': string,
+            'next': string,
+            'data': AppleMusicSongData
+        }[]
     }
 }

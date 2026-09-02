@@ -30,15 +30,18 @@
       }
     }
 
-    >img {
-      height: 7rem;
-      width: 7rem;
-      margin-right: 20px;
-    }
-
     >.fa-solid {
       margin-left: auto;
       font-size: 2rem;
+    }
+
+    >img,
+    .img-placeholder {
+      height: 7rem;
+      width: 7rem;
+      margin-right: 20px;
+      font-size: 6rem;
+      margin-left: 0;
     }
   }
 }

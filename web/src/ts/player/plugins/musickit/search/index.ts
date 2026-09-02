@@ -1,7 +1,4 @@
 import type {
-    MusicKitInstance
-} from 'musickitjs-v3-types/MusicKitInstance';
-import type {
     Song
 } from '@/ts/dtype/playlist';
 import {
@@ -14,16 +11,17 @@ import {
     searchSongs
 } from './songs';
 
-export const addFromAppleMusic = async ( instance: MusicKitInstance, cb: ( songs: Song[] ) => void ): Promise<void> => {
-    const songs = await searchSongs( instance, cb );
-    const playlists = await searchPlaylists( instance, cb );
+export const addFromAppleMusic = async ( cb: ( songs: Song[] ) => void ): Promise<void> => {
+    const songs = await searchSongs( cb );
+    const playlists = await searchPlaylists( cb );
 
     openImportTypePicker( [
         {
             'name': 'Songs',
             'type': 'cloud',
             'addSelected': songs.addSelected,
-            'search': songs.search
+            'search': songs.search,
+            'minChars': 3
         },
         {
             'name': 'Playlists',

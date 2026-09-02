@@ -1,19 +1,15 @@
 <script setup lang="ts">
     import {
-        type Ref,
-        ref
-    } from 'vue';
-    import {
         isShowingSearchView,
+        query,
+        results,
         searchOpts
     } from './searchManager';
     import PopupElement from '@/components/PopupElement.vue';
-    import type {
-        Song
-    } from '@/ts/dtype/playlist';
+    import {
+        ref
+    } from 'vue';
 
-    const results: Ref<Song[]> = ref( [] );
-    const query = ref( '' );
     const isSearching = ref( false );
     const addedIndex = ref( -1 );
 
@@ -29,7 +25,7 @@
             } catch { /* empty */ }
 
             doSearch();
-        } else if ( query.value.length > 2 ) {
+        } else if ( query.value.length > ( searchOpts.value?.minChars ?? 0 ) - 1 ) {
             try {
                 clearTimeout( timeout );
             } catch { /* empty */ }
@@ -43,7 +39,7 @@
 
         isSearching.value = true;
         searchedForQuery = query.value;
-        results.value = await searchOpts.value?.search( query.value ) ?? [];
+        results.value = await searchOpts.value?.search( query.value, 0 ) ?? [];
         isSearching.value = false;
     };
 
@@ -73,12 +69,14 @@
             <div v-if="!isSearching && results.length > 0" class="search-results-wrapper">
                 <div v-for="(result, index) in results" :key="index" @click="() => add(index)">
                     <img v-if="result.artwork" :src="result.artwork" :alt="'Album artwork of ' + result.name + ' by ' + result.artist">
+                    <i v-else class="fa-solid fa-music img-placeholder"></i>
                     <div>
                         <h4>{{ result.name }}</h4>
                         <p>{{ result.artist }}</p>
                     </div>
                     <i v-if="addedIndex === index" class="fa-solid fa-check"></i>
                 </div>
+                <!-- TODO: load more if close to bottom of scroll view -->
             </div>
             <div v-else-if="!isSearching && results.length === 0" class="search-results-wrapper placeholder">
                 No results found

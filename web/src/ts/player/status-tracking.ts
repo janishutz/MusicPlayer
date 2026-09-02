@@ -14,9 +14,9 @@ import {
 // Tracking of time and player status
 let interval = -1;
 
-export const playbackPercentage = ref( 0 );
+export const playbackPercentage = ref( 1 );
 
-export const duration = ref( 0 );
+export const duration = ref( -1 );
 
 export const startTracking = () => {
     if ( interval === -1 ) {

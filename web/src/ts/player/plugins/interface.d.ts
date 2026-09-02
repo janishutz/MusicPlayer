@@ -5,8 +5,14 @@ import type {
     Song
 } from '@/ts/dtype/playlist';
 
-// TODO: Add search interface elements to plugin's args (such as a search interface)
 export type PlayerSourcePluginInitializer = () => Promise<PlayerSourcePlugin>;
+
+export interface AssociationResult {
+    'song': Song,
+    'match': 'exact' | 'none' | 'multiple';
+    'possibleFiles': File[],
+    'selectedIdx'?: number;
+}
 
 export interface PlayerSourcePlugin {
     /**
@@ -34,16 +40,25 @@ export interface PlayerSourcePlugin {
         'requiresLocalFiles': true;
 
         /**
-         * The allowed MIME types for loading associated files
-         */
-        'MIMETypes': string;
-
-        /**
          * Function used to associate the file to the songs of the playlist
          * @param files - The files that were picked by the user
-         * @returns A promise resolving to an array of song identifiers (corresponding to Song.identifier, for association)
+         * @param song - The song to update
+         * @returns A promise resolving to the (possibly) updated song and metadata
          */
-        'association': ( files: File[] ) => Promise<string[]>;
+        'association': ( files: FileList, song: Song ) => Promise<AssociationResult>;
+
+        /**
+         * Function used to update the additional identifier of the song if the file has changed
+         * @param song - The song that needs updating
+         * @param file - The file that it should be updated to
+         * @returns The updated song
+         */
+        'updateIdentifiers': ( song: Song, file: File ) => Promise<Song>;
+
+        /**
+         * The mime types that this source's files may have
+         */
+        'mime': string;
     } | {
         /**
          * Set to true if the user needs to load files

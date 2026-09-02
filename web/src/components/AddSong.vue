@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import DiskLoader from '@/composables/DiskLoader.vue';
     import ImportTypePicker from '@/composables/ImportTypePicker.vue';
     import PopupElement from '@/components/PopupElement.vue';
     import player from '@/ts/player';
@@ -20,6 +21,7 @@
 <template>
     <div>
         <ImportTypePicker />
+        <DiskLoader />
         <PopupElement v-model="showPopup" show-close>
             <div class="title">
                 <h1>Add Song(s)</h1>
@@ -60,9 +62,9 @@
     overflow-x: hidden;
 
     >div {
-        width: 32%;
+        width: 45%;
         margin: 0.5%;
-        height: 50%;
+        height: 60%;
         background-color: var(--accent-background);
         border-radius: 20px;
         display: flex;
@@ -84,6 +86,7 @@
         >.not-auth-notice {
             font-size: 0.6rem;
             margin: 0;
+            width: 70%;
         }
     }
 }
