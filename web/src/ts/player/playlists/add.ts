@@ -4,6 +4,7 @@ import {
     queue,
     queueIdx,
     rawQueue,
+    repeat,
     shuffle,
     sources
 } from '../state';
@@ -27,6 +28,12 @@ export const clearQueue = () => {
     duration.value = -1;
     playbackPercentage.value = 1;
     isPlaying.value = false;
+    repeat.value = 'off';
+    shuffle.value = false;
+
+    for ( const song of queue.value ) {
+        sources[ song.source ]?.songUnload( song );
+    }
 };
 
 /**

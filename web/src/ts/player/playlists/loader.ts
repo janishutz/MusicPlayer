@@ -7,13 +7,13 @@ import type {
     AssociationResult
 } from '../plugins/interface';
 import type {
-    Playlist
+    PlaylistSongs
 } from '@/ts/dtype/playlist';
 import {
     openAssociationManager
 } from '@/composables/associationManager';
 
-export const load = ( playlist: Playlist ) => {
+export const load = ( playlist: PlaylistSongs ) => {
     queue.value = playlist;
     rawQueue.value = playlist;
 

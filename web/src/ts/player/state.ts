@@ -6,7 +6,7 @@ import type {
     PlayerSourcePlugin
 } from './plugins/interface';
 import type {
-    Playlist
+    PlaylistSongs
 } from '../dtype/playlist';
 import type {
     RepeatMode
@@ -24,11 +24,11 @@ export const sources: {
 
 export const currentSource = ref( '' );
 
-export const rawQueue: Ref<Playlist> = ref( [] );
+export const rawQueue: Ref<PlaylistSongs> = ref( [] );
 
 export const queueIdx = ref( 0 );
 
-export const queue: Ref<Playlist> = ref( [] );
+export const queue: Ref<PlaylistSongs> = ref( [] );
 
 export const isPlaying = ref( false );
 

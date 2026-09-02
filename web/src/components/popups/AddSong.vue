@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import DiskLoader from '@/composables/DiskLoader.vue';
     import ImportTypePicker from '@/composables/ImportTypePicker.vue';
-    import PopupElement from '@/components/PopupElement.vue';
+    import PopupElement from './PopupElement.vue';
     import player from '@/ts/player';
     import {
         sources

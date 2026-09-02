@@ -118,4 +118,9 @@ export interface PlayerSourcePlugin {
      * You may use the provided interface elements (search bar and popups) to e.g. ask if user wants to use a playlist, album, etc
      */
     'addSongsFromThisSource': ( cb: ( songs: Song[] ) => void ) => void;
+
+    /**
+     * Fully unload a song. This is called on clear of a playlist
+     */
+    'songUnload': ( song: Song ) => Promise<void>;
 }

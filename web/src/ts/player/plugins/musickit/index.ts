@@ -2,9 +2,6 @@ import type {
     PlayerSourcePlugin,
     PlayerSourcePluginInitializer
 } from '../interface';
-import type {
-    Song
-} from '@/ts/dtype/playlist';
 import {
     addFromAppleMusic
 } from './search';
@@ -57,7 +54,8 @@ export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string =
                     'addSongsFromThisSource': addFromAppleMusic,
                     'loading': {
                         'requiresLocalFiles': false
-                    }
+                    },
+                    'songUnload': async () => {}
                 };
             } else {
                 throw new Error( 'ERR_AUTH' );

@@ -11,7 +11,7 @@
         onMounted,
         useTemplateRef
     } from 'vue';
-    import PopupElement from '@/components/PopupElement.vue';
+    import PopupElement from '@/components/popups/PopupElement.vue';
     import player from '@/ts/player';
     import {
         queue

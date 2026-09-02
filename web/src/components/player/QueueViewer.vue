@@ -5,12 +5,12 @@
         computed,
         ref
     } from 'vue';
-    import AddSong from './AddSong.vue';
+    import AddSong from '../popups/AddSong.vue';
     import type {
         Song
     } from '@/ts/dtype/playlist';
-    import SongEditor from './SongEditor.vue';
-    import SortableList from './SortableList.vue';
+    import SongEditor from '../popups/SongEditor.vue';
+    import SortableList from '../SortableList.vue';
     import {
         beautifyTime
     } from '@/ts/util/time';

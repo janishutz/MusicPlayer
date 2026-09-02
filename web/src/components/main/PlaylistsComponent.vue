@@ -1,5 +1,5 @@
 <template>
     <div>
-        Hello World
+        <h1>Playlists</h1>
     </div>
 </template>

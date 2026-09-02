@@ -5,7 +5,7 @@
         results,
         searchOpts
     } from './searchManager';
-    import PopupElement from '@/components/PopupElement.vue';
+    import PopupElement from '@/components/popups/PopupElement.vue';
     import {
         ref
     } from 'vue';

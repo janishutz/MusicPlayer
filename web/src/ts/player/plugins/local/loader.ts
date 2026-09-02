@@ -75,3 +75,7 @@ export const load = ( cb: ( songs: Song[] ) => void ) => {
         }
     };
 };
+
+export const unload = async ( song: Song ) => {
+    URL.revokeObjectURL( song.identifier );
+};

@@ -7,7 +7,8 @@ import {
     updateIdentifiers
 } from './association';
 import {
-    load
+    load,
+    unload
 } from './loader';
 import {
     ref
@@ -38,6 +39,7 @@ export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<P
             'association': associate,
             'updateIdentifiers': updateIdentifiers,
             'mime': 'audio/aac,audio/mpeg,audio/wav,audio/mp4,audio/ogg'
-        }
+        },
+        'songUnload': unload
     };
 };

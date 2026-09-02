@@ -4,7 +4,7 @@
         importers,
         isShowingImportTypePicker
     } from './importTypePicker';
-    import PopupElement from '@/components/PopupElement.vue';
+    import PopupElement from '@/components/popups/PopupElement.vue';
     import SearchView from './SearchView.vue';
     import {
         openDiskLoaderInterface

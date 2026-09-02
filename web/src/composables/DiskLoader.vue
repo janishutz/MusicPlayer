@@ -8,7 +8,7 @@
         ref,
         useTemplateRef
     } from 'vue';
-    import PopupElement from '@/components/PopupElement.vue';
+    import PopupElement from '@/components/popups/PopupElement.vue';
 
     const fileinput = useTemplateRef( 'fileinput' );
     const progress = ref( -1 );
