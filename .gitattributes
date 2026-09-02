@@ -1,1 +1,2 @@
-*eslint.config.mjs linguist-generated
+web/eslint.config.mjs linguist-generated
+backend/eslint.config.mjs linguist-generated
