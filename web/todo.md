@@ -14,6 +14,7 @@
 - [ ] Apple-Music signin
 - [ ] Loading existing playlists with local music and association of that
 - [ ] Remote screens can use polling (once a minute or so) or SSE for updating (/fancy uses SSE by default, /share uses polling by default). Should reduce server load
+- [ ] Comply with AGPL (link source code somewhere)
 
 # Backend
 - [ ] Implement all endpoints
