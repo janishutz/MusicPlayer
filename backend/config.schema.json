@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "mode": {
+            "type": "string",
+            "enum": [
+                "foss",
+                "hosted"
+            ],
+            "default": "foss",
+            "description": "Mode to use for the login. If set to hosted, sdk configuration needs to be complete"
+        },
+        "clientMode": {
+            "type": "string",
+            "enum": [
+                "sse",
+                "poll"
+            ],
+            "default": "poll",
+            "description": "Default information retrieval mode for the basic remote displays. Polling is slightly cheaper at the cost of responsiveness"
+        },
+        "webUrl": {
+            "type": "string",
+            "description": "The URL to the frontend. Just the host, in form https://music.janishutz.com"
+        }
+    }
+}
