@@ -1,14 +1,18 @@
 {
   "dependencies": {
-    "@types/cors": "^2.8.19",
+    "@janishutz/login-sdk-server": "^1.4.0",
+    "@janishutz/login-sdk-server-stubs": "^1.4.0",
+    "@janishutz/store-sdk": "^1.2.1",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "@types/jsonwebtoken": "^9.0.10",

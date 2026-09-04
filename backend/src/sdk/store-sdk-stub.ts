@@ -1,3 +1,10 @@
+interface StoreSDKConfig {
+    'backendURL': string;
+    'signingSecret': string;
+    'name': string;
+    'loglevel': 'debug' | 'info' | 'log' | 'warn' | 'error' | 'none';
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getSubscriptions = ( _uid: string ) => {
     return [ {
@@ -7,6 +14,9 @@ const getSubscriptions = ( _uid: string ) => {
     } ];
 };
 
+const configure = ( _config: StoreSDKConfig ) => {}
+
 export default {
-    getSubscriptions
+    getSubscriptions,
+    configure
 };

@@ -5,3 +5,4 @@ apple_private_key.p8
 musicplayerv2-server.zip
 dist
 package-lock.json
+yarn.lock
