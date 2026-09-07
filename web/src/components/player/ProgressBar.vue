@@ -8,6 +8,7 @@
         'required': true,
         'default': 0.5
     } );
+    const moveVal = ref( 0 );
     const offset = ref( -1 );
     const isMoving = ref( false );
     const bar = useTemplateRef( 'bar' );
@@ -15,19 +16,20 @@
     const start = ( ev: MouseEvent ) => {
         offset.value = bar.value!.getBoundingClientRect().x;
         isMoving.value = true;
-        val.value = ( ev.x - offset.value ) / bar.value!.clientWidth;
+        moveVal.value = ( ev.x - offset.value ) / bar.value!.clientWidth;
         emit( 'move-start' );
     };
 
     const move = ( ev: MouseEvent ) => {
         if ( isMoving.value ) {
-            val.value = Math.max( 0, Math.min( ( ev.x - offset.value ) / bar.value!.clientWidth, 1 ) );
+            moveVal.value = Math.max( 0, Math.min( ( ev.x - offset.value ) / bar.value!.clientWidth, 1 ) );
         }
     };
 
-    const end = () => {
+    const end = ( ev: MouseEvent ) => {
         if ( !isMoving.value ) return;
 
+        val.value = ( ev.x - offset.value ) / bar.value!.clientWidth;
         offset.value = -1;
         isMoving.value = false;
         emit( 'move-end' );
@@ -42,7 +44,7 @@
 <template>
     <div class="progressbar">
         <div ref="bar" class="back">
-            <div :style="`width: ${ val * 100 }%;`"></div>
+            <div :style="`width: ${ isMoving ? moveVal * 100 : val * 100 }%;`"></div>
         </div>
         <div
             :class="['click-target', offset >= 0 ? 'active' : undefined]"
