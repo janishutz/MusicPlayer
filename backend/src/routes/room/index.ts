@@ -24,12 +24,12 @@ const routes = ( app: express.Application, foss: boolean, config: Config ) => {
         sdk.loginCheck(),
         ownership.middleware(),
         ( request: express.Request, response: express.Response ) => {
-            if ( !request.query.room ) return response.sendStatus( 400 );
+            if ( !request.query.room || !( /^[a-zA-Z0-9-]{3,20}/ ).test( String( request.query.room ) ) ) return response.sendStatus( 400 );
 
             if ( rooms.create( String( request.query.room ), sdk.getUID( request )! ) )
                 response.sendStatus( 200 );
             else
-                response.sendStatus( 500 );
+                response.sendStatus( 409 );
         }
     );
 

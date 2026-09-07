@@ -9,6 +9,8 @@ const get = async ( url: string ): Promise<Response> => {
     } );
 };
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const post = async ( url: string, payload: string, mime: string = 'application/json' ): Promise<Response> => {
     return await wrapper( url, {
         'credentials': 'include',
@@ -21,11 +23,12 @@ const post = async ( url: string, payload: string, mime: string = 'application/j
 };
 
 const wrapper = async ( url: string, opts: RequestInit ): Promise<Response> => {
-    const res = await fetch( import.meta.env.VITE_BACKEND_URL + url, opts );
+    const res = await fetch( backendURL + url, opts );
 
     if ( res.ok ) {
         return res;
     } else if ( res.status === 403 || res.status === 401 ) {
+        // TODO: Handle these errors better (probably do something like in the old version, but better)
         throw new AuthError( 'ERR_USER_UNAUTHORIZED' );
     } else if ( res.status === 402 ) {
         throw new UnownedError( 'ERR_USER_UNOWNED' );
@@ -36,5 +39,6 @@ const wrapper = async ( url: string, opts: RequestInit ): Promise<Response> => {
 
 export default {
     get,
-    post
+    post,
+    backendURL
 };

@@ -14,7 +14,7 @@ export const sseMiddleware = ( kind: 'client' | 'trackingClient', config?: Confi
 
         const room = rooms.get( request.params.id );
 
-        if ( !room ) response.sendStatus( 404 );
+        if ( !room ) return response.sendStatus( 404 );
 
         response.writeHead( 200, {
             'Content-Type': 'text/event-stream',

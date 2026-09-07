@@ -14,6 +14,7 @@ import room from './routes/room';
 import user from './routes/user';
 
 const run = () => {
+    // FIXME: Use DB instead of memory optionally
     const sdkConfig = JSON.parse( fs.readFileSync( path.join(
         __dirname,
         '/../config/sdk.config.testing.json'

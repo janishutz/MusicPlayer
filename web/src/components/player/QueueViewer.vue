@@ -63,11 +63,6 @@
                 <i class="fa-solid fa-save"></i>
                 Save
             </button>
-            <!-- TODO: Should only appear when sharing -->
-            <button>
-                <i class="fa-solid fa-paper-plane"></i>
-                Transmit
-            </button>
         </div>
         <SongEditor v-model="showEditSong" editing-song="" />
         <AddSong v-model="showAddSong" />

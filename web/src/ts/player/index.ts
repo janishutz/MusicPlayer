@@ -29,6 +29,7 @@ import type {
 import {
     load
 } from './playlists/loader';
+import messages from '../messages';
 import {
     playIndex
 } from './playlists';
@@ -148,6 +149,7 @@ const addSongFromSource = async ( source: string ): Promise<boolean> => {
     return true;
 };
 
+messages.useRoomWatchers();
 
 export default {
     play,

@@ -28,6 +28,15 @@ const router = createRouter( {
             }
         },
         {
+            'path': '/share/:name',
+            'name': 'share',
+            'component': () => import( '@/views/SharedView.vue' ),
+            'meta': {
+                'title': 'Shared',
+                'auth': false
+            }
+        },
+        {
             'path': '/:pathMatch(.*)*',
             'name': 'NotFound',
             'component': () => import( '@/views/404View.vue' ),

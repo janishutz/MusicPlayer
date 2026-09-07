@@ -1,5 +1,6 @@
 import {
     Client,
+    Room,
     RoomStore
 } from './room';
 import {
@@ -16,7 +17,7 @@ const rooms: RoomStore = {};
  * @param room - The name of the room to get
  * @returns The room, or undefined if it is not present
  */
-const get = ( room: string ) => {
+const get = ( room: string ): Room | undefined => {
     return rooms[room];
 };
 
@@ -114,7 +115,9 @@ const close = ( name: string, uid: string ) => {
  * @returns true if update succeeded
  */
 const updateState = ( room: string, uid: string, playing: boolean, index: number, start: number ) => {
-    if ( !rooms[room] || rooms[room].owner !== uid ) return false;
+    if ( !rooms[room] || rooms[room].owner !== uid ) {
+        return false;
+    }
 
     rooms[room].state = {
         'playing': playing,
@@ -149,10 +152,12 @@ const sendUpdate = ( room: string, kind: 'state' | 'playlist' ) => {
 
     if ( !roomObject ) return false;
 
-    roomObject.clients.forEach( client => client.response.write( `data: ${ {
+    roomObject.clients.forEach( client => client.response.write( `data: ${ JSON.stringify( {
         'type': kind,
         'data': JSON.stringify( roomObject[kind] )
-    } }\n\n` ) );
+    } ) }\n\n` ) );
+
+    return true;
 };
 
 /**

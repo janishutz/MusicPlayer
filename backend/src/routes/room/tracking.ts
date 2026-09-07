@@ -39,7 +39,7 @@ const routes = ( app: express.Application, foss: boolean ) => {
         '/room/:id/admin',
         corsManager.middleware( false ),
         sdk.loginCheck(),
-        sseMiddleware( 'client' )
+        sseMiddleware( 'trackingClient' )
     );
 };
 

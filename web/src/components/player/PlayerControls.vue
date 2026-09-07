@@ -1,16 +1,19 @@
 <script setup lang="ts">
+    import {
+        computed,
+        ref
+    } from 'vue';
     import ProgressBar from './ProgressBar.vue';
+    import ShareManagement from './ShareManagement.vue';
     import {
         beautifyTime
     } from '@/ts/util/time';
-    import {
-        computed
-    } from 'vue';
     import player from '@/ts/player';
 
     const playbackPercentage = player.playbackPercentage;
     const repeatMode = player.repeat;
     const shuffleMode = player.shuffle;
+    const showShareMenu = ref( false );
 
     const seek = () => {
         player.seekTo( playbackPercentage.value );
@@ -30,7 +33,7 @@
     };
 
     const openShareMenu = () => {
-        alert( 'Share menu not yet implemented' );
+        showShareMenu.value = true;
     };
 
     const current = computed( () => {
@@ -39,13 +42,11 @@
     const duration = computed( () => {
         return beautifyTime( player.duration.value );
     } );
-
-
-    // TODO: Button availability
 </script>
 
 <template>
     <div class="mp-player">
+        <ShareManagement v-model="showShareMenu" />
         <div class="controls">
             <i class="fa-solid fa-backward-step" @click="player.prev"></i>
             <i class="fa-solid fa-arrow-rotate-left quick-seek" @click="player.back10"></i>

@@ -31,8 +31,8 @@ const routes = ( app: express.Application, foss: boolean, config: Config ) => {
 
         response.send(
             JSON.stringify( {
-                'state': room.state,
-                'playlist': lastRequest < room.playlist.lastUpdate ? room.playlist : undefined
+                'state': room?.state,
+                'playlist': lastRequest < room!.playlist!.lastUpdate ? room!.playlist : undefined
             } )
         );
     } );
@@ -51,7 +51,7 @@ const routes = ( app: express.Application, foss: boolean, config: Config ) => {
                 if ( rooms.updatePlaylist(
                     request.params.id,
                     sdk.getUID( request )!,
-                    request.body.playlist ? JSON.parse( request.body.playlist ) : []
+                    request.body.playlist ?? []
                 ) )
                     response.sendStatus( 200 );
                 else
@@ -70,8 +70,9 @@ const routes = ( app: express.Application, foss: boolean, config: Config ) => {
         sdk.loginCheck(),
         bodyParser.json(),
         ( request: express.Request, response: express.Response ) => {
-            if ( typeof request.params.id !== 'string' )
+            if ( typeof request.params.id !== 'string' ) {
                 return response.sendStatus( 400 );
+            }
 
             try {
                 if ( rooms.updateState(
