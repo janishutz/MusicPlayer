@@ -6,9 +6,6 @@ import {
     getUserFile,
     writeUserFile
 } from '../../manager/users';
-import {
-    Config
-} from '../../dtype/config';
 import bodyParser from 'body-parser';
 import express from 'express';
 import {
@@ -19,21 +16,15 @@ import {
 } from '../../manager/users/ownership';
 import logger from '../../logger';
 
-const routes = ( app: express.Application, foss: boolean, config: Config ) => {
+const routes = ( app: express.Application, foss: boolean ) => {
     const sdk = getLoginSdk( foss );
     const ownership = getOwnershipManager( foss );
 
     app.get( '/user/owned', sdk.loginCheck(), async ( request: express.Request, response: express.Response ) => {
         if ( await ownership.getOwned( request ) )
-            response.send( JSON.stringify( {
-                'status': true,
-                'shareMode': config.clientMode
-            } ) );
+            response.send( true );
         else
-            response.send( JSON.stringify( {
-                'status': false,
-                'shareMode': config.clientMode
-            } ) );
+            response.send( true );
     } );
 
     app.get(

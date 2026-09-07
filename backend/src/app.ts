@@ -77,7 +77,7 @@ const run = () => {
     // Load extra routes
     devtoken.routes( app, foss );
     room.routes( app, foss );
-    user.routes( app, foss, config );
+    user.routes( app, foss );
 
 
     app.use( ( _request: express.Request, response: express.Response ) => {
