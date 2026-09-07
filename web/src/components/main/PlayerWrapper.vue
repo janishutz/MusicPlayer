@@ -1,11 +1,10 @@
 <script setup lang="ts">
+    import AssociationView from '@/composables/AssociationView.vue';
     import PlayerComponent from './PlayerComponent.vue';
     import SmallPlayerComponent from './SmallPlayerComponent.vue';
     import {
-        ref
-    } from 'vue';
-
-    const fullPlayer = ref( true );
+        fullPlayer
+    } from '@/ts/player/state';
 
     const close = () => {
         fullPlayer.value = false;
@@ -14,6 +13,7 @@
 
 <template>
     <div class="player-wrapper">
+        <AssociationView />
         <SmallPlayerComponent v-model="fullPlayer" />
         <div :class="['player-container', fullPlayer ? undefined : 'hidden']">
             <i class="fa-solid fa-xmark" @click="close"></i>

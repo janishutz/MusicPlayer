@@ -1,4 +1,5 @@
 import {
+    fullPlayer,
     queue,
     rawQueue,
     sources
@@ -42,6 +43,16 @@ export const load = ( playlist: PlaylistSongs ) => {
 
     if ( needToLoadLocalSongs ) {
         // FIXME: Combine mime types
-        openAssociationManager( fileLoader, '' );
+        const mime = Object.values( sources )
+            .map( src => {
+                return src.loading.requiresLocalFiles === true ? src.loading.mime : '';
+            } )
+            .reduce( ( prev, curr ) => {
+                return prev === '' ? curr : prev + ',' + curr;
+            } );
+
+        openAssociationManager( fileLoader, mime );
     }
+
+    fullPlayer.value = true;
 };

@@ -1,5 +1,10 @@
 // NOTE: For re-associating files with details here, can use dropdown in UI
 
+export interface Playlist {
+    'name': string;
+    'songs': PlaylistSongs;
+}
+
 export type PlaylistSongs = Song[];
 
 export interface UrlToFileMapping {

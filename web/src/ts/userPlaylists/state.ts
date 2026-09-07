@@ -3,8 +3,11 @@ import {
     ref
 } from 'vue';
 import type {
-    PlaylistSongs
-} from '../dtype/playlist';
+    Playlist
+} from './file';
 
-const currentPlaylist = ref( '' );
-const playlists: Ref<PlaylistSongs> = ref( [] );
+export const playlistIdx = ref( -1 );
+
+export const playlists: Ref<Playlist[]> = ref( [] );
+
+export const editingPlaylists: Ref<boolean[]> = ref( [] );

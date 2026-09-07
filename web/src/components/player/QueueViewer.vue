@@ -18,6 +18,9 @@
     import {
         queueIdx
     } from '@/ts/player/state';
+    import {
+        savePlaylist
+    } from '@/ts/userPlaylists/save';
 
     const queue: WritableComputedRef<Song[]> = computed( {
         get () {
@@ -56,7 +59,7 @@
                 <i class="fa-solid fa-xmark"></i>
                 Clear
             </button>
-            <button>
+            <button @click="savePlaylist">
                 <i class="fa-solid fa-save"></i>
                 Save
             </button>

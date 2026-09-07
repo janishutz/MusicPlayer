@@ -13,6 +13,7 @@ const post = async ( url: string, payload: string, mime: string = 'application/j
     return await wrapper( url, {
         'credentials': 'include',
         'body': payload,
+        'method': 'post',
         'headers': {
             'Content-Type': mime ?? 'application/json'
         }

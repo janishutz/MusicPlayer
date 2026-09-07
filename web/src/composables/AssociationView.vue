@@ -8,21 +8,22 @@
         saveAssociations
     } from './associationManager';
     import {
+        fullPlayer,
+        queue
+    } from '@/ts/player/state';
+    import {
         onMounted,
         useTemplateRef
     } from 'vue';
     import PopupElement from '@/components/popups/PopupElement.vue';
     import player from '@/ts/player';
-    import {
-        queue
-    } from '@/ts/player/state';
 
     const fileinput = useTemplateRef( 'fileinput' );
 
     onMounted( () => {
         fileinput.value?.addEventListener( 'change', async () => {
             if ( fileinput.value && fileinput.value.files ) {
-                associationResults.value.concat( await associationOpts.value?.get( fileinput.value.files ) ?? [] );
+                await associationOpts.value?.get( fileinput.value.files );
             }
         } );
     } );
@@ -42,6 +43,12 @@
 
         associationResults.value.splice( idx, 1 );
     };
+
+    const cancel = () => {
+        player.clearQueue();
+        isShowingAssociationManager.value = false;
+        fullPlayer.value = false;
+    };
 </script>
 
 <template>
@@ -58,16 +65,15 @@
                     :accept="associationOpts?.mime ?? '*'"
                 >
             </div>
-            <div v-else-if="!needsFiles && !isAnalyzing && associationResults.length === 0">
-                All files have been associated correctly
-            </div>
-            <div v-else-if="!needsFiles && !isAnalyzing && associationResults.length > 0">
+            <div v-if="needsFiles && !isAnalyzing && associationResults.length > 0" class="association-wrapper">
                 <button @click="saveAssociations">
                     Save
                 </button>
-                <div v-for="(result, index) in associationResults" :key="index">
+                <div v-for="(result, index) in associationResults" :key="index" class="association">
                     <p>
-                        {{ result.song.name }} by {{ result.song.artist }}
+                        <b>{{ result.song.name.length > 30 ? result.song.name.slice( 0, 30 ) + '...' : result.song.name }}</b>
+                        by
+                        <i>{{ result.song.artist.length > 20 ? result.song.artist.slice( 0, 20 ) + '...' : result.song.artist }}</i>
                     </p>
                     <select v-if="result.match === 'multiple'">
                         <option v-for="(file, idx) in result.possibleFiles" :key="idx" :value="idx">
@@ -82,10 +88,40 @@
                     </div>
                 </div>
             </div>
+            <div v-else-if="associationResults.length === 0"></div>
             <div v-else>
                 An error occurred. Please try again
                 <!-- FIXME: Button to restore -->
             </div>
+            <button @click="cancel">
+                Cancel
+            </button>
         </PopupElement>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.association-wrapper {
+    width: 60vw;
+    height: 50vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .association {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 3rem;
+
+        >div, select {
+            display: flex;
+            margin-left: auto;
+            justify-content: center;
+            align-items: center;
+            >p {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+</style>

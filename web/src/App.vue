@@ -1,5 +1,8 @@
 <script setup lang="ts">
     import {
+        Notifications
+    } from '@kyvg/vue3-notification';
+    import {
         RouterView
     } from 'vue-router';
     import {
@@ -35,6 +38,14 @@
 
 <template>
     <div>
+        <notifications
+            position="top center"
+            :duration="5000"
+            class="notifications"
+            style="top: 20px;"
+            width="400px"
+            :max="3"
+        />
         <button id="themeSelector" title="Toggle between light and dark mode" @click="changeTheme();">
             <i :class="['fa-solid', 'fa-' + theme]"></i>
         </button>
@@ -46,9 +57,21 @@
     </div>
 </template>
 
-<style>
+<style lang="scss">
     body {
         background-color: var( --background-color );
+    }
+
+    .notifications {
+        .vue-notification {
+            padding: 20px;
+            .notification-title {
+                font-size: 1rem;
+            }
+            .notification-text {
+                font-size: 0.75rem;
+            }
+        }
     }
 
     :root, :root.light {

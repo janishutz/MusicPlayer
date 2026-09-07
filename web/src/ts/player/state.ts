@@ -26,7 +26,7 @@ export const currentSource = ref( '' );
 
 export const rawQueue: Ref<PlaylistSongs> = ref( [] );
 
-export const queueIdx = ref( 0 );
+export const queueIdx = ref( -1 );
 
 export const queue: Ref<PlaylistSongs> = ref( [] );
 
@@ -35,6 +35,8 @@ export const isPlaying = ref( false );
 export const shuffle = ref( false );
 
 export const repeat: Ref<RepeatMode> = ref( 'off' );
+
+export const fullPlayer = ref( false );
 
 const initSources = async () => {
     try {
