@@ -3,17 +3,27 @@
         computed,
         ref
     } from 'vue';
-    import type {
-        Song
-    } from '@/ts/dtype/playlist';
+    import {
+        currentQueue,
+        currentQueueIdx
+    } from '@/ts/shared/state';
 
-    const props = defineProps<{
-        'songs': Song[],
-        'idx': number
-    }>();
-    const songs = computed( () => props.songs?.slice( props.idx + 1 ) ?? [] );
+    const songs = computed( () => currentQueue.value?.slice( currentQueueIdx.value + 1 ) ?? [] );
     // TODO: Move this out of this file
     const showArtworks = ref( false );
+    const timeToPlay = computed( () => {
+        return ( idx: number ) => {
+            let total = 0;
+
+            for ( let i = 0; i < idx; i++ ) {
+                total += songs.value[ i ]!.duration;
+            }
+
+            total += currentQueue.value[ currentQueueIdx.value ]?.duration ?? 0;
+
+            return Math.round( total / 60 );
+        };
+    } );
 </script>
 
 <template>
@@ -34,7 +44,7 @@
                 <p>{{ song['additional-info'] }}</p>
             </div>
             <div class="song-actions">
-                <p>In {{ song.duration }}min</p>
+                <p>In {{ timeToPlay( index ) }}min</p>
             </div>
         </div>
     </div>

@@ -1,8 +1,4 @@
 import {
-    duration,
-    playbackPercentage
-} from '../player/status-tracking';
-import {
     isPlaying,
     queue,
     queueIdx
@@ -11,6 +7,9 @@ import {
     ref,
     watch
 } from 'vue';
+import {
+    playbackPercentage
+} from '../player/status-tracking';
 import request from '../request';
 
 const RETRY_CAP = 10;
@@ -56,6 +55,8 @@ const connect = (): Promise<boolean> => {
     return new Promise( ( resolve, reject ) => {
         if ( !useAntiTamper.value ) {
             isConnected.value = true;
+            sendPlaylistData();
+            sendStateData();
 
             return resolve( true );
         }
@@ -67,6 +68,8 @@ const connect = (): Promise<boolean> => {
         connection.onopen = () => {
             isConnected.value = true;
             console.log( '[SSE] Connection established successfully' );
+            sendPlaylistData();
+            sendStateData();
             resolve( true );
         };
 
@@ -91,25 +94,45 @@ const connect = (): Promise<boolean> => {
     } );
 };
 
+// FIXME: This is not a sensible solution, but easy for now (i.e. solve properly)
+let playlistLock = false;
+let stateLock = false;
+
+const sendPlaylistData = () => {
+    if ( isConnected.value && !playlistLock ) {
+        playlistLock = true;
+        request.post( `/room/${ room.value }/update/playlist`, JSON.stringify( {
+            'playlist': queue.value
+        } ) );
+
+        setTimeout( () => {
+            playlistLock = false;
+        }, 500 );
+    }
+};
+
+const sendStateData = () => {
+    if ( isConnected.value && !stateLock ) {
+        stateLock = true;
+        request.post( `/room/${ room.value }/update/state`, JSON.stringify( {
+            'playing': isPlaying.value,
+            'index': queueIdx.value,
+            'start': new Date().getTime() - ( playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 ) ) - 100
+        } ) );
+
+        setTimeout( () => {
+            stateLock = false;
+        }, 500 );
+    }
+};
+
 const useRoomWatchers = () => {
-    watch( queue, () => {
-        if ( isConnected.value )
-            request.post( `/room/${ room.value }/update/playlist`, JSON.stringify( {
-                'playlist': queue.value
-            } ) );
-    } );
+    watch( queue, sendPlaylistData );
 
     watch( [
         isPlaying,
         queueIdx
-    ], () => {
-        if ( isConnected.value )
-            request.post( `/room/${ room.value }/update/state`, JSON.stringify( {
-                'playing': isPlaying.value,
-                'index': queueIdx.value,
-                'start': new Date().getTime() - ( playbackPercentage.value * duration.value ) - 100
-            } ) );
-    } );
+    ], sendStateData );
 
     if ( room.value ) connect();
 };

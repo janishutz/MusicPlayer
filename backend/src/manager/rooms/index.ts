@@ -152,9 +152,9 @@ const sendUpdate = ( room: string, kind: 'state' | 'playlist' ) => {
 
     if ( !roomObject ) return false;
 
-    roomObject.clients.forEach( client => client.response.write( `data: ${ JSON.stringify( {
+    roomObject.clients.forEach( client => client.response.write( `data: json:${ JSON.stringify( {
         'type': kind,
-        'data': JSON.stringify( roomObject[kind] )
+        'data': roomObject[kind]
     } ) }\n\n` ) );
 
     return true;

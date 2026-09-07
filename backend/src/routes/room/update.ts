@@ -32,7 +32,7 @@ const routes = ( app: express.Application, foss: boolean, config: Config ) => {
         response.send(
             JSON.stringify( {
                 'state': room?.state,
-                'playlist': lastRequest < room!.playlist!.lastUpdate ? room!.playlist : undefined
+                'playlist': ( lastRequest < room!.playlist!.lastUpdate || isNaN( lastRequest ) ) ? room!.playlist.playlist : undefined
             } )
         );
     } );

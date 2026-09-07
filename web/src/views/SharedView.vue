@@ -13,7 +13,7 @@
                 <CurrentSong />
             </div>
             <div>
-                <SharedQueue :songs="[]" :idx="-1" />
+                <SharedQueue />
             </div>
         </div>
     </div>

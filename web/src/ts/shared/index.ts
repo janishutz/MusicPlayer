@@ -1,3 +1,16 @@
+import {
+    type StateUpdate,
+    messageHandler
+} from './messageHandler';
+import {
+    currentQueue,
+    currentQueueIdx,
+    isPlaying,
+    startTime
+} from './state';
+import type {
+    Song
+} from '../dtype/playlist';
 import request from '../request';
 
 const RETRY_CAP = 10;
@@ -8,21 +21,38 @@ let hasConnected = false;
 let retries = 0;
 
 // TODO: Persist settings in local storage
+// TODO: Polling instead of sse
 
 const connect = (): Promise<void> => {
     return new Promise( ( resolve, reject ) => {
         room = location.pathname.substring( location.pathname.lastIndexOf( '/' ) + 1 );
         connection = new EventSource( request.backendURL + `/room/${ room }/connect` );
 
-        connection.onopen = () => {
+        connection.onopen = async () => {
             hasConnected = true;
             console.log( '[SSE] Connection established successfully' );
+            const data = await ( await request.get( `/room/${ room }/poll` ) ).json() as {
+                'playlist': Song[],
+                'state': StateUpdate
+            };
+
+            currentQueue.value = data.playlist;
+            currentQueueIdx.value = data.state.index;
+            isPlaying.value = data.state.playing;
+            startTime.value = data.state.start;
+
             resolve();
         };
 
         connection.onmessage = msg => {
-            console.log( msg.data );
-            // TODO: On connect, retrieve data from poll endpoint
+            if ( msg.data === 'close' ) {
+                connection?.close();
+
+                // TODO: Show popup informing user that share was closed
+                return;
+            }
+
+            messageHandler( msg.data );
         };
 
         connection.onerror = () => {
