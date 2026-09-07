@@ -18,6 +18,14 @@ export const getUserFile = async ( uid: string ): Promise<UserPlaylistFile> => {
     } );
 };
 
+const createUserFile = async ( uid: string ): Promise<void> => {
+    writeUserFile( uid, {
+        'playlists': [],
+        'userid': uid,
+        'version': '1'
+    } );
+};
+
 export const getUserFilePath = ( uid: string ): string => {
     return path.join( __dirname, '/../../../data/', uid + '.json' );
 };
@@ -43,5 +51,6 @@ export default {
     getUserFilePath,
     getUserFile,
     writeUserFile,
-    testUserFileExists
+    testUserFileExists,
+    createUserFile
 };

@@ -8,6 +8,7 @@ import {
 import devtoken from './routes/devtoken';
 import express from 'express';
 import fs from 'fs';
+import logger from './logger';
 import path from 'path';
 import room from './routes/room';
 import user from './routes/user';
@@ -25,6 +26,8 @@ const run = () => {
     const sdk = getLoginSdk( foss );
     const storeSdk = getStoreSdk( foss );
     const app = express();
+
+    app.use( logger.routeLogging() );
 
     // Load id.janishutz.com SDK and allow signing in
     sdk.setUp(

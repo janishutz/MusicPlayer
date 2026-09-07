@@ -1,29 +1,37 @@
+import express from 'express';
 import {
     writeFile
 } from 'node:fs';
 
 const log = ( ...msg: unknown[] ) => {
-    output( 'log', log.caller.toString(), ...msg );
+    output( 'log', 'UNKNOWN', ...msg );
 };
 
 const info = ( ...msg: unknown[] ) => {
-    output( 'info', log.caller.toString(), ...msg );
+    output( 'info', 'UNKNOWN', ...msg );
 };
 
 const debug = ( ...msg: unknown[] ) => {
-    output( 'debug', log.caller.toString(), ...msg );
+    output( 'debug', 'UNKNOWN', ...msg );
 };
 
 const warn = ( ...msg: unknown[] ) => {
-    output( 'warn', log.caller.toString(), ...msg );
+    output( 'warn', 'UNKNOWN', ...msg );
 };
 
 const error = ( ...msg: unknown[] ) => {
-    output( 'error', log.caller.toString(), ...msg );
+    output( 'error', 'UNKNOWN', ...msg );
 };
 
 const fatal = ( ...msg: unknown[] ) => {
-    output( 'fatal', log.caller.toString(), ...msg );
+    output( 'fatal', 'UNKNOWN', ...msg );
+};
+
+const routeLogging = () => {
+    return ( request: express.Request, _response: express.Response, next: express.NextFunction ) => {
+        output( 'info', 'ROUTER', request.originalUrl, 'from', request.headers['user-agent'] ?? 'No UA' );
+        next();
+    };
 };
 
 
@@ -100,5 +108,6 @@ export default {
     warn,
     error,
     fatal,
-    configure
+    configure,
+    routeLogging
 };
