@@ -56,7 +56,6 @@
                 <i class="fa-solid fa-xmark"></i>
                 Clear
             </button>
-            <!-- TODO: On save, copy the current queue into rawQueue! -->
             <button>
                 <i class="fa-solid fa-save"></i>
                 Save

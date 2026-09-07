@@ -8,58 +8,51 @@ import {
 import {
     musicKitPlayback
 } from './playback';
+import request from '@/ts/request';
 
 export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string = 'ch' ): Promise<PlayerSourcePlugin> => {
     return new Promise( ( resolve, reject ) => {
         const init = async ( storefront: string ): Promise<PlayerSourcePlugin> => {
-            const res = await fetch( import.meta.env.VITE_BACKEND_URL + '/dev-token', {
-                'credentials': 'include'
+            const token = await ( await request.get( '/dev-token' ) ).text();
+            const instance = await window.MusicKit.configure( {
+                'developerToken': token,
+                'app': {
+                    'name': 'MusicPlayer',
+                    'build': '4'
+                    // 'icon': 'https://music.janishutz.com/logo.jpg'
+                },
+                'storefrontId': storefront.toUpperCase()
             } );
+            const controls = musicKitPlayback( instance );
 
-            if ( res.status === 200 ) {
-                const token = await res.text();
-                const instance = await window.MusicKit.configure( {
-                    'developerToken': token,
-                    'app': {
-                        'name': 'MusicPlayer',
-                        'build': '4'
-                        // 'icon': 'https://music.janishutz.com/logo.jpg'
-                    },
-                    'storefrontId': storefront.toUpperCase()
-                } );
-                const controls = musicKitPlayback( instance );
+            const login = async (): Promise<boolean> => {
+                try {
+                    await instance.authorize();
 
-                const login = async (): Promise<boolean> => {
-                    try {
-                        await instance.authorize();
+                    return true;
+                } catch {
+                    return false;
+                }
+            };
 
-                        return true;
-                    } catch {
-                        return false;
-                    }
-                };
-
-                return {
-                    'authorized': controls.loggedIn,
-                    'play': controls.play,
-                    'pause': controls.pause,
-                    'stop': controls.stop,
-                    'playSong': controls.playSong,
-                    'getDuration': controls.getDuration,
-                    'getPlaybackPos': controls.getPlaybackPos,
-                    'id': 'applemusic',
-                    'name': 'Apple Music',
-                    'seekTo': controls.seekTo,
-                    'login': login,
-                    'addSongsFromThisSource': addFromAppleMusic,
-                    'loading': {
-                        'requiresLocalFiles': false
-                    },
-                    'songUnload': async () => {}
-                };
-            } else {
-                throw new Error( 'ERR_AUTH' );
-            }
+            return {
+                'authorized': controls.loggedIn,
+                'play': controls.play,
+                'pause': controls.pause,
+                'stop': controls.stop,
+                'playSong': controls.playSong,
+                'getDuration': controls.getDuration,
+                'getPlaybackPos': controls.getPlaybackPos,
+                'id': 'applemusic',
+                'name': 'Apple Music',
+                'seekTo': controls.seekTo,
+                'login': login,
+                'addSongsFromThisSource': addFromAppleMusic,
+                'loading': {
+                    'requiresLocalFiles': false
+                },
+                'songUnload': async () => {}
+            };
         };
 
         if ( !window.MusicKit ) {

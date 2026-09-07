@@ -19,7 +19,6 @@
 
     const search = ( ev: KeyboardEvent ) => {
         if ( ev.key === 'Enter' ) {
-            // TODO: If no new input, instead of searching, add first song
             try {
                 clearTimeout( timeout );
             } catch { /* empty */ }
