@@ -1,10 +1,13 @@
+import {
+    Config
+} from '../../dtype/config';
 import express from 'express';
 import {
     generateToken
 } from '../../token';
 import rooms from '.';
 
-export const sseMiddleware = ( kind: 'client' | 'trackingClient' ) => {
+export const sseMiddleware = ( kind: 'client' | 'trackingClient', config?: Config ) => {
     return ( request: express.Request, response: express.Response ) => {
         if ( typeof request.params.id !== 'string' )
             return response.sendStatus( 400 );
@@ -20,7 +23,11 @@ export const sseMiddleware = ( kind: 'client' | 'trackingClient' ) => {
         } );
         response.status( 200 );
         response.flushHeaders();
-        response.write( 'data: connected\n\n' );
+
+        if ( kind === 'trackingClient' || config?.clientMode === 'poll' )
+            response.write( 'data: use-poll\n\n' );
+        else
+            response.write( 'data: connected\n\n' );
 
         const token = generateToken( 20 );
 

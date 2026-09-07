@@ -4,7 +4,9 @@ import {
 } from '../../sdk';
 import express from 'express';
 
-const cache = {};
+const cache: {
+    [key: string]: boolean
+} = {};
 
 export const getOwnershipManager = ( foss: boolean ) => {
     const storeSdk = getStoreSdk( foss );

@@ -1,3 +1,6 @@
+import {
+    Config
+} from '../../dtype/config';
 import bodyParser from 'body-parser';
 import corsManager from '../../corsManager';
 import express from 'express';
@@ -10,11 +13,11 @@ import {
     sseMiddleware
 } from '../../manager/rooms/sse';
 
-const routes = ( app: express.Application, foss: boolean ) => {
+const routes = ( app: express.Application, foss: boolean, config: Config ) => {
     const sdk = getLoginSdk( foss );
 
     // FIXME: Here, if not in sse mode, simply close the connection after sending 'poll'
-    app.get( '/room/:id/connect', corsManager.middleware( false ), sseMiddleware( 'client' ) );
+    app.get( '/room/:id/connect', corsManager.middleware( false ), sseMiddleware( 'client', config ) );
 
     app.get( '/room/:id/poll', corsManager.middleware( false ), ( request: express.Request, response: express.Response ) => {
         if ( typeof request.params.id !== 'string' )

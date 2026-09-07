@@ -1,3 +1,6 @@
+import {
+    Config
+} from '../../dtype/config';
 import express from 'express';
 import {
     getLoginSdk
@@ -9,12 +12,12 @@ import rooms from '../../manager/rooms';
 import tracking from './tracking';
 import update from './update';
 
-const routes = ( app: express.Application, foss: boolean ) => {
+const routes = ( app: express.Application, foss: boolean, config: Config ) => {
     const sdk = getLoginSdk( foss );
     const ownership = getOwnershipManager( foss );
 
     tracking.routes( app, foss );
-    update.routes( app, foss );
+    update.routes( app, foss, config );
 
     app.get(
         '/room/create',
