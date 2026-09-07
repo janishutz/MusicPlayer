@@ -1,22 +1,46 @@
+import corsManager from '../../corsManager';
 import express from 'express';
+import {
+    getLoginSdk
+} from '../../sdk';
+import rooms from '../../manager/rooms';
+import {
+    sseMiddleware
+} from '../../manager/rooms/sse';
 
-const routes = ( app: express.Application ) => {
-    app.get( '/room/:id/tracking/exit', ( request: express.Request, response: express.Response ) => {
+const tackingUpdate = ( message: string ) => {
+    return ( request: express.Request, response: express.Response ) => {
+        if ( typeof request.params.id === 'string' ) {
+            if ( rooms.sendTrackingUpdate( request.params.id, message ) )
+                response.sendStatus( 200 );
+            else
+                response.sendStatus( 500 );
+        } else
+            response.sendStatus( 400 );
+    };
+};
 
-    } );
+const routes = ( app: express.Application, foss: boolean ) => {
+    const sdk = getLoginSdk( foss );
 
-    app.get( '/room/:id/tracking/ping', ( request: express.Request, response: express.Response ) => {
+    app.get(
+        '/room/:id/tracking/exit',
+        corsManager.middleware( false ),
+        tackingUpdate( 'exit' )
+    );
 
-    } );
+    app.get(
+        '/room/:id/tracking/ping',
+        corsManager.middleware( false ),
+        tackingUpdate( 'ping' )
+    );
 
-    app.get( '/room/:id/tracking/connect', ( request: express.Request, response: express.Response ) => {
-
-    } );
-
-    app.get( '/room/:id/admin', ( request: express.Request, response: express.Response ) => {
-        // Endpoint for the streamer to connect to, all above events are sent there
-
-    } );
+    app.get(
+        '/room/:id/admin',
+        corsManager.middleware( false ),
+        sdk.loginCheck(),
+        sseMiddleware( 'client' )
+    );
 };
 
 export default {

@@ -1,24 +1,30 @@
 import {
-    Playlist
+    PlaylistSongs
 } from '../../dtype/file';
 import {
     Response
 } from 'express';
 
+export interface Client {
+    'id': string;
+    'response': Response;
+}
+
 export interface Room {
-    'playlist': Playlist;
-    'playing': boolean;
-    'index': number;
-    'start': number;
-    'token': string;
-    'lastUpdate': number;
+    'playlist': {
+        'lastUpdate': number;
+        'playlist': PlaylistSongs;
+    }
+    'state': {
+        'index': number;
+        'start': number;
+        'playing': boolean;
+        'lastUpdate': number;
+    };
+    'owner': string;
+    'clients': Client[];
+    'trackingClients': Client[];
 
-    /**
-     * This is used to determine if the playlist needs to be sent in polling mode
-     */
-    'lastPlaylistUpdate': number;
-
-    'clients': Response[]
 }
 
 export interface RoomStore {

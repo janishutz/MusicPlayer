@@ -2,27 +2,27 @@ import {
     writeFile
 } from 'node:fs';
 
-const log = ( ...msg: string[] ) => {
+const log = ( ...msg: unknown[] ) => {
     output( 'log', log.caller.toString(), ...msg );
 };
 
-const info = ( ...msg: string[] ) => {
+const info = ( ...msg: unknown[] ) => {
     output( 'info', log.caller.toString(), ...msg );
 };
 
-const debug = ( ...msg: string[] ) => {
+const debug = ( ...msg: unknown[] ) => {
     output( 'debug', log.caller.toString(), ...msg );
 };
 
-const warn = ( ...msg: string[] ) => {
+const warn = ( ...msg: unknown[] ) => {
     output( 'warn', log.caller.toString(), ...msg );
 };
 
-const error = ( ...msg: string[] ) => {
+const error = ( ...msg: unknown[] ) => {
     output( 'error', log.caller.toString(), ...msg );
 };
 
-const fatal = ( ...msg: string[] ) => {
+const fatal = ( ...msg: unknown[] ) => {
     output( 'fatal', log.caller.toString(), ...msg );
 };
 
@@ -51,7 +51,7 @@ const configure = ( location: 'stderr' | 'file', minLevel: LogLevel, file?: stri
 
 const logfile: string[] = [];
 
-const output = ( level: LogLevel, caller: string, ...message: string[] ) => {
+const output = ( level: LogLevel, caller: string, ...message: unknown[] ) => {
     if ( levels.indexOf( level ) < lev ) {
         return;
     }

@@ -5,16 +5,24 @@ interface StoreSDKConfig {
     'loglevel': 'debug' | 'info' | 'log' | 'warn' | 'error' | 'none';
 }
 
+interface SubscriptionData {
+    'id': string;
+    'status': string;
+    'expires': number;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getSubscriptions = ( _uid: string ) => {
+const getSubscriptions = async ( _uid: string ): Promise<SubscriptionData[]> => {
     return [ {
         'id': 'com.janishutz.MusicPlayer.subscription',
         'expires': new Date().getTime() + 200000,
-        'status': true
+        'status': 'active'
     } ];
 };
 
-const configure = ( _config: StoreSDKConfig ) => {}
+const configure = ( config: StoreSDKConfig ) => {
+    console.log( config );
+};
 
 export default {
     getSubscriptions,

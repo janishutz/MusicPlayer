@@ -2,35 +2,42 @@ import {
     getLoginSdk,
     getStoreSdk
 } from './sdk';
+import {
+    Config
+} from './dtype/config';
 import devtoken from './routes/devtoken';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-
-// TODO: configurable
-const sdk = getLoginSdk( false );
-const storeSdk = getStoreSdk( false );
-
+import room from './routes/room';
+import user from './routes/user';
 
 const run = () => {
-    const app = express();
     const sdkConfig = JSON.parse( fs.readFileSync( path.join(
         __dirname,
-        '/config/sdk.config.testing.json'
+        '/../config/sdk.config.testing.json'
     ) ).toString() );
+    const config = JSON.parse( fs.readFileSync( path.join(
+        __dirname,
+        '/../config/config.json'
+    ) ).toString() ) as Config;
+    const foss = config.mode !== 'hosted';
+    const sdk = getLoginSdk( foss );
+    const storeSdk = getStoreSdk( foss );
+    const app = express();
 
     // Load id.janishutz.com SDK and allow signing in
     sdk.setUp(
         {
             'prod': false,
             'service': {
-                'serviceID': 'jh-music',
+                'serviceID': sdkConfig[ 'name' ],
                 'serviceToken': sdkConfig[ 'token' ]
             },
             'user-agent': sdkConfig[ 'ua' ],
             'sessionType': 'memory',
-            'frontendURL': 'https://music.janishutz.com',
-            'corsWhitelist': [ 'https://music.janishutz.com' ],
+            'frontendURL': config.webUrl,
+            'corsWhitelist': [ config.webUrl ],
             'recheckTimeout': 300 * 1000,
             'advancedVerification': 'sdk'
         },
@@ -55,22 +62,26 @@ const run = () => {
     // Load store sdk
     const storeConfig = JSON.parse( fs.readFileSync( path.join(
         __dirname,
-        '/config/store-sdk.config.secret.json'
+        '/../config/store-sdk.config.testing.json'
     ) ).toString() );
 
     storeSdk.configure( storeConfig );
 
     app.get( '/', ( _request: express.Request, response: express.Response ) => {
-        response.send( 'HELLO WORLD' );
+        response.redirect( config.webUrl ?? 'https://music.janishutz.com' );
     } );
+
+    // TODO: Need way for frontend to get the connection type for shares
 
 
     // Load extra routes
-    devtoken.routes( app );
+    devtoken.routes( app, foss );
+    room.routes( app, foss );
+    user.routes( app, foss, config );
 
 
     app.use( ( _request: express.Request, response: express.Response ) => {
-        response.sendFile( path.join( __dirname, '' ) );
+        response.sendStatus( 404 );
     } );
 
     const PORT = process.env.PORT || 8080;

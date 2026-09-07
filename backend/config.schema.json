@@ -24,5 +24,10 @@
             "type": "string",
             "description": "The URL to the frontend. Just the host, in form https://music.janishutz.com"
         }
-    }
+    },
+    "required": [
+        "mode",
+        "clientMode",
+        "webUrl"
+    ]
 }
