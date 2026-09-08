@@ -29,7 +29,6 @@ import type {
 import {
     load
 } from './playlists/loader';
-import messages from '../messages';
 import {
     playIndex
 } from './playlists';
@@ -52,6 +51,7 @@ const play = () => {
 
     sources[currentSource.value]?.play();
     startTracking();
+    document.dispatchEvent( new CustomEvent( 'musicplayer:playpause' ) );
 };
 
 const pause = () => {
@@ -61,6 +61,7 @@ const pause = () => {
 
     sources[currentSource.value]?.pause();
     stopTracking();
+    document.dispatchEvent( new CustomEvent( 'musicplayer:playpause' ) );
 };
 
 /**
@@ -71,6 +72,7 @@ const seekTo = ( pos: number ) => {
     if ( currentSource.value === '' ) return;
 
     sources[currentSource.value]?.seekTo( pos );
+    document.dispatchEvent( new CustomEvent( 'musicplayer:seek' ) );
 };
 
 const skip10 = () => {
@@ -152,8 +154,6 @@ const addSongFromSource = async ( source: string, cb?: ( songs: Song[] ) => void
 
     return true;
 };
-
-messages.useRoomWatchers();
 
 export default {
     play,

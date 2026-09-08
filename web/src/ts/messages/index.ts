@@ -4,6 +4,8 @@ import {
     queueIdx
 } from '../player/state';
 import {
+    onMounted,
+    onUnmounted,
     ref,
     watch
 } from 'vue';
@@ -116,7 +118,8 @@ const sendStateData = () => {
         request.post( `/room/${ room.value }/update/state`, JSON.stringify( {
             'playing': isPlaying.value,
             'index': queueIdx.value,
-            'start': new Date().getTime() - ( playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 ) ) - 100
+            'start': new Date().getTime() - 100,
+            'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
         } ) );
 
         setTimeout( () => {
@@ -128,10 +131,25 @@ const sendStateData = () => {
 const useRoomWatchers = () => {
     watch( queue, sendPlaylistData );
 
-    watch( [
-        isPlaying,
-        queueIdx
-    ], sendStateData );
+    onMounted( () => {
+        document.addEventListener( 'musicplayer:playindex', sendStateData );
+        document.addEventListener( 'musicplayer:seek', sendStateData );
+        document.addEventListener( 'musicplayer:playpause', sendStateData );
+    } );
+
+    onUnmounted( () => {
+        try {
+            document.addEventListener( 'musicplayer:play', sendStateData );
+        } catch { /* empty */ }
+
+        try {
+            document.addEventListener( 'musicplayer:seek', sendStateData );
+        } catch { /* empty */ }
+
+        try {
+            document.addEventListener( 'musicplayer:playpause', sendStateData );
+        } catch { /* empty */ }
+    } );
 
     if ( room.value ) connect();
 };

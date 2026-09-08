@@ -6,6 +6,8 @@ import {
     currentQueue,
     currentQueueIdx,
     isPlaying,
+    playbackOffset,
+    playbackTime,
     startTime
 } from './state';
 import type {
@@ -40,6 +42,8 @@ const connect = (): Promise<void> => {
             currentQueueIdx.value = data.state.index;
             isPlaying.value = data.state.playing;
             startTime.value = data.state.start;
+            playbackTime.value = data.state.offset;
+            playbackOffset.value = data.state.offset;
 
             resolve();
         };

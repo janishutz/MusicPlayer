@@ -16,15 +16,17 @@ import {
     useNotification
 } from '@kyvg/vue3-notification';
 
-export const savePlaylist = async () => {
+export const savePlaylist = () => {
     rawQueue.value = queue.value;
     shuffle.value = false;
 
-    if ( playlistIdx.value ) {
+    if ( playlistIdx.value < 0 ) {
         let name: null | string = '';
 
         while ( !name || name.length === 0 ) {
             name = prompt( 'You are trying to save a playlist that has not previously been created. Please enter a name for it' );
+
+            if ( !name ) return;
         }
 
         addPlaylist( name );

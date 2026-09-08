@@ -20,6 +20,7 @@ export interface Room {
         'start': number;
         'playing': boolean;
         'lastUpdate': number;
+        'offset': number;
     };
     'owner': string;
     'clients': Client[];

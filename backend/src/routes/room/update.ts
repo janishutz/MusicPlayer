@@ -79,7 +79,8 @@ const routes = ( app: express.Application, foss: boolean, config: Config ) => {
                     sdk.getUID( request )!,
                     request.body.playing ?? false,
                     request.body.index ?? -1,
-                    request.body.start ?? new Date().getTime()
+                    request.body.start ?? new Date().getTime(),
+                    request.body.offset ?? 0
                 ) )
                     response.sendStatus( 200 );
                 else

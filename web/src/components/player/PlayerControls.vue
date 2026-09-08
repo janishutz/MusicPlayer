@@ -8,6 +8,7 @@
     import {
         beautifyTime
     } from '@/ts/util/time';
+    import messages from '@/ts/messages';
     import player from '@/ts/player';
 
     const playbackPercentage = player.playbackPercentage;
@@ -42,6 +43,8 @@
     const duration = computed( () => {
         return beautifyTime( player.duration.value );
     } );
+
+    messages.useRoomWatchers();
 </script>
 
 <template>

@@ -2,6 +2,8 @@ import {
     currentQueue,
     currentQueueIdx,
     isPlaying,
+    playbackOffset,
+    playbackTime,
     startTime
 } from './state';
 import type {
@@ -17,6 +19,7 @@ export interface StateUpdate {
     'playing': boolean;
     'index': number;
     'start': number;
+    'offset': number;
 }
 
 export const messageHandler = ( msg: string ) => {
@@ -36,6 +39,8 @@ export const messageHandler = ( msg: string ) => {
                 currentQueueIdx.value = state.index;
                 isPlaying.value = state.playing;
                 startTime.value = state.start;
+                playbackTime.value = state.offset;
+                playbackOffset.value = state.offset;
             } else {
                 console.log( '[SSE] Received unknown data', data.type );
             }

@@ -41,7 +41,8 @@ const create = ( name: string, uid: string ) => {
                 'index': 0,
                 'lastUpdate': new Date().getTime(),
                 'playing': false,
-                'start': new Date().getTime()
+                'start': new Date().getTime(),
+                'offset': 0
             }
         };
 
@@ -112,9 +113,10 @@ const close = ( name: string, uid: string ) => {
  * @param playing - Set to true if the player is playing currently
  * @param index - The current playback index
  * @param start - The timestamp where playback of the current song started
+ * @param offset - The playback offset from the start in seconds
  * @returns true if update succeeded
  */
-const updateState = ( room: string, uid: string, playing: boolean, index: number, start: number ) => {
+const updateState = ( room: string, uid: string, playing: boolean, index: number, start: number, offset: number ) => {
     if ( !rooms[room] || rooms[room].owner !== uid ) {
         return false;
     }
@@ -123,7 +125,8 @@ const updateState = ( room: string, uid: string, playing: boolean, index: number
         'playing': playing,
         'index': index,
         'lastUpdate': new Date().getTime(),
-        'start': start
+        'start': start,
+        'offset': offset
     };
 
     return sendUpdate( room, 'state' );

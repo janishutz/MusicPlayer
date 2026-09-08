@@ -1,11 +1,11 @@
 <script setup lang="ts">
     import {
         addPlaylist,
-        removePlaylist
+        removePlaylist,
+        selectPlaylist
     } from '@/ts/userPlaylists';
     import {
         editingPlaylists,
-        playlistIdx as playlistIdx,
         playlists
     } from '@/ts/userPlaylists/state';
     import {
@@ -20,7 +20,6 @@
     import {
         UnownedError
     } from '@/ts/request';
-    import player from '@/ts/player';
     import router from '@/router';
 
     const checkingStatus = ref( true );
@@ -64,12 +63,6 @@
 
     const togglePlaylistEditing = ( idx: number ) => {
         editingPlaylists.value[ idx ] = !editingPlaylists.value[ idx ];
-    };
-
-    const selectPlaylist = ( idx: number ) => {
-        playlistIdx.value = idx;
-        player.clearQueue();
-        player.loadPlaylist( playlists.value[ idx ]!.songs );
     };
 </script>
 

@@ -16,8 +16,8 @@ import type {
     Song
 } from '@/ts/dtype/playlist';
 import {
-    playlistIdx
-} from '@/ts/userPlaylists/state';
+    setPlaylistIdx
+} from '@/ts/userPlaylists';
 
 export const addSongList = ( songs: Song[] ) => {
     rawQueue.value = rawQueue.value.concat( songs );
@@ -25,7 +25,7 @@ export const addSongList = ( songs: Song[] ) => {
 };
 
 export const clearQueue = () => {
-    playlistIdx.value = -1;
+    setPlaylistIdx( 0 );
     queue.value = [];
     rawQueue.value = [];
     sources[currentSource.value]?.stop();

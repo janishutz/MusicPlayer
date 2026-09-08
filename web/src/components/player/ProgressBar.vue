@@ -12,8 +12,13 @@
     const offset = ref( -1 );
     const isMoving = ref( false );
     const bar = useTemplateRef( 'bar' );
+    const props = defineProps<{
+        'disallowMove'?: boolean
+    }>();
 
     const start = ( ev: MouseEvent ) => {
+        if ( props.disallowMove ) return;
+
         offset.value = bar.value!.getBoundingClientRect().x;
         isMoving.value = true;
         moveVal.value = ( ev.x - offset.value ) / bar.value!.clientWidth;
@@ -47,7 +52,7 @@
             <div :style="`width: ${ isMoving ? moveVal * 100 : val * 100 }%;`"></div>
         </div>
         <div
-            :class="['click-target', offset >= 0 ? 'active' : undefined]"
+            :class="['click-target', offset >= 0 ? 'active' : undefined, props.disallowMove ? 'disallowed' : undefined]"
             @mousedown="start"
             @mousemove="move"
             @mouseup="end"

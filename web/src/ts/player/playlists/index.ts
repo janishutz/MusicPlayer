@@ -15,7 +15,7 @@ import {
  * Play a song at the given index of the queue. Wraps to 0 and end if index below 0 or above end
  * @param idx - The index in the queue to play at
  */
-export const playIndex = async ( idx: number ) => {
+export const playIndex = ( idx: number ) => {
     if ( idx >= queue.value.length ) {
         idx = repeat.value === 'all' ? 0 : -1;
     } else if ( idx < 0 ) {
@@ -42,4 +42,7 @@ export const playIndex = async ( idx: number ) => {
     startTracking();
 
     isPlaying.value = true;
+    setTimeout( () => {
+        document.dispatchEvent( new CustomEvent( 'musicplayer:playindex', {} ) );
+    }, 500 );
 };

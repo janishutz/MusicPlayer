@@ -4,4 +4,9 @@ import type {
 
 declare global {
     var MusicKit: MusicKitObject;
+    interface GlobalEventHandlersEventMap {
+        'musicplayer:playpause': CustomEvent<void>;
+        'musicplayer:playindex': CustomEvent<void>;
+        'musicplayer:seek': CustomEvent<void>;
+    }
 }
