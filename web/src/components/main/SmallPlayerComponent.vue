@@ -28,7 +28,7 @@
     };
 
     const song: ComputedRef<Song> = computed( () => {
-        if ( queueIdx.value >= 0 ) {
+        if ( queueIdx.value >= 0 && queue.value.length > queueIdx.value ) {
             return queue.value[ queueIdx.value ]!;
         } else {
             return {

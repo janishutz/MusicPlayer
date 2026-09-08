@@ -23,6 +23,7 @@
 
     &.moving {
       position: fixed;
+      user-select: none;
     }
 
     >i {

@@ -43,7 +43,12 @@ const connect = (): Promise<void> => {
             currentQueueIdx.value = data.state.index;
             isPlaying.value = data.state.playing;
             startTime.value = data.state.start;
-            playbackTime.value = data.state.offset;
+
+            if ( data.playlist.length === 0 )
+                playbackTime.value = 0;
+            else
+                playbackTime.value = data.state.offset;
+
             playbackOffset.value = data.state.offset;
             playbackProgress.value = data.state.offset / ( data.playlist[ data.state.index ]?.duration ?? -1 );
             resolve();

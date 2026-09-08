@@ -69,37 +69,46 @@
 <template>
     <div class="playlists">
         <AddPlaylist v-model="showAddPlaylist" @add-playlist="addPlaylist" />
-        <div v-if="checkingStatus">
+        <div v-if="checkingStatus" class="playlist-wrapper">
             Loading{{ '.'.repeat( dots ) }}
         </div>
-        <div v-else-if="playlists.length === 0">
+        <div v-else-if="playlists.length === 0" class="playlist-wrapper">
             No playlists
             <button @click="openAddPlaylistPopup">
                 <i class="fa-solid fa-plus"></i>
                 Add one
             </button>
         </div>
-        <div v-else>
-            <button @click="openAddPlaylistPopup">
-                <i class="fa-solid fa-plus"></i>
-                Add Playlist
-            </button>
-            <button @click="savePlaylists">
-                <i class="fa-solid fa-floppy-disk"></i>
-                Save Changes
-            </button>
-            <button @click="loadPlaylists">
-                <i class="fa-solid fa-rotate"></i>
-                Undo unsaved changes
-            </button>
-            <div v-for="(playlist, index) in playlists" :key="index">
-                <input v-if="editingPlaylists[ index ]" v-model="playlist.name" type="text">
-                <h2 v-else @click="() => selectPlaylist( index )">
-                    {{ playlist.name }}
-                </h2>
-                <i class="fa-solid fa-pen-to-square" @click="() => togglePlaylistEditing( index )"></i>
-                <i class="fa-solid fa-trash" @click="() => removePlaylist( index )"></i>
+        <div v-else class="playlist-wrapper">
+            <div class="playlist-actions">
+                <button @click="openAddPlaylistPopup">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Playlist
+                </button>
+                <button @click="savePlaylists">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Save Changes
+                </button>
+                <button @click="loadPlaylists">
+                    <i class="fa-solid fa-rotate"></i>
+                    Undo unsaved changes
+                </button>
+            </div>
+            <div class="playlist-container">
+                <div v-for="(playlist, index) in playlists" :key="index" class="playlist">
+                    <i class="fa-solid fa-circle-play" @click="() => selectPlaylist( index )"></i>
+                    <input v-if="editingPlaylists[ index ]" v-model="playlist.name" type="text">
+                    <h2 v-else @click="() => selectPlaylist( index )">
+                        {{ playlist.name }}
+                    </h2>
+                    <i class="fa-solid fa-pen-to-square" @click="() => togglePlaylistEditing( index )"></i>
+                    <i class="fa-solid fa-trash" @click="() => removePlaylist( index )"></i>
+                </div>
             </div>
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+    @use '@/scss/components/playlists.scss';
+</style>

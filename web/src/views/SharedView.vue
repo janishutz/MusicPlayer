@@ -44,7 +44,7 @@
         }, 250 );
     } );
     const song: ComputedRef<Song> = computed( () => {
-        if ( currentQueueIdx.value >= 0 )
+        if ( currentQueueIdx.value >= 0 && currentQueue.value.length > currentQueueIdx.value )
             return currentQueue.value[currentQueueIdx.value]!;
         else
             return {
@@ -68,7 +68,7 @@
             <ProgressBar v-model="playbackProgress" :disallow-move="true" />
             <div class="time">
                 <p class="current">
-                    {{ beautifyTime( playbackTime ) }}
+                    {{ beautifyTime( song.duration >= 0 ? playbackTime : -1 ) }}
                 </p>
                 <p class="duration">
                     {{ beautifyTime( song.duration ) }}

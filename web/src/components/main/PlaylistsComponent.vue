@@ -4,8 +4,15 @@
 </script>
 
 <template>
-    <div>
+    <div class="playlist-main">
         <h1>Playlists</h1>
         <UserPlaylists />
     </div>
 </template>
+
+<style lang="scss" scoped>
+.playlist-main {
+    height: 100%;
+    width: 100%;
+}
+</style>
