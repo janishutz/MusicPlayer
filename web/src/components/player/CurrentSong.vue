@@ -50,7 +50,6 @@
         max-height: calc(100% - 9rem);
 
         >img, .fa-solid {
-            max-width: 60%;
             height: 100%;
             font-size: 40vh;
         }

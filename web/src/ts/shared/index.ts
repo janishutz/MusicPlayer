@@ -24,7 +24,7 @@ let hasConnected = false;
 let retries = 0;
 
 // TODO: Persist settings in local storage
-// TODO: Polling instead of sse
+// TODO: Polling instead of sse as option
 
 const connect = (): Promise<void> => {
     return new Promise( ( resolve, reject ) => {
