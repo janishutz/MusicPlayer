@@ -15,18 +15,20 @@ import user from './routes/user';
 
 const run = () => {
     // FIXME: Use DB instead of memory optionally
-    const sdkConfig = JSON.parse( fs.readFileSync( path.join(
-        __dirname,
-        '/../config/sdk.config.testing.json'
-    ) ).toString() );
     const config = JSON.parse( fs.readFileSync( path.join(
         __dirname,
         '/../config/config.json'
     ) ).toString() ) as Config;
     const foss = config.mode !== 'hosted';
+    const sdkConfig = JSON.parse( fs.readFileSync( path.join(
+        __dirname,
+        `/../config/sdk.config.${ foss ? 'testing' : 'secret' }.json`
+    ) ).toString() );
     const sdk = getLoginSdk( foss );
     const storeSdk = getStoreSdk( foss );
     const app = express();
+
+    logger.info( 'Starting in', foss ? 'FOSS' : 'hosted', 'mode' );
 
     app.use( logger.routeLogging() );
 
@@ -67,7 +69,7 @@ const run = () => {
     // Load store sdk
     const storeConfig = JSON.parse( fs.readFileSync( path.join(
         __dirname,
-        '/../config/store-sdk.config.testing.json'
+        `/../config/store-sdk.config.${ foss ? 'testing' : 'secret' }.json`
     ) ).toString() );
 
     storeSdk.configure( storeConfig );

@@ -15,10 +15,16 @@
     sdk.setUp( 'jh-music', 'http://localhost:8080', '/app' );
 
     onMounted( async () => {
-        store.isAuth = await sdk.verify();
+        try {
+            store.isAuth = await sdk.verify();
 
-        if ( store.isAuth )
-            isAuthorizedHandler();
+            if ( store.isAuth )
+                isAuthorizedHandler();
+        } catch ( e ) {
+            if ( e !== 'ERR_401' ) {
+                throw e;
+            }
+        }
 
         isLoggingIn.value = false;
 
