@@ -39,7 +39,9 @@ const next = () => {
 };
 
 const prev = () => {
-    // TODO: Back to beginning if more than some seconds have passed?
+    if ( playbackPercentage.value * duration.value > 7 )
+        return seekTo( 0 );
+
     playIndex( ( queueIdx.value - 1 + queue.value.length ) % queue.value.length );
 };
 
@@ -136,10 +138,12 @@ const addToSongList = ( songs: Song[] ) => {
 /**
  * Add songs to the playlist from given source
  * @param source - The ID of the source to add from
+ * @param cb - A custom callback to be executed instead of the default, which adds to queue
+ * @param skipLogin - Whether to skip login checks
  */
-const addSongFromSource = async ( source: string ): Promise<boolean> => {
-    if ( sources[source]!.authorized.value ) {
-        sources[source]!.addSongsFromThisSource( addToSongList );
+const addSongFromSource = async ( source: string, cb?: ( songs: Song[] ) => void, skipLogin?: boolean ): Promise<boolean> => {
+    if ( sources[source]!.authorized.value || skipLogin ) {
+        sources[source]!.addSongsFromThisSource( cb ? cb : addToSongList, skipLogin ? 0 : undefined, skipLogin );
     } else {
         sources[source]!.login!();
 

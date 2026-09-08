@@ -12,6 +12,7 @@ export interface CloudImport {
     'search': ( term: string, offset: number ) => Promise<Song[]>;
     'addSelected': ( index: number ) => void;
     'minChars'?: number;
+    'autoClose': boolean;
 }
 
 export interface FileImport {
@@ -19,6 +20,7 @@ export interface FileImport {
     'type': 'file';
     'mime': string;
     'process': ( files: FileList, cb: ( progress: number ) => void ) => Promise<void>;
+    'autoClose': boolean;
 }
 
 export type ImportTypes = CloudImport | FileImport;

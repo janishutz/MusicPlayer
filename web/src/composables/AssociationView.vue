@@ -49,6 +49,12 @@
         isShowingAssociationManager.value = false;
         fullPlayer.value = false;
     };
+
+    const retry = () => {
+        associationResults.value = [];
+        isAnalyzing.value = false;
+        needsFiles.value = true;
+    };
 </script>
 
 <template>
@@ -91,7 +97,9 @@
             <div v-else-if="associationResults.length === 0"></div>
             <div v-else>
                 An error occurred. Please try again
-                <!-- FIXME: Button to restore -->
+                <button @click="retry">
+                    Retry
+                </button>
             </div>
             <button @click="cancel">
                 Cancel

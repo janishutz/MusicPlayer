@@ -64,7 +64,7 @@
                 Save
             </button>
         </div>
-        <SongEditor v-model="showEditSong" editing-song="" />
+        <SongEditor v-model="showEditSong" :song="editingSong" />
         <AddSong v-model="showAddSong" />
         <div v-if="queue.length > 0" class="queue-container">
             <SortableList v-slot="{ item: song, index }" v-model="queue">

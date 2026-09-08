@@ -6,7 +6,7 @@ import {
 } from 'vue';
 
 export const useAuthStore = defineStore( 'authstore', () => {
-    const isAuth = ref( true );
+    const isAuth = ref( false );
 
     return {
         isAuth

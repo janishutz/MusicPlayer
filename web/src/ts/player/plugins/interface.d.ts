@@ -116,8 +116,11 @@ export interface PlayerSourcePlugin {
     /**
      * Called when user adds another song to the playlist via this source.
      * You may use the provided interface elements (search bar and popups) to e.g. ask if user wants to use a playlist, album, etc
+     * @param cb - Added songs are the arguments
+     * @param kindIdx - The index in the list of import types that should be used without showing popup. If unset, will show the picker
+     * @param autoClose - Whether or not to automatically close the interface after a single pick
      */
-    'addSongsFromThisSource': ( cb: ( songs: Song[] ) => void ) => void;
+    'addSongsFromThisSource': ( cb: ( songs: Song[] ) => void, kindIdx?: number, autoClose?: boolean ) => void;
 
     /**
      * Fully unload a song. This is called on clear of a playlist

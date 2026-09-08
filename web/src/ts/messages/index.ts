@@ -20,12 +20,11 @@ export const isConnected = ref( false );
 
 export const useAntiTamper = ref( false );
 
+// TODO: Anit-Tamper
 // const antiTamperClients = [];
 
 let connection: null | EventSource = null;
 let retries = 0;
-
-// TODO: Persist room name in local storage
 
 const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean> => {
     if ( !( /^[a-zA-Z0-9-]{3,20}$/ ).test( name ) ) return false;

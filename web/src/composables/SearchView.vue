@@ -49,6 +49,10 @@
 
         addedIndex.value = idx;
         searchOpts.value?.addSelected( idx );
+
+        if ( searchOpts.value?.autoClose )
+            isShowingSearchView.value = false;
+
         addedTimeout = setTimeout( () => {
             addedIndex.value = -1;
         }, 2000 );

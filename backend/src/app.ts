@@ -43,7 +43,8 @@ const run = () => {
             'frontendURL': config.webUrl,
             'corsWhitelist': [ config.webUrl ],
             'recheckTimeout': 300 * 1000,
-            'advancedVerification': 'sdk'
+            'advancedVerification': 'sdk',
+            'defaultRedirectURL': '/app'
         },
         app,
         async () => {
@@ -74,8 +75,6 @@ const run = () => {
     app.get( '/', ( _request: express.Request, response: express.Response ) => {
         response.redirect( config.webUrl ?? 'https://music.janishutz.com' );
     } );
-
-    // TODO: Need way for frontend to get the connection type for shares
 
 
     // Load extra routes

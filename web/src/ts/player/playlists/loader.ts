@@ -42,7 +42,6 @@ export const load = ( playlist: PlaylistSongs ) => {
     };
 
     if ( needToLoadLocalSongs ) {
-        // FIXME: Combine mime types
         const mime = Object.values( sources )
             .map( src => {
                 return src.loading.requiresLocalFiles === true ? src.loading.mime : '';

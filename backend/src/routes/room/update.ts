@@ -16,7 +16,6 @@ import {
 const routes = ( app: express.Application, foss: boolean, config: Config ) => {
     const sdk = getLoginSdk( foss );
 
-    // FIXME: Here, if not in sse mode, simply close the connection after sending 'poll'
     app.get( '/room/:id/connect', corsManager.middleware( false ), sseMiddleware( 'client', config ) );
 
     app.get( '/room/:id/poll', corsManager.middleware( false ), ( request: express.Request, response: express.Response ) => {
