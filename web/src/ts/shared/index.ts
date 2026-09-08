@@ -7,6 +7,7 @@ import {
     currentQueueIdx,
     isPlaying,
     playbackOffset,
+    playbackProgress,
     playbackTime,
     startTime
 } from './state';
@@ -44,7 +45,7 @@ const connect = (): Promise<void> => {
             startTime.value = data.state.start;
             playbackTime.value = data.state.offset;
             playbackOffset.value = data.state.offset;
-
+            playbackProgress.value = data.state.offset / ( data.playlist[ data.state.index ]?.duration ?? -1 );
             resolve();
         };
 

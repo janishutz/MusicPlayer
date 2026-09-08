@@ -32,6 +32,7 @@
         background-color: var(--secondary-color);
         transition: bottom 1s ease;
         transition-delay: 0.25s;
+        overflow: hidden;
 
         &.hidden {
             transition-delay: 0s;

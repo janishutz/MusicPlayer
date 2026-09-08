@@ -21,7 +21,7 @@
             total += currentQueue.value[ currentQueueIdx.value ]?.duration ?? 0;
             total -= playbackTime.value;
 
-            return Math.round( total / 60 );
+            return Math.ceil( total / 60 );
         };
     } );
 </script>
@@ -29,24 +29,29 @@
 <template>
     <div class="queue-viewer">
         <div class="queue-container">
-            <div v-for="(song, index) in songs" :key="index" class="song-list-element">
-                <div class="song-cover-wrapper">
-                    <img
-                        v-if="song.artwork && showArtworks"
-                        :src="song.artwork"
-                        alt="Song cover"
-                        class="song-cover"
-                    >
-                    <i v-else class="fa-solid fa-music song-cover"></i>
+            <div v-if="songs.length > 0" class="queue-scroll">
+                <div v-for="(song, index) in songs" :key="index" class="song-list-element">
+                    <div class="song-cover-wrapper">
+                        <img
+                            v-if="song.artwork && showArtworks"
+                            :src="song.artwork"
+                            alt="Song cover"
+                            class="song-cover"
+                        >
+                        <i v-else class="fa-solid fa-music song-cover"></i>
+                    </div>
+                    <div class="song-details">
+                        <h3>{{ song.name }}</h3>
+                        <p>{{ song.artist }}</p>
+                        <p>{{ song['additional-info'] }}</p>
+                    </div>
+                    <div class="song-actions">
+                        <p>In {{ '<' + timeToPlay( index ) }}min</p>
+                    </div>
                 </div>
-                <div class="song-details">
-                    <h3>{{ song.name }}</h3>
-                    <p>{{ song.artist }}</p>
-                    <p>{{ song['additional-info'] }}</p>
-                </div>
-                <div class="song-actions">
-                    <p>In {{ timeToPlay( index ) }}min</p>
-                </div>
+            </div>
+            <div v-else class="queue-empty">
+                No upcoming songs
             </div>
         </div>
     </div>
@@ -54,4 +59,12 @@
 
 <style lang="scss" scoped>
     @use '@/scss/components/queue.scss';
+
+    .queue-scroll {
+        height: 100%;
+        width: 100%;
+        margin-top: 20px;
+        justify-content: flex-start !important;
+        overflow-y: scroll;
+    }
 </style>

@@ -12,6 +12,9 @@ import {
 import {
     playbackPercentage
 } from '../player/status-tracking';
+import {
+    reauth
+} from '../util/reauth';
 import request from '../request';
 
 const RETRY_CAP = 10;
@@ -43,6 +46,8 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
     useAntiTamper.value = antiTamper;
     room.value = name;
 
+    document.addEventListener( 'musicplayer:autherror', reauth );
+
     return await connect();
 };
 
@@ -50,6 +55,11 @@ const closeRoom = async () => {
     // TODO: Trigger close on backend and disconnect.
     isConnected.value = false;
     localStorage.removeItem( 'room' );
+    connection?.close();
+
+    try {
+        document.removeEventListener( 'musicplayer:autherror', reauth );
+    } catch { /* empty */ }
 };
 
 const connect = (): Promise<boolean> => {
@@ -102,9 +112,14 @@ let stateLock = false;
 const sendPlaylistData = () => {
     if ( isConnected.value && !playlistLock ) {
         playlistLock = true;
-        request.post( `/room/${ room.value }/update/playlist`, JSON.stringify( {
-            'playlist': queue.value
-        } ) );
+
+        try {
+            request.post( `/room/${ room.value }/update/playlist`, JSON.stringify( {
+                'playlist': queue.value
+            } ) );
+        } catch ( e ) {
+            console.error( e );
+        }
 
         setTimeout( () => {
             playlistLock = false;
@@ -112,15 +127,20 @@ const sendPlaylistData = () => {
     }
 };
 
-const sendStateData = () => {
+const sendStateData = async () => {
     if ( isConnected.value && !stateLock ) {
         stateLock = true;
-        request.post( `/room/${ room.value }/update/state`, JSON.stringify( {
-            'playing': isPlaying.value,
-            'index': queueIdx.value,
-            'start': new Date().getTime() - 100,
-            'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
-        } ) );
+
+        try {
+            request.post( `/room/${ room.value }/update/state`, JSON.stringify( {
+                'playing': isPlaying.value,
+                'index': queueIdx.value,
+                'start': new Date().getTime() - 100,
+                'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
+            } ) );
+        } catch ( e ) {
+            console.error( e );
+        }
 
         setTimeout( () => {
             stateLock = false;
@@ -135,6 +155,7 @@ const useRoomWatchers = () => {
         document.addEventListener( 'musicplayer:playindex', sendStateData );
         document.addEventListener( 'musicplayer:seek', sendStateData );
         document.addEventListener( 'musicplayer:playpause', sendStateData );
+        document.addEventListener( 'musicplayer:update', sendPlaylistData );
     } );
 
     onUnmounted( () => {
@@ -148,6 +169,10 @@ const useRoomWatchers = () => {
 
         try {
             document.addEventListener( 'musicplayer:playpause', sendStateData );
+        } catch { /* empty */ }
+
+        try {
+            document.addEventListener( 'musicplayer:update', sendPlaylistData );
         } catch { /* empty */ }
     } );
 

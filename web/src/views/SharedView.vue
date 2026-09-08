@@ -2,14 +2,14 @@
     import {
         type ComputedRef,
         computed,
-        onMounted,
-        ref
+        onMounted
     } from 'vue';
     import {
         currentQueue,
         currentQueueIdx,
         isPlaying,
         playbackOffset,
+        playbackProgress,
         playbackTime,
         startTime
     } from '@/ts/shared/state';
@@ -25,7 +25,6 @@
     import shared from '@/ts/shared';
 
     shared.connect();
-    const playbackProgress = ref( 0 );
 
     onMounted( () => {
         setInterval( () => {
@@ -62,22 +61,26 @@
 
 <template>
     <div class="shared-view">
-        <div>
-            <div>
-                <CurrentSong v-model="song" />
-                <div class="time">
-                    <p class="current">
-                        {{ beautifyTime( playbackTime ) }}
-                    </p>
-                    <p class="duration">
-                        {{ beautifyTime( song.duration ) }}
-                    </p>
-                </div>
-                <ProgressBar v-model="playbackProgress" :disallow-move="true" />
+        <div class="panel">
+            <div class="current-song-wrapper">
+                <CurrentSong v-model="song" :show-additional-info="true" />
             </div>
-            <div>
-                <SharedQueue />
+            <ProgressBar v-model="playbackProgress" :disallow-move="true" />
+            <div class="time">
+                <p class="current">
+                    {{ beautifyTime( playbackTime ) }}
+                </p>
+                <p class="duration">
+                    {{ beautifyTime( song.duration ) }}
+                </p>
             </div>
+        </div>
+        <div class="panel">
+            <SharedQueue />
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+    @use '@/scss/shared/main.scss';
+</style>

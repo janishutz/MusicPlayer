@@ -19,3 +19,5 @@ export const showArtworks = ref( false );
 export const playbackTime = ref( 0 );
 
 export const playbackOffset = ref( 0 );
+
+export const playbackProgress = ref( 0 );

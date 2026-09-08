@@ -13,7 +13,7 @@
         <div
             class="panel"
         >
-            <div style="margin-bottom: 20px; width: 100%;">
+            <div class="current-song-wrapper">
                 <CurrentSong
                     v-model="queue[queueIdx]"
                 />
@@ -44,6 +44,15 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        position: relative;
+
+        >.current-song-wrapper {
+            margin-bottom: 1.5rem;
+            width: 100%;
+            height: 100%;
+            max-height: calc(100% - 15rem);
+            overflow: hidden;
+        }
     }
 }
 </style>

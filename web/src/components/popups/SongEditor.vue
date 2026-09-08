@@ -44,6 +44,7 @@
 
     const save = () => {
         model.value = false;
+        document.dispatchEvent( new CustomEvent( 'musicplayer:update' ) );
     };
 </script>
 

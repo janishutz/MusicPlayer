@@ -18,12 +18,23 @@
         store.isAuth = await sdk.verify();
 
         if ( store.isAuth )
-            router.push( '/app' );
+            isAuthorizedHandler();
 
         isLoggingIn.value = false;
 
         // TODO: Logout button
     } );
+
+    const isAuthorizedHandler = () => {
+        if ( localStorage.getItem( 'close-tab' ) === 'true' ) {
+            localStorage.setItem( 'login-ok', 'true' );
+            localStorage.removeItem( 'close-tab' );
+
+            return window.close();
+        }
+
+        router.push( '/app' );
+    };
 
     const login = () => {
         if ( isLoggingIn.value ) return;

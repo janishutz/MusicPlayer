@@ -59,6 +59,10 @@
                 <i class="fa-solid fa-xmark"></i>
                 Clear
             </button>
+            <button @click="editSong( -1 )">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Edit Current
+            </button>
             <button @click="savePlaylist">
                 <i class="fa-solid fa-save"></i>
                 Save

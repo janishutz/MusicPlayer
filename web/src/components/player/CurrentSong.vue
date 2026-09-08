@@ -6,6 +6,9 @@
     const song = defineModel<Song>( {
         'required': false
     } );
+    const props = defineProps<{
+        'showAdditionalInfo'?: boolean
+    }>();
 </script>
 
 <template>
@@ -24,6 +27,9 @@
                 {{ song?.name ?? 'Not playing' }}
             </h1>
             <p>{{ song?.artist ?? 'No artist' }}</p>
+            <p v-if="props.showAdditionalInfo">
+                {{ song?.['additional-info'] }}
+            </p>
         </div>
     </div>
 </template>
@@ -31,14 +37,22 @@
 <style lang="scss" scoped>
 .current-song {
     width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     .artwork {
         width: 100%;
+        height: 100%;
+        max-height: calc(100% - 9rem);
 
         >img, .fa-solid {
-            width: 60%;
-            max-height: 50%;
-            font-size: 15vw;
+            max-width: 60%;
+            height: 100%;
+            font-size: 40vh;
         }
     }
 
