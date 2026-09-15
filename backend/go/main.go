@@ -1,0 +1,5 @@
+package musicplayer
+
+func main() {
+
+}
