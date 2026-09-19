@@ -15,7 +15,7 @@ If any of these are unset, then no authentication will be used. If that is the c
 - `OIDC_CLIENT_SECRET`: The Client Secret
 
 ### Store
-If any of these are unset, ownership / subscription status won't be checked for the user. If that is the case, you will see a warning in the logs
+If any of these are unset, ownership / subscription status won't be checked for the user. If that is the case, you will see a warning in the logs.
 If they are set and a request fails with a 401 code, the check is disabled after a few failed attempts (TODO: Implement)
 - `STORE_SERVICE_ID`: The ServiceID for the store
 - `STORE_SERVICE_SECRET`: The service secret for authentication
