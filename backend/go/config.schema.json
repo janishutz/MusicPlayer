@@ -6,15 +6,62 @@
             "type": "string",
             "enum": [
                 "websockets",
-                "sse",
                 "poll"
             ],
             "default": "poll",
             "description": "Default information retrieval mode for the basic remote displays. Polling is slightly cheaper than websockets at the cost of responsiveness"
         },
-        "webUrl": {
-            "type": "string",
-            "description": "The URL to the frontend. Just the host, in form https://music.janishutz.com"
+        "urls": {
+            "type": "object",
+            "properties": {
+                "defaultRedirect": {
+                    "type": "string",
+                    "description": "The URL to redirect to by default after authentication, of form https://music.janishutz.com"
+                },
+                "frontendURL": {
+                    "type": "string",
+                    "description": "The URL of the frontend. This is used to control CORS"
+                },
+                "backend": {
+                    "type": "string",
+                    "description": "The URL of the backend. Just the host, of form https://music.janishutz.com"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "defaultRedirect",
+                "frontendURL",
+                "backend"
+            ]
+        },
+        "appleMusicApi": {
+            "type": "object",
+            "description": "Apple Music API configuration, see https://developer.apple.com/documentation/applemusicapi/generating-developer-tokens",
+            "properties": {
+                "teamID": {
+                    "type": "string",
+                    "description": "The Team ID"
+                },
+                "keyID": {
+                    "type": "string",
+                    "description": "The ID of the key"
+                },
+                "storefront": {
+                    "type": "string",
+                    "description": "The default storefront"
+                },
+                "keyPath": {
+                    "type": "string",
+                    "default": "./apple_private_key.p8",
+                    "description": "Path to the key, relative to the root folder"
+                }
+            },
+            "required": [
+                "teamID",
+                "keyID",
+                "storefront",
+                "keyPath"
+            ]
         },
         "dataDir": {
             "type": "string",
@@ -23,9 +70,8 @@
         }
     },
     "required": [
-        "store",
-        "auth",
         "clientMode",
-        "webUrl"
+        "urls",
+        "dataDir"
     ]
 }
