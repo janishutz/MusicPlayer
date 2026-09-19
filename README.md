@@ -40,6 +40,11 @@ A completely new version of MusicPlayer is currently [in development](https://gi
     <a href="https://store.janishutz.com/donate" target="_blank"><img src="https://store-cdn.janishutz.com/static/support-me.jpg" width="150px"></a>
 </div>
 
+
+# Limitations
+- You can either use OpenID Connect for sign in or no sign in at all.
+There are plans to eventually also add local authentication, but that is low priority (since ProxyAuth is a thing)
+
 # Features
 **NOTICE:** This section has not been updated for the new version of MusicPlayer yet
 - Browser based App that runs on all OS (Linux, MacOS, Windows, iOS, Android, iPadOS, ...)
