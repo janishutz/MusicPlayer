@@ -3,26 +3,8 @@ package routes
 import (
 	"log"
 	"regexp"
-	"sync"
-
-	"github.com/gorilla/websocket"
+	// "github.com/gorilla/websocket"
 )
-
-type Playlist struct{}
-
-// Represents the current state of the player
-type State struct{}
-
-type clientList map[*websocket.Conn]bool
-
-type room struct {
-	uid       string
-	state     State
-	playlist  Playlist
-	timestamp int64
-	members   clientList
-	lock      sync.RWMutex
-}
 
 var (
 	rooms     map[string]room
@@ -31,7 +13,7 @@ var (
 )
 
 func Init() {
-	r, err := regexp.Compile("[a-zA-Z0-9-]+")
+	r, err := regexp.Compile("[a-zA-Z0-9-]{3,}")
 	if err != nil {
 		log.Fatal("[Rooms] Regex compile failed")
 	}
@@ -53,11 +35,13 @@ func createRoom(uid string, name string) bool {
 	} else {
 		roomNames[name] = true
 		rooms[name] = room{
-			uid:       uid,
-			state:     State{},
-			playlist:  Playlist{},
-			timestamp: 0,
-			members:   clientList{},
+			uid:   uid,
+			state: state{},
+			playlist: playlistState{
+				lastUpdate: 0,
+				playlist:   Songs{},
+			},
+			members: clientList{},
 		}
 
 		return true

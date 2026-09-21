@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 
+	"musicplayer/config"
 	"musicplayer/routes"
 
 	"github.com/gin-contrib/cors"
@@ -17,15 +18,14 @@ func main() {
 	// TODO: First try to load config.secret.yaml, then config.yaml
 
 	// Using https://github.com/goccy/go-yaml for yaml
-	var conf struct {
-	}
+	var conf config.Config
 
 	yaml.Unmarshal([]byte(""), &conf)
 
 	// TODO: Security stuff (and auto-config frontend and load config, parse that, etc, etc)
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://music.example.com"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowOrigins:     []string{"http://localhost:8081"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
@@ -34,7 +34,7 @@ func main() {
 
 	oidclogin.Configure(r, "https://api.music.example.com", "https://music.example.com", true)
 
-	routes.AddRoutes(r)
+	routes.AddRoutes(r, conf)
 
 	r.Run()
 }
