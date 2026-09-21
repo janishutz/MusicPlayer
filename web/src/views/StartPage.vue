@@ -4,7 +4,7 @@
         ref
     } from 'vue';
     import router from '@/router';
-    import sdk from '@janishutz/login-sdk-browser';
+    import * as sdk from '@janishutz/oidc-login-sdk-browser';
     import {
         useAuthStore
     } from '@/stores/authstore';
@@ -12,7 +12,7 @@
     const isLoggingIn = ref( true );
     const store = useAuthStore();
 
-    sdk.setUp( 'jh-music', 'http://localhost:8080', '/app' );
+    sdk.configure( {} );
 
     onMounted( async () => {
         try {
