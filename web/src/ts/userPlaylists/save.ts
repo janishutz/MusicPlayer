@@ -41,7 +41,7 @@ export const savePlaylist = () => {
 };
 
 export const getPlaylists = async () => {
-    playlists.value = await ( await request.get( '/user/playlists' ) ).json();
+    playlists.value = ( await ( await request.get( '/user/playlists' ) ).json() ).playlists;
     editingPlaylists.value = playlists.value.map( () => false );
 };
 

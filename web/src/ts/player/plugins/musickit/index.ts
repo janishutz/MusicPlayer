@@ -15,7 +15,7 @@ import {
 export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string = 'ch' ): Promise<PlayerSourcePlugin> => {
     return new Promise( ( resolve, reject ) => {
         const init = async ( storefront: string ): Promise<PlayerSourcePlugin> => {
-            const token = await ( await request.get( '/dev-token' ) ).text();
+            const token = ( await ( await request.get( '/dev-token' ) ).json() ).token;
             const instance = await window.MusicKit.configure( {
                 'developerToken': token,
                 'app': {
