@@ -1,7 +1,6 @@
 package config
 
 import (
-	"io/fs"
 	"log"
 	"os"
 
@@ -11,7 +10,7 @@ import (
 // MusicPlayer Configuration. See the configuration file for more information
 type Config struct {
 	Datadir        string              `json:"dataDir"`
-	OwnershipCheck OwnershipCheck      `json:"ownershiptCheck"`
+	OwnershipCheck OwnershipCheck      `json:"ownershipCheck"`
 	AppleMusicApi  AppleMusicApiConfig `json:"appleMusicApi"`
 	Urls           ApplicationURLs     `json:"urls"`
 	ClientMode     string              `json:"clientMode"`
@@ -19,7 +18,7 @@ type Config struct {
 
 type OwnershipCheck struct {
 	Enabled       bool     `json:"enabled"`
-	BackendURL    bool     `json:"backendURL"`
+	BackendURL    string   `json:"backendURL"`
 	BypassingUIDs []string `json:"bypassingUIDs"`
 }
 
@@ -39,30 +38,53 @@ type ApplicationURLs struct {
 }
 
 func LoadConfig() Config {
-	// TODO: First try to load config.secret.yml, then config.yml
-	// Using https://github.com/goccy/go-yaml for yaml
+	// Default Config
 	var conf Config
-	curdir, err := os.Getwd()
-	if err != nil {
-		log.Fatal("Failed to read current directory")
-	}
 
-	dir := os.DirFS(curdir)
-	contents, err := fs.ReadDir(dir, "")
+	// Load config
+	contents, err := os.ReadDir("./")
 	fname := "config.yml"
 	for _, file := range contents {
 		if file.Name() == "config.secret.yml" {
 			fname = "config.secret.yml"
 		}
 	}
-	data, err := fs.ReadFile(dir, fname)
+	data, err := os.ReadFile(fname)
 	if err != nil {
-		log.Fatal("Failed to load configuration")
+		log.Fatal("[FATAL] Failed to load configuration")
 	}
-
 	yaml.Unmarshal(data, &conf)
 
-	// TODO: Verify using schema (such as via https://github.com/google/jsonschema-go)
+	// Validate config and input defaults where not set
+	if conf.ClientMode != "ws" && conf.ClientMode != "poll" {
+		conf.ClientMode = "poll"
+	}
+	if conf.Datadir == "" {
+		conf.Datadir = "./data/"
+	}
+	if conf.Datadir[len(conf.Datadir)-1] != '/' {
+		conf.Datadir += "/"
+	}
+	if conf.AppleMusicApi.KeyPath == "" {
+		conf.AppleMusicApi.KeyPath = "./apple_private_key.p8"
+	}
+	if conf.AppleMusicApi.KeyID == "" || conf.AppleMusicApi.Storefront == "" || conf.AppleMusicApi.TeamID == "" {
+		log.Fatal("[FATAL] Missing Apple Music API configuration")
+	}
+	if conf.Urls.BackendURL == "" {
+		log.Print("[WARN] Backend URL was not configured, falling back to localhost")
+		conf.Urls.BackendURL = "http://localhost:8080"
+	}
+	if conf.Urls.FrontendURL == "" {
+		log.Print("[WARN] Frontend URL URL was not configured, falling back to localhost")
+		conf.Urls.BackendURL = "http://localhost:8081"
+	}
+	if conf.Urls.DefaultRedirect == "" {
+		log.Print("[WARN] DefaultRedirect was not configured, falling back to default")
+		conf.Urls.BackendURL = conf.Urls.FrontendURL + "/app"
+	}
+
+	log.Print("Configuration loaded and validated successfully")
 
 	return conf
 }

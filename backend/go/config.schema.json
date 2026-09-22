@@ -31,7 +31,7 @@
             "required": [
                 "defaultRedirect",
                 "frontendURL",
-                "backend"
+                "backendURL"
             ]
         },
         "appleMusicApi": {
@@ -73,6 +73,7 @@
                 },
                 "backendURL": {
                     "type": "string",
+                    "pattern": "(?:http[s]?:\\/\\/.)?(?:www\\.)?[-a-zA-Z0-9@%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b(?:[-a-zA-Z0-9@:%_\\+.~#?&\\/\\/=]*)",
                     "description": "The URL of the store backend to check against. AppID and Secret need to be configured using environment variables, see README"
                 },
                 "bypassingUIDs": {
