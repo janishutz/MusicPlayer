@@ -8,7 +8,9 @@ import {
 import {
     musicKitPlayback
 } from './playback';
-import request from '@/ts/request';
+import {
+    request
+} from '@janishutz/oidc-login-sdk-browser';
 
 export const useMusicKit: PlayerSourcePluginInitializer = ( storefront: string = 'ch' ): Promise<PlayerSourcePlugin> => {
     return new Promise( ( resolve, reject ) => {

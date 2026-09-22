@@ -1,10 +1,10 @@
 <script setup lang="ts">
+    import * as sdk from '@janishutz/oidc-login-sdk-browser';
     import {
         onMounted,
         ref
     } from 'vue';
     import router from '@/router';
-    import * as sdk from '@janishutz/oidc-login-sdk-browser';
     import {
         useAuthStore
     } from '@/stores/authstore';
@@ -12,16 +12,14 @@
     const isLoggingIn = ref( true );
     const store = useAuthStore();
 
-    sdk.configure( {} );
-
     onMounted( async () => {
         try {
-            store.isAuth = await sdk.verify();
+            store.isAuth = await sdk.auth.check();
 
             if ( store.isAuth )
                 isAuthorizedHandler();
         } catch ( e ) {
-            if ( e !== 'ERR_401' ) {
+            if ( e instanceof sdk.request.AuthError ) {
                 throw e;
             }
         }
@@ -46,7 +44,7 @@
         if ( isLoggingIn.value ) return;
 
         isLoggingIn.value = true;
-        sdk.login();
+        sdk.auth.login();
         isLoggingIn.value = false;
     };
 </script>

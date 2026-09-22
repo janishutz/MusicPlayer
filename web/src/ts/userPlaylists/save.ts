@@ -11,7 +11,9 @@ import {
 import {
     addPlaylist
 } from '.';
-import request from '../request';
+import {
+    request
+} from '@janishutz/oidc-login-sdk-browser';
 import {
     useNotification
 } from '@kyvg/vue3-notification';

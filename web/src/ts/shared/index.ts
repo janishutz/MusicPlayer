@@ -14,7 +14,9 @@ import {
 import type {
     Song
 } from '../dtype/playlist';
-import request from '../request';
+import {
+    request
+} from '@janishutz/oidc-login-sdk-browser';
 
 const RETRY_CAP = 10;
 
@@ -29,7 +31,7 @@ let retries = 0;
 const connect = (): Promise<void> => {
     return new Promise( ( resolve, reject ) => {
         room = location.pathname.substring( location.pathname.lastIndexOf( '/' ) + 1 );
-        connection = new EventSource( request.backendURL + `/room/${ room }/connect` );
+        connection = new EventSource( request.getBackendURL() + `/room/${ room }/connect` );
 
         connection.onopen = async () => {
             hasConnected = true;

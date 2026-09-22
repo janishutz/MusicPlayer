@@ -17,9 +17,6 @@
         ref
     } from 'vue';
     import AddPlaylist from './AddPlaylist.vue';
-    import {
-        UnownedError
-    } from '@/ts/request';
     import router from '@/router';
 
     const checkingStatus = ref( true );
@@ -38,7 +35,7 @@
         try {
             await getPlaylists();
         } catch ( e ) {
-            if ( e instanceof UnownedError ) {
+            if ( e === 'ERR_402' ) {
                 router.push( '/get' );
             }
         }
