@@ -7,13 +7,14 @@ import (
 )
 
 type File struct {
-	Version   string   `json:"version"`
-	Playlists Playlist `json:"playlists"`
+	Version   string    `json:"version"`
+	Playlists Playlists `json:"playlists"`
 }
 
-type Playlist []struct {
+type Playlists []Playlist
+type Playlist struct {
 	Name  string `json:"name"`
-	Songs Songs  `json:"song"`
+	Songs Songs  `json:"songs"`
 }
 
 type Songs []Song

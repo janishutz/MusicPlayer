@@ -49,7 +49,10 @@ export const savePlaylists = async () => {
     const notifications = useNotification();
 
     try {
-        await request.post( '/user/playlists', JSON.stringify( playlists.value ) );
+        await request.post( '/user/playlists', JSON.stringify( {
+            'playlists': playlists.value,
+            'version': '1'
+        } ) );
         notifications.notify( {
             'text': 'Playlists saved successfully',
             'type': 'success',
