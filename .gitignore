@@ -2,6 +2,7 @@
 node_modules
 *.secret.json
 *.secret.yaml
+*.secret.yml
 apple_private_key.p8
 musicplayerv2-server.zip
 dist

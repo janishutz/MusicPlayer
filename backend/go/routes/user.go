@@ -3,7 +3,7 @@ package routes
 import "github.com/gin-gonic/gin"
 
 func playlistGetHandler(c *gin.Context) {
-	c.File(conf.Datapath + "" + ".json")
+	c.File(conf.Datadir + "" + ".json")
 }
 
 func playlistPostHandler(c *gin.Context) {
