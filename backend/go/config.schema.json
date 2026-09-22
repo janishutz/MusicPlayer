@@ -22,7 +22,7 @@
                     "type": "string",
                     "description": "The URL of the frontend. This is used to control CORS"
                 },
-                "backend": {
+                "backendURL": {
                     "type": "string",
                     "description": "The URL of the backend. Just the host, of form https://music.janishutz.com"
                 }
@@ -61,7 +61,32 @@
                 "keyID",
                 "storefront",
                 "keyPath"
-            ]
+            ],
+            "additionalProperties": false
+        },
+        "ownershipCheck": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether or not to enable the check. Only will be enabled if backendURL is set and env vars for secret and AppID are set"
+                },
+                "backendURL": {
+                    "type": "string",
+                    "description": "The URL of the store backend to check against. AppID and Secret need to be configured using environment variables, see README"
+                },
+                "bypassingUIDs": {
+                    "type": "array",
+                    "description": "A list of userids that bypass the ownership check. The stubs user always bypasses it. This setting has no effect if the ownership check is disabled",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "enabled"
+            ],
+            "additionalProperties": false
         },
         "dataDir": {
             "type": "string",
@@ -72,6 +97,7 @@
     "required": [
         "clientMode",
         "urls",
-        "dataDir"
+        "dataDir",
+        "ownershipCheck"
     ]
 }
