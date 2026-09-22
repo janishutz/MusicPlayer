@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"time"
 
 	"musicplayer/config"
@@ -28,14 +29,17 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
+	r.LoadHTMLGlob("public/*.tmpl")
+
 	// FIXME: Choose session store (probably best to support both redis and memstore or memcache)
 	// TODO: Secret via env var as well
 	store := memstore.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("jhid", store))
 
-	oidclogin.Configure(r, "https://api.music.example.com", "https://music.example.com", true)
-
 	routes.AddRoutes(r, conf)
+
+	log.Println("Redirect URL: ", conf.Urls.DefaultRedirect)
+	oidclogin.Configure(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, true)
 
 	// Healthcheck
 	r.GET("/healthz", func(c *gin.Context) { c.JSON(200, gin.H{"status": true}) })

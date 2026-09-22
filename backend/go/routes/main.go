@@ -9,8 +9,9 @@ import (
 var conf config.Config
 
 func AddRoutes(r *gin.Engine, configuration config.Config) {
+	initializeDevTokenGenerator(configuration)
 	// Get the apple music token
-	r.GET("/dev-token", oidclogin.EnsureLogin(false), devTokenHandler)
+	r.GET("/dev-token", oidclogin.EnsureLogin(false), devTokenHandler(configuration))
 
 	// Get the user's playlists
 	r.GET("/user/playlists", oidclogin.EnsureLogin(false), playlistGetHandler)

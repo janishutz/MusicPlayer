@@ -1,9 +1,16 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"log"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+)
 
 func playlistGetHandler(c *gin.Context) {
-	c.File(conf.Datadir + "" + ".json")
+	session := sessions.Default(c)
+	log.Println(session.Get("jhid_uid"))
+	c.File(conf.Datadir + session.Get("jhid_uid").(string) + ".json")
 }
 
 func playlistPostHandler(c *gin.Context) {
