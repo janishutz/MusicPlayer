@@ -49,8 +49,20 @@ func LoadConfig() Config {
 
 	dir := os.DirFS(curdir)
 	contents, err := fs.ReadDir(dir, "")
+	fname := "config.yml"
+	for _, file := range contents {
+		if file.Name() == "config.secret.yml" {
+			fname = "config.secret.yml"
+		}
+	}
+	data, err := fs.ReadFile(dir, fname)
+	if err != nil {
+		log.Fatal("Failed to load configuration")
+	}
 
-	fs.ReadFile(dir, "config.yml")
-	yaml.Unmarshal([]byte(""), &conf)
+	yaml.Unmarshal(data, &conf)
+
+	// TODO: Verify using schema (such as via https://github.com/google/jsonschema-go)
+
 	return conf
 }
