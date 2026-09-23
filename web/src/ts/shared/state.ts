@@ -24,4 +24,8 @@ export const playbackOffset = ref( 0 );
 
 export const playbackProgress = ref( 0 );
 
-export const errMsg = ref( '' );
+export const popupTitle = ref( '' );
+
+export const popupMsg = ref( '' );
+
+export const showInfoPopup = ref( false );

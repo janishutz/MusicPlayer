@@ -11,9 +11,13 @@
         playbackOffset,
         playbackProgress,
         playbackTime,
+        popupMsg,
+        popupTitle,
+        showInfoPopup,
         startTime
     } from '@/ts/shared/state';
     import CurrentSong from '@/components/player/CurrentSong.vue';
+    import InformationPopup from '@/components/shared/InformationPopup.vue';
     import ProgressBar from '@/components/player/ProgressBar.vue';
     import SharedQueue from '@/components/shared/SharedQueue.vue';
     import type {
@@ -61,6 +65,7 @@
 
 <template>
     <div class="shared-view">
+        <InformationPopup v-model="showInfoPopup" :title="popupTitle" :msg="popupMsg" />
         <div class="panel">
             <div class="current-song-wrapper">
                 <CurrentSong v-model="song" :show-additional-info="true" />

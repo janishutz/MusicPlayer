@@ -4,6 +4,9 @@ import {
 import {
     request
 } from '@janishutz/oidc-login-sdk-browser';
+import {
+    reset
+} from './reset';
 
 const RETRY_CAP = 10;
 
@@ -22,6 +25,7 @@ const disconnect = () => {
     connection = null;
     hasConnected = false;
     retries = 0;
+    reset();
 };
 
 const connectHandler = (): Promise<void> => {
@@ -36,7 +40,7 @@ const connectHandler = (): Promise<void> => {
         };
 
         connection.onmessage = msg => {
-            if ( msg.data === 'close' ) {
+            if ( msg.data === 'close-room' ) {
                 connection?.close();
 
                 // TODO: Show popup informing user that share was closed

@@ -65,7 +65,7 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
 const closeRoom = async () => {
     isConnected.value = false;
     localStorage.removeItem( 'room' );
-    connection?.send( 'close' );
+    connection?.send( 'close-room' );
     connection?.close();
 
     try {

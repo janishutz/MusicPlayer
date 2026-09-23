@@ -5,6 +5,9 @@ import {
     playbackOffset,
     playbackProgress,
     playbackTime,
+    popupMsg,
+    popupTitle,
+    showInfoPopup,
     startTime
 } from './state';
 import type {
@@ -16,6 +19,9 @@ import type {
 import {
     request
 } from '@janishutz/oidc-login-sdk-browser';
+import {
+    reset
+} from './reset';
 
 const POLL_INTERVAL = 60000;
 
@@ -25,8 +31,16 @@ let interval = -1;
 const connect = () => {
     const room = location.pathname.substring( location.pathname.lastIndexOf( '/' ) + 1 );
 
-    interval = setInterval( () => {
-        poll( room );
+    interval = setInterval( async () => {
+        try {
+            await poll( room );
+        } catch ( error ) {
+            if ( ( error as Error ).message === 'ERR_404' ) {
+                popupTitle.value = 'Share deleted';
+                popupMsg.value = 'The share you were connected to has been deleted';
+                showInfoPopup.value = true;
+            }
+        }
     }, POLL_INTERVAL );
 };
 
@@ -34,6 +48,8 @@ const disconnect = () => {
     try {
         clearInterval( interval );
     } catch { /* empty */ }
+
+    reset();
 };
 
 const poll = async ( room: string ) => {

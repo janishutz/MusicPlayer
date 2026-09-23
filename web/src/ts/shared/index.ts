@@ -1,7 +1,9 @@
 // TODO: Persist settings in local storage
 import {
     enableAntiTamper,
-    errMsg
+    popupMsg,
+    popupTitle,
+    showInfoPopup
 } from './state';
 import poll from './poll';
 import ws from './ws';
@@ -21,10 +23,12 @@ const connect = async () => {
             poll.connect();
         }
     } catch ( e ) {
-        const error = await e;
+        const error = await e as Error;
 
-        if ( error === 'ERR_404' ) {
-            errMsg.value = 'Missing';
+        if ( error.message === 'ERR_404' ) {
+            popupTitle.value = 'Share not found';
+            popupMsg.value = 'The share you have specified does not currently exist. Please try again later';
+            showInfoPopup.value = true;
         }
     }
 };

@@ -4,7 +4,7 @@
     const show = defineModel<boolean>();
     const props = defineProps<{
         'title': string;
-        'message'?: string;
+        'msg'?: string;
     }>();
 
     const close = () => {
@@ -16,7 +16,7 @@
     <div>
         <PopupElement v-model="show">
             <h2>{{ props.title }}</h2>
-            <p>{{ props.message }}</p>
+            <p>{{ props.msg }}</p>
             <button @click="close">
                 Ok
             </button>
