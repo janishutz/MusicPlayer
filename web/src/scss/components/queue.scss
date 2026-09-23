@@ -15,7 +15,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      width: calc(100% - 1.5rem);
 
       >.song-cover-wrapper {
         height: 7rem;
@@ -61,7 +61,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         text-wrap: nowrap;
-        max-width: 60%;
+        width: calc(100% - 18rem);
 
         >* {
           margin: 5px;
