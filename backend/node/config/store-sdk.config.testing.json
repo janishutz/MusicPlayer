@@ -1,5 +1,0 @@
-{
-    "backendURL": "http://localhost:8083",
-    "name": "testing",
-    "signingSecret": "test"
-}

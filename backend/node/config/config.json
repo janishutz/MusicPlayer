@@ -1,6 +1,0 @@
-{
-    "$schema": "../config.schema.json",
-    "mode": "hosted",
-    "clientMode": "sse",
-    "webUrl": "http://localhost:8081"
-}
