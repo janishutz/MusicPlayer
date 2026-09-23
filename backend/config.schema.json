@@ -5,7 +5,7 @@
         "clientMode": {
             "type": "string",
             "enum": [
-                "websockets",
+                "sse",
                 "poll"
             ],
             "default": "poll",

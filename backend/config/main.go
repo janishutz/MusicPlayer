@@ -56,7 +56,7 @@ func LoadConfig() Config {
 	yaml.Unmarshal(data, &conf)
 
 	// Validate config and input defaults where not set
-	if conf.ClientMode != "ws" && conf.ClientMode != "poll" {
+	if conf.ClientMode != "sse" && conf.ClientMode != "poll" {
 		conf.ClientMode = "poll"
 	}
 	if conf.Datadir == "" {

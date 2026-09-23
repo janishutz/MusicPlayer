@@ -63,9 +63,9 @@ func AdminHandler(c *gin.Context) {
 			log.Printf("Read error: %v", err)
 			break
 		}
+		broadcast(roomID, message)
 		if string(message) == "close-room" {
 			rooms.Close(uid.(string), roomID)
 		}
-		broadcast(roomID, message)
 	}
 }

@@ -20,7 +20,7 @@ func pollHandler(c *gin.Context) {
 	if err != nil {
 		i = 0
 	}
-	room := rooms.GetState(c.Params.ByName("id"), i/1000)
+	room := rooms.GetState(c.Params.ByName("id"), i/1000, conf.ClientMode == "sse")
 	if room != nil {
 		c.JSON(200, room)
 	} else {
@@ -29,8 +29,8 @@ func pollHandler(c *gin.Context) {
 }
 
 type roomCreateRequestBody struct {
-	RoomId string `json:"roomId"`
-	AntiTamper bool `json:"antiTamper"`
+	RoomId     string `json:"roomId"`
+	AntiTamper bool   `json:"antiTamper"`
 }
 
 func createRoomHandler(c *gin.Context) {

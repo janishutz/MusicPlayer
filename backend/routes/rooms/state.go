@@ -36,6 +36,7 @@ type room struct {
 	state      state
 	playlist   playlistState
 	antiTamper bool
+	Message    chan string
 }
 
 type roomsList map[string]*room
@@ -57,9 +58,10 @@ type StateUpdate struct {
 	Playlist   *types.Songs `json:"playlist"`
 	State      state        `json:"state"`
 	AntiTamper bool         `json:"AT"`
+	Mode       bool         `json:"SSE"`
 }
 
-func GetState(roomId string, lastUpdate int) *StateUpdate {
+func GetState(roomId string, lastUpdate int, sse bool) *StateUpdate {
 	if roomNames[roomId] {
 		room := rooms[roomId]
 		if room.playlist.LastUpdate > lastUpdate {
@@ -67,12 +69,14 @@ func GetState(roomId string, lastUpdate int) *StateUpdate {
 				Playlist:   &room.playlist.Playlist,
 				State:      room.state,
 				AntiTamper: room.antiTamper,
+				Mode: sse,
 			}
 		} else {
 			return &StateUpdate{
 				Playlist:   nil,
 				State:      room.state,
 				AntiTamper: room.antiTamper,
+				Mode: sse,
 			}
 		}
 	}
@@ -87,6 +91,7 @@ func UpdateState(roomId string, playing bool, index int, start int, offset float
 		rooms[roomId].state.Start = start
 		rooms[roomId].state.Playing = playing
 		rooms[roomId].state.Offset = offset
+		rooms[roomId].Message <- "state"
 		return true
 	}
 	return false
@@ -97,6 +102,7 @@ func UpdatePlaylist(roomId string, playlist types.Songs) bool {
 	if roomNames[roomId] {
 		rooms[roomId].playlist.LastUpdate = int(time.Now().Unix())
 		rooms[roomId].playlist.Playlist = playlist
+		rooms[roomId].Message <- "playlists"
 		return true
 	}
 	return false

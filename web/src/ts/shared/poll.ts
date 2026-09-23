@@ -52,11 +52,15 @@ const disconnect = () => {
     reset();
 };
 
-const poll = async ( room: string ) => {
+const poll = async ( room: string ): Promise<{
+    'antiTamper': boolean,
+    'sse': boolean
+}> => {
     const data = await ( await request.get( `/room/${ room }/poll` ) ).json() as {
         'playlist': Song[],
         'state': StateUpdate,
-        'AT': boolean
+        'AT': boolean,
+        'SSE': boolean
     };
 
     if ( data.playlist ) {
@@ -79,7 +83,10 @@ const poll = async ( room: string ) => {
 
     playbackProgress.value = playbackTime.value / ( data.playlist[ data.state.index ]?.duration ?? -1 );
 
-    return data.AT;
+    return {
+        'antiTamper': data.AT,
+        'sse': data.SSE
+    };
 };
 
 export default {

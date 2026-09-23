@@ -1,4 +1,12 @@
 import {
+    popupMsg,
+    popupTitle,
+    showInfoPopup
+} from './state';
+import {
+    messageHandler
+} from './messageHandler';
+import {
     request
 } from '@janishutz/oidc-login-sdk-browser';
 import {
@@ -28,7 +36,6 @@ const disconnect = () => {
 
 const connectHandler = (): Promise<boolean> => {
     return new Promise( ( resolve, reject ) => {
-        room = location.pathname.substring( location.pathname.lastIndexOf( '/' ) + 1 );
         const url = request.getBackendURL();
 
         if ( url.protocol === 'https:' )
@@ -47,7 +54,16 @@ const connectHandler = (): Promise<boolean> => {
         };
 
         connection.onmessage = msg => {
-            console.log( msg );
+            if ( msg.data === 'close-room' ) {
+                connection?.close();
+                popupTitle.value = 'Share deleted';
+                popupMsg.value = 'The share you were connected to has been deleted';
+                showInfoPopup.value = true;
+
+                return reset();
+            }
+
+            messageHandler( msg.data );
         };
 
         connection.onerror = () => {

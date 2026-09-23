@@ -124,7 +124,7 @@ const sendPlaylistData = () => {
         playlistLock = true;
 
         connection!.send( JSON.stringify( {
-            'kind': 'playlist',
+            'type': 'playlist',
             'playlist': queue.value
         } ) );
 
@@ -139,7 +139,7 @@ const sendStateData = async () => {
         stateLock = true;
 
         connection!.send( JSON.stringify( {
-            'kind': 'state',
+            'type': 'state',
             'playing': isPlaying.value,
             'index': queueIdx.value,
             'start': new Date().getTime() - 100,

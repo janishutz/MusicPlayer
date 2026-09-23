@@ -33,19 +33,17 @@ A music player, specifically created for displaying song information on multiple
 
 The [hosted version](https://music.janishutz.com) of this MusicPlayer, which is fully set up for you is subscription-based and can be paid for on my [store](https://store.janishutz.com/product/com.janishutz).
 
-## Version 4
-A completely new version of MusicPlayer is currently [in development](https://github.com/janishutz/MusicPlayer/tree/dev) and will be ready by November 2026.
 
 <div id="donate" align="center">
     <a href="https://store.janishutz.com/donate" target="_blank"><img src="https://store-cdn.janishutz.com/static/support-me.jpg" width="150px"></a>
 </div>
 
 
-# Limitations
+## Limitations
 - You can either use OpenID Connect for sign in or no sign in at all.
 There are plans to eventually also add local authentication, but that is low priority (since ProxyAuth is a thing)
 
-# Features
+## Features
 **NOTICE:** This section has not been updated for the new version of MusicPlayer yet
 - Browser based App that runs on all OS (Linux, MacOS, Windows, iOS, Android, iPadOS, ...)
 - Fully featured Music Player
@@ -53,6 +51,12 @@ There are plans to eventually also add local authentication, but that is low pri
 - Client displays show the playback position and all information from song metadata fetched from the Apple Music API
 - Play most common music files
 - No setup required when using the hosted version at [music.janishutz.com](https://music.janishutz.com)
+
+
+## Contributing
+Please note that this project has entirely been written without the help of AI and I am fairly opposed to Pretend Intelligence.
+If you wish to contribute code that was partially written by AI, you may do so, but be aware that as with most FOSS projects,
+you are fully responsible for the code it generates and obvious slop code will be rejected.
 
 
 ## License

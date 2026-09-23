@@ -30,17 +30,14 @@ func AddRoutes(r *gin.Engine, configuration config.Config) {
 
 	// Connect to the websocket here
 	r.GET("/room/:id/ws", websocket.Handler)
-	
+
 	// Admin websocket
 	r.GET("/room/:id/ws/admin", oidclogin.EnsureLogin(false), websocket.AdminHandler)
 
 	// Get updates by calling this endpoint with a time offset.
 	r.GET("/room/:id/poll", pollHandler)
 
-	// Get updates faster via SSE (but at higher server cost)
-	if configuration.ClientMode == "sse" {
-		r.GET("/room/:id/sse", sse.Handler)
-	}
+	sse.Init(r, configuration)
 
 	conf = configuration
 }

@@ -1,4 +1,9 @@
 import {
+    popupMsg,
+    popupTitle,
+    showInfoPopup
+} from './state';
+import {
     messageHandler
 } from './messageHandler';
 import {
@@ -30,7 +35,10 @@ const disconnect = () => {
 
 const connectHandler = (): Promise<void> => {
     return new Promise( ( resolve, reject ) => {
-        connection = new EventSource( request.getBackendURL() + `/room/${ room }/connect` );
+        const url = request.getBackendURL();
+
+        url.pathname = `room/${ room }/sse`;
+        connection = new EventSource( url );
 
         connection.onopen = async () => {
             hasConnected = true;
@@ -42,9 +50,11 @@ const connectHandler = (): Promise<void> => {
         connection.onmessage = msg => {
             if ( msg.data === 'close-room' ) {
                 connection?.close();
+                popupTitle.value = 'Share deleted';
+                popupMsg.value = 'The share you were connected to has been deleted';
+                showInfoPopup.value = true;
 
-                // TODO: Show popup informing user that share was closed
-                return;
+                return reset();
             }
 
             messageHandler( msg.data );

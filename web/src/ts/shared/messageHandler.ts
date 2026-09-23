@@ -10,11 +10,6 @@ import type {
     Song
 } from '../dtype/playlist';
 
-interface ReceivedJSONMessage {
-    'type': 'state' | 'playlist';
-    'data': unknown;
-}
-
 export interface StateUpdate {
     'playing': boolean;
     'index': number;
@@ -24,16 +19,16 @@ export interface StateUpdate {
 
 export const messageHandler = ( msg: string ) => {
     try {
-        const data = JSON.parse( msg.substring( 5 ) ) as ReceivedJSONMessage;
+        const data = JSON.parse( msg );
 
         if ( data.type === 'playlist' ) {
-            currentQueue.value = ( data.data as {
+            currentQueue.value = ( data as {
                 'playlist': Song[]
             } ?? {
                 'playlist': []
             } ).playlist;
         } else if ( data.type === 'state' ) {
-            const state = data.data as StateUpdate;
+            const state = data as StateUpdate;
 
             currentQueueIdx.value = state.index;
             isPlaying.value = state.playing;
@@ -41,7 +36,7 @@ export const messageHandler = ( msg: string ) => {
             playbackTime.value = state.offset;
             playbackOffset.value = state.offset;
         } else {
-            console.log( '[SSE] Received unknown data', data.type );
+            console.log( '[CONN] Received unknown data', data.type );
         }
     } catch ( err ) {
         console.error( 'JSON DECODE failed with error', err );

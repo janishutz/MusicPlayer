@@ -29,7 +29,7 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	r.LoadHTMLGlob("public/*.tmpl")
+	r.LoadHTMLGlob("templates/*.tmpl")
 
 	// FIXME: Choose session store (probably best to support both redis and memstore or memcache)
 	// TODO: Secret via env var as well

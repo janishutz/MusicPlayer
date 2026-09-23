@@ -34,7 +34,10 @@
                     You can use a share to show what you are currently listening to (and the progress) on a page.
                 </p>
                 <p>{{ errorMessage }}</p>
-                <input v-model="shareName" type="text">
+                <label for="share-name">Share Name</label>
+                <input id="share-name" v-model="shareName" type="text">
+                <label for="share-anti-tamper">Use Anti-Tamper</label>
+                <input id="share-anti-tamper" v-model="useAntiTamper" type="checkbox">
                 <button @click="startShare">
                     Create Share
                 </button>

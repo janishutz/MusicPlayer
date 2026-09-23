@@ -50,8 +50,6 @@ func Close(uid string, name string) bool {
 		}
 		delete(roomNames, name)
 		delete(rooms, name)
-
-		// TODO: Broadcast to all members of this room, then close websockets
 		delete(Clients.Rooms, name)
 		return true
 	}

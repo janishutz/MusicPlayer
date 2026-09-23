@@ -6,6 +6,7 @@ import {
     showInfoPopup
 } from './state';
 import poll from './poll';
+import sse from './sse';
 import ws from './ws';
 
 const connect = async () => {
@@ -13,14 +14,19 @@ const connect = async () => {
     const room = location.pathname.substring( location.pathname.lastIndexOf( '/' ) + 1 );
 
     try {
-        const antiTamper = await poll.poll( room );
+        const conf = await poll.poll( room );
 
-        if ( enableAntiTamper.value && antiTamper ) {
+        if ( enableAntiTamper.value && conf.antiTamper ) {
+            console.warn( 'Anti Tamper Enabled!' );
             ws.connect( room );
         } else {
             // TODO: SSE?
             // SSE would only update the state, if the playlist changes, a special event is dispatched and new data is fetched
-            poll.connect();
+            if ( conf.sse ) {
+                sse.connect( room );
+            } else {
+                poll.connect();
+            }
         }
     } catch ( e ) {
         const error = await e as Error;

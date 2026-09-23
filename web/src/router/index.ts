@@ -37,6 +37,15 @@ const router = createRouter( {
             }
         },
         {
+            'path': '/fancy/:name',
+            'name': 'fancy',
+            'component': () => import( '@/views/SharedView.vue' ),
+            'meta': {
+                'title': 'Fancy Share',
+                'auth': false
+            }
+        },
+        {
             'path': '/:pathMatch(.*)*',
             'name': 'NotFound',
             'component': () => import( '@/views/404View.vue' ),
