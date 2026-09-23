@@ -3,6 +3,7 @@ package routes
 import (
 	"encoding/json"
 	"log"
+	"musicplayer/routes/types"
 	"os"
 
 	"github.com/gin-contrib/sessions"
@@ -15,7 +16,7 @@ func playlistGetHandler(c *gin.Context) {
 }
 
 func playlistPostHandler(c *gin.Context) {
-	var data File
+	var data types.File
 	err := c.BindJSON(&data)
 	if err == nil {
 		session := sessions.Default(c)

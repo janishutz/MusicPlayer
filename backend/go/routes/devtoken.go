@@ -66,9 +66,10 @@ func devTokenHandler(conf config.Config) gin.HandlerFunc {
 				"kid": conf.AppleMusicApi.KeyID,
 			},
 			Claims: jwt.MapClaims{
-				"iss": conf.AppleMusicApi.TeamID,
-				"iat": now.Unix(),
-				"exp": now.Add(time.Second * time.Duration(86400)),
+				"iss":    conf.AppleMusicApi.TeamID,
+				"iat":    now.Unix(),
+				"exp":    now.Add(time.Second * time.Duration(86400)).Unix(),
+				"origin": []string{"http://localhost:8081"}, // TODO: Update this
 			},
 			Signature: string(sig),
 		}

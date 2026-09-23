@@ -23,29 +23,27 @@ export interface StateUpdate {
 }
 
 export const messageHandler = ( msg: string ) => {
-    if ( msg.startsWith( 'json:' ) ) {
-        try {
-            const data = JSON.parse( msg.substring( 5 ) ) as ReceivedJSONMessage;
+    try {
+        const data = JSON.parse( msg.substring( 5 ) ) as ReceivedJSONMessage;
 
-            if ( data.type === 'playlist' ) {
-                currentQueue.value = ( data.data as {
-                    'playlist': Song[]
-                } ?? {
-                    'playlist': []
-                } ).playlist;
-            } else if ( data.type === 'state' ) {
-                const state = data.data as StateUpdate;
+        if ( data.type === 'playlist' ) {
+            currentQueue.value = ( data.data as {
+                'playlist': Song[]
+            } ?? {
+                'playlist': []
+            } ).playlist;
+        } else if ( data.type === 'state' ) {
+            const state = data.data as StateUpdate;
 
-                currentQueueIdx.value = state.index;
-                isPlaying.value = state.playing;
-                startTime.value = state.start;
-                playbackTime.value = state.offset;
-                playbackOffset.value = state.offset;
-            } else {
-                console.log( '[SSE] Received unknown data', data.type );
-            }
-        } catch ( err ) {
-            console.error( 'JSON DECODE failed with error', err );
+            currentQueueIdx.value = state.index;
+            isPlaying.value = state.playing;
+            startTime.value = state.start;
+            playbackTime.value = state.offset;
+            playbackOffset.value = state.offset;
+        } else {
+            console.log( '[SSE] Received unknown data', data.type );
         }
+    } catch ( err ) {
+        console.error( 'JSON DECODE failed with error', err );
     }
 };

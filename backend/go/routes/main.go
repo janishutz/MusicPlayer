@@ -1,15 +1,21 @@
 package routes
 
 import (
+	"musicplayer/config"
+	"musicplayer/routes/rooms"
+	"musicplayer/routes/sse"
+	"musicplayer/routes/websocket"
+
 	"github.com/gin-gonic/gin"
 	"github.com/janishutz/oidclogin"
-	"musicplayer/config"
 )
 
 var conf config.Config
 
 func AddRoutes(r *gin.Engine, configuration config.Config) {
 	initializeDevTokenGenerator(configuration)
+	rooms.Init()
+
 	// Get the apple music token
 	r.GET("/dev-token", oidclogin.EnsureLogin(false), devTokenHandler(configuration))
 
@@ -20,13 +26,21 @@ func AddRoutes(r *gin.Engine, configuration config.Config) {
 	r.POST("/user/playlists", oidclogin.EnsureLogin(false), playlistPostHandler)
 
 	// Create a room
-	r.GET("/room/create", oidclogin.EnsureLogin(false))
+	r.POST("/room/create", oidclogin.EnsureLogin(false), createRoomHandler)
 
 	// Connect to the websocket here
-	r.GET("/room/:id/ws")
+	r.GET("/room/:id/ws", websocket.Handler)
+	
+	// Admin websocket
+	r.GET("/room/:id/ws/admin", oidclogin.EnsureLogin(false), websocket.AdminHandler)
 
 	// Get updates by calling this endpoint with a time offset.
-	r.GET("/room/:id/poll")
+	r.GET("/room/:id/poll", pollHandler)
+
+	// Get updates faster via SSE (but at higher server cost)
+	if configuration.ClientMode == "sse" {
+		r.GET("/room/:id/sse", sse.Handler)
+	}
 
 	conf = configuration
 }

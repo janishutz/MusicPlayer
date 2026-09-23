@@ -5,10 +5,18 @@
     import {
         fullPlayer
     } from '@/ts/player/state';
+    import messages from '@/ts/messages';
+    import {
+        onUnmounted
+    } from 'vue';
 
     const close = () => {
         fullPlayer.value = false;
     };
+
+    onUnmounted( () => {
+        messages.closeRoom();
+    } );
 </script>
 
 <template>

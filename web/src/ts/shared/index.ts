@@ -1,87 +1,32 @@
-import {
-    type StateUpdate,
-    messageHandler
-} from './messageHandler';
-import {
-    currentQueue,
-    currentQueueIdx,
-    isPlaying,
-    playbackOffset,
-    playbackProgress,
-    playbackTime,
-    startTime
-} from './state';
-import type {
-    Song
-} from '../dtype/playlist';
-import {
-    request
-} from '@janishutz/oidc-login-sdk-browser';
-
-const RETRY_CAP = 10;
-
-let room = location.pathname;
-let connection: EventSource | null = null;
-let hasConnected = false;
-let retries = 0;
-
 // TODO: Persist settings in local storage
-// TODO: Polling instead of sse as option
+import {
+    enableAntiTamper,
+    errMsg
+} from './state';
+import poll from './poll';
+import ws from './ws';
 
-const connect = (): Promise<void> => {
-    return new Promise( ( resolve, reject ) => {
-        room = location.pathname.substring( location.pathname.lastIndexOf( '/' ) + 1 );
-        connection = new EventSource( request.getBackendURL() + `/room/${ room }/connect` );
+const connect = async () => {
+    // Load first data
+    const room = location.pathname.substring( location.pathname.lastIndexOf( '/' ) + 1 );
 
-        connection.onopen = async () => {
-            hasConnected = true;
-            console.log( '[SSE] Connection established successfully' );
-            const data = await ( await request.get( `/room/${ room }/poll` ) ).json() as {
-                'playlist': Song[],
-                'state': StateUpdate
-            };
+    try {
+        const antiTamper = await poll.poll( room );
 
-            currentQueue.value = data.playlist;
-            currentQueueIdx.value = data.state.index;
-            isPlaying.value = data.state.playing;
-            startTime.value = data.state.start;
+        if ( enableAntiTamper.value && antiTamper ) {
+            ws.connect( room );
+        } else {
+            // TODO: SSE?
+            // SSE would only update the state, if the playlist changes, a special event is dispatched and new data is fetched
+            poll.connect();
+        }
+    } catch ( e ) {
+        const error = await e;
 
-            if ( data.playlist.length === 0 )
-                playbackTime.value = 0;
-            else
-                playbackTime.value = data.state.offset;
-
-            playbackOffset.value = data.state.offset;
-            playbackProgress.value = data.state.offset / ( data.playlist[ data.state.index ]?.duration ?? -1 );
-            resolve();
-        };
-
-        connection.onmessage = msg => {
-            if ( msg.data === 'close' ) {
-                connection?.close();
-
-                // TODO: Show popup informing user that share was closed
-                return;
-            }
-
-            messageHandler( msg.data );
-        };
-
-        connection.onerror = () => {
-            connection?.close();
-
-            if ( !hasConnected ) return reject( 'ERR_CONNECT' );
-
-            console.error( '[SSE] Connection failed, reconnecting' );
-
-            if ( retries <= RETRY_CAP ) {
-                retries += 1;
-                setTimeout( () => {
-                    connect();
-                }, 1000 * retries );
-            }
-        };
-    } );
+        if ( error === 'ERR_404' ) {
+            errMsg.value = 'Missing';
+        }
+    }
 };
 
 export default {

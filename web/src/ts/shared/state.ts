@@ -16,8 +16,12 @@ export const startTime = ref( new Date().getTime() );
 
 export const showArtworks = ref( false );
 
+export const enableAntiTamper = ref( location.pathname.includes( 'fancy' ) );
+
 export const playbackTime = ref( 0 );
 
 export const playbackOffset = ref( 0 );
 
 export const playbackProgress = ref( 0 );
+
+export const errMsg = ref( '' );

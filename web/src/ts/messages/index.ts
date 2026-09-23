@@ -30,14 +30,17 @@ export const useAntiTamper = ref( false );
 // TODO: Anit-Tamper
 // const antiTamperClients = [];
 
-let connection: null | EventSource = null;
+let connection: null | WebSocket = null;
 let retries = 0;
 
 const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean> => {
     if ( !( /^[a-zA-Z0-9-]{3,20}$/ ).test( name ) ) return false;
 
     try {
-        await request.get( '/room/create?room=' + name );
+        await request.post( '/room/create', JSON.stringify( {
+            'roomId': name,
+            'antiTamper': antiTamper
+        } ) );
     } catch ( err ) {
         if ( err === 'ERR_409' ) {
             return await connect();
@@ -48,39 +51,44 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
     useAntiTamper.value = antiTamper;
     room.value = name;
 
-    document.addEventListener( 'musicplayer:autherror', reauth );
+    document.addEventListener( 'autherror', reauth );
 
-    return await connect();
+    try {
+        return await connect();
+    } catch ( e ) {
+        console.debug( '[WS] Setup failed with error', e );
+
+        return false;
+    }
 };
 
 const closeRoom = async () => {
-    // TODO: Trigger close on backend and disconnect.
     isConnected.value = false;
     localStorage.removeItem( 'room' );
+    connection?.send( 'close' );
     connection?.close();
 
     try {
-        document.removeEventListener( 'musicplayer:autherror', reauth );
+        document.removeEventListener( 'autherror', reauth );
     } catch { /* empty */ }
 };
 
 const connect = (): Promise<boolean> => {
     return new Promise( ( resolve, reject ) => {
-        if ( !useAntiTamper.value ) {
-            isConnected.value = true;
-            sendPlaylistData();
-            sendStateData();
+        const url = request.getBackendURL();
 
-            return resolve( true );
-        }
+        if ( url.protocol === 'https:' )
+            url.protocol = 'wss:';
+        else
+            url.protocol = 'ws:';
 
-        connection = new EventSource( request.getBackendURL() + `/room/${ room.value }/admin`, {
-            'withCredentials': true
-        } );
+        url.pathname = `room/${ room.value }/ws/admin`;
+
+        connection = new WebSocket( url );
 
         connection.onopen = () => {
             isConnected.value = true;
-            console.log( '[SSE] Connection established successfully' );
+            console.log( '[WS] Connection established successfully' );
             sendPlaylistData();
             sendStateData();
             resolve( true );
@@ -92,7 +100,7 @@ const connect = (): Promise<boolean> => {
 
         connection.onerror = () => {
             connection?.close();
-            console.error( '[SSE] Reconnecting due to error' );
+            console.error( '[WS] Reconnecting due to error' );
 
             if ( !isConnected.value ) reject( 'ERR_CONNECT' );
 
@@ -115,13 +123,10 @@ const sendPlaylistData = () => {
     if ( isConnected.value && !playlistLock ) {
         playlistLock = true;
 
-        try {
-            request.post( `/room/${ room.value }/update/playlist`, JSON.stringify( {
-                'playlist': queue.value
-            } ) );
-        } catch ( e ) {
-            console.error( e );
-        }
+        connection!.send( JSON.stringify( {
+            'kind': 'playlist',
+            'playlist': queue.value
+        } ) );
 
         setTimeout( () => {
             playlistLock = false;
@@ -133,16 +138,13 @@ const sendStateData = async () => {
     if ( isConnected.value && !stateLock ) {
         stateLock = true;
 
-        try {
-            request.post( `/room/${ room.value }/update/state`, JSON.stringify( {
-                'playing': isPlaying.value,
-                'index': queueIdx.value,
-                'start': new Date().getTime() - 100,
-                'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
-            } ) );
-        } catch ( e ) {
-            console.error( e );
-        }
+        connection!.send( JSON.stringify( {
+            'kind': 'state',
+            'playing': isPlaying.value,
+            'index': queueIdx.value,
+            'start': new Date().getTime() - 100,
+            'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
+        } ) );
 
         setTimeout( () => {
             stateLock = false;
