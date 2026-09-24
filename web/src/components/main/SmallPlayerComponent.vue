@@ -70,7 +70,8 @@
 
 <style lang="scss" scoped>
 .small-player {
-    background-color: var(--secondary-color);
+    background-color: var(--theme-app);
+    color: var(--theme-on-app);
     width: 80vw;
     height: 4.5rem;
     position: fixed;

@@ -37,7 +37,8 @@
         position: fixed;
         bottom: 0;
         left: 0;
-        background-color: var(--theme-bg-2);
+        background-color: var(--theme-app);
+        color: var(--theme-on-app);
         transition: bottom 1s ease;
         transition-delay: 0.25s;
         overflow: hidden;

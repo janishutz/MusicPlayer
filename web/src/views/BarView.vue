@@ -210,7 +210,7 @@
                         user-select: none;
                         cursor: pointer;
                         background: none;
-                        border: solid var( --primary-color ) 1px;
+                        border: solid var( --theme-primary ) 1px;
                         border-radius: 20px;
                         width: 2rem;
                         height: 2rem;
@@ -218,7 +218,7 @@
                         justify-content: center;
                         align-items: center;
                         font-size: 1.5rem;
-                        color: var( --primary-color );
+                        color: var( --theme-primary );
                         touch-action: manipulation;
                     }
                 }

@@ -87,8 +87,8 @@
 
     >.fa-shuffle {
       &.active {
-        background-color: var(--primary-color);
-        color: var(--secondary-color);
+        background-color: var(--theme-primary);
+        color: var(--theme-on-primary);
         border-radius: 10px;
       }
     }
@@ -99,8 +99,8 @@
 
       &.once,
       &.all {
-        background-color: var(--primary-color);
-        color: var(--secondary-color);
+        background-color: var(--theme-primary);
+        color: var(--theme-on-primary);
         border-radius: 10px;
       }
 
@@ -111,7 +111,8 @@
         font-family: sans-serif;
         top: 5px;
         right: 5px;
-        background-color: var(--accent-color);
+        color: var(--theme-on-secondary);
+        background-color: var(--theme-secondary);
         width: 1.5em;
         height: 1.5em;
         display: flex;

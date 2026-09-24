@@ -3,8 +3,8 @@
         Song
     } from '@/ts/dtype/playlist';
 
-    const song = defineModel<Song>( {
-        'required': false
+    const song = defineModel<Song | undefined>( {
+        'required': true
     } );
     const props = defineProps<{
         'showAdditionalInfo'?: boolean

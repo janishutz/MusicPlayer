@@ -39,7 +39,7 @@
             width: 100vw;
             height: 100vh;
             position: absolute;
-            background-color: var( --overlay-color );
+            background-color: var( --theme-shadow );
             top: 0;
             left: 0;
             overflow: hidden;
@@ -49,7 +49,8 @@
         .popup-main {
             width: fit-content;
             height: fit-content;
-            background-color: var( --secondary-color );
+            background-color: var( --theme-app );
+            color: var( --theme-on-app );
             padding: 2.5%;
             border-radius: 20px;
             transform: scale(1);

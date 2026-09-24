@@ -40,6 +40,8 @@
 @include gen-theme('.theme-blue-light', $theme-blue-light);
 @include gen-theme('.theme-purple-dark', $theme-purple-dark);
 @include gen-theme('.theme-purple-light', $theme-purple-light);
-@include gen-theme('.theme-black', $theme-black);
-@include gen-theme('.theme-white', $theme-black);
+@include gen-theme('.theme-black-light', $theme-black-light);
+@include gen-theme('.theme-black-dark', $theme-black-dark);
+@include gen-theme('.theme-white-light', $theme-white-light);
+@include gen-theme('.theme-white-dark', $theme-white-dark);
 </style>

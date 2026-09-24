@@ -58,7 +58,8 @@
         width: 45%;
         margin: 0.5%;
         height: 60%;
-        background-color: var(--accent-background);
+        background-color: var(--theme-primary);
+        color: var(--theme-on-primary);
         border-radius: 20px;
         display: flex;
         justify-content: center;

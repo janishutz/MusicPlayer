@@ -7,8 +7,9 @@ html {
   margin: 0;
   padding: 0;
   font-size: 17px;
-  background-color: var(--theme-bg-1);
-  color: var(--theme-foreground-text);
+  background-color: var(--theme-bg);
+  color: var(--theme-on-bg);
+  // TODO: Choose good font and load it
   font-family: 'Manrope', sans-serif;
 
   &.init-complete {
@@ -23,7 +24,7 @@ body {
 }
 
 a {
-  color: var(--theme-interactable-text);
+  color: var(--theme-primary);
 }
 
 .info {
@@ -58,10 +59,9 @@ a {
 }
 
 button {
-  /* TODO: Colours */
-  color: var(--primary-color);
+  color: var(--theme-on-primary);
   padding: 7px;
-  background: var(--accent-background);
+  background: var(--theme-primary);
   border-radius: 20px;
   margin: 2px;
   border: none;
@@ -71,7 +71,7 @@ button {
 
   &:hover {
     border-radius: 5px;
-    background-color: var(--accent-color);
+    background-color: var(--theme-primary-hover);
   }
 
   // TODO: Update these buttons
