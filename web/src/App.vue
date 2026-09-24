@@ -1,15 +1,24 @@
 <script setup lang="ts">
     import {
+        darkMode,
+        selectedTheme,
+        themes
+    } from './ts/util/theme';
+    import {
         Notifications
     } from '@kyvg/vue3-notification';
     import {
         RouterView
     } from 'vue-router';
     import {
-        selectedTheme
-    } from './ts/util/theme';
+        ref
+    } from 'vue';
 
-    const changeTheme = () => {};
+    const changeTheme = () => {
+        showThemePanel.value = !showThemePanel.value;
+    };
+
+    const showThemePanel = ref( false );
 </script>
 
 <template>
@@ -22,9 +31,26 @@
             width="400px"
             :max="3"
         />
-        <button id="themeSelector" title="Toggle between light and dark mode" @click="changeTheme();">
-            {{ selectedTheme }}
+        <button
+            id="theme-selector"
+            title="Toggle between light and dark mode"
+            @click="changeTheme();"
+        >
+            Theme <!-- TODO: Icon -->
         </button>
+        <div
+            id="theme-selection-panel"
+            :class="showThemePanel ? 'shown' : undefined"
+        >
+            <h3>Themes</h3>
+            <select v-model="selectedTheme">
+                <option v-for="(val, index) in themes" :key="index" :value="val">
+                    {{ val }}
+                </option>
+            </select>
+            <label for="light-mode-toggle">Dark Mode</label>
+            <input id="light-mode-toggle" v-model="darkMode" type="checkbox">
+        </div>
         <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition ? String( route.meta.transition ) : 'fade'" mode="out-in">
                 <component :is="Component" />
@@ -44,4 +70,33 @@
 @include gen-theme('.theme-black-dark', $theme-black-dark);
 @include gen-theme('.theme-white-light', $theme-white-light);
 @include gen-theme('.theme-white-dark', $theme-white-dark);
+
+#theme-selector {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    font-size: 1rem;
+}
+
+// TODO: Switches
+#theme-selection-panel {
+    position: fixed;
+    top: calc(5px + 3rem);
+    right: -220px;
+    width: 200px;
+    height: 250px;
+    background-color: var(--theme-primary);
+    color: var(--theme-on-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 20px;
+    transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    &.shown {
+        right: 5px;
+    }
+}
 </style>

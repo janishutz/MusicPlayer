@@ -30,10 +30,10 @@ $theme-red-dark: (
 );
 
 $theme-blue-light: (
-  on-bg: #ffffff,
-  bg: #080813,
-  on-app: #ffffff,
-  app: #020202,
+  on-bg: #000000,
+  bg: #dadae3,
+  on-app: #000000,
+  app: #fefefe,
   on-primary: #ffffff,
   primary: #04305c,
   primary-hover: #08328c,
@@ -54,7 +54,7 @@ $theme-blue-dark: (
   on-secondary: #ffffff,
   secondary: #7583da,
   secondary-hover: #7593c0,
-  shadow: rgba(0, 0, 0, 0.7),
+  shadow: rgba(20, 20, 20, 0.7),
 );
 
 $theme-purple-light: (
