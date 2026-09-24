@@ -98,6 +98,8 @@ const back10 = () => {
  * @param enabled - Whether to enable or disable shuffle
  */
 const setShuffle = ( enabled: boolean ) => {
+    if ( rawQueue.value.length === 0 ) return;
+
     shuffle.value = enabled;
 
     if ( enabled ) {
@@ -122,6 +124,8 @@ const setShuffle = ( enabled: boolean ) => {
  * @param mode - The repeat mode to switch into
  */
 const setRepeat = ( mode: RepeatMode ) => {
+    if ( rawQueue.value.length === 0 ) return;
+
     repeat.value = mode;
 };
 

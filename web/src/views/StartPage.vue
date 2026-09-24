@@ -52,7 +52,7 @@
 <template>
     <div>
         <h1>MusicPlayer</h1>
-        <button :class="['fancy-button', isLoggingIn ? 'fancy-button-inactive' : undefined]" @click="login">
+        <button :class="['fancy-button', isLoggingIn ? 'inactive' : undefined]" @click="login">
             Log In
         </button>
     </div>

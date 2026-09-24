@@ -16,6 +16,8 @@ import {
  * @param idx - The index in the queue to play at
  */
 export const playIndex = ( idx: number ) => {
+    if ( queue.value.length === 0 ) return;
+
     if ( idx >= queue.value.length ) {
         idx = repeat.value === 'all' ? 0 : -1;
     } else if ( idx < 0 ) {

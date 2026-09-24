@@ -1,0 +1,40 @@
+button {
+  color: white;
+  padding: 7px;
+  background: var(--accent-background);
+  border-radius: 20px;
+  margin: 2px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.5s, border-radius 0.5s;
+
+  &:hover {
+    border-radius: 5px;
+    background-color: var(--accent-color);
+  }
+
+  &.fancy-button {
+    text-decoration: none;
+    padding: 20px;
+    background: linear-gradient(45deg, rgb(0, 33, 139), rgb(151, 0, 0));
+    font-size: larger;
+    transition: all 0.5s;
+    background-size: 150%;
+
+    &:hover {
+      border-radius: 5px;
+      background-position: 50%;
+    }
+
+    &.inactive {
+      background: linear-gradient(45deg, rgba(0, 33, 139, 0.6), rgba(151, 0, 0, 0.6));
+      cursor: not-allowed;
+
+      &:hover {
+        border-radius: 20px;
+        background-position: 0px;
+      }
+    }
+  }
+}

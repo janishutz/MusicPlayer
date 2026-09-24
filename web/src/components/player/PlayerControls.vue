@@ -69,7 +69,7 @@
                 {{ duration }}
             </p>
         </div>
-        <ProgressBar v-model="playbackPercentage" @move-end="seek" />
+        <ProgressBar v-model="playbackPercentage" :disallow-move="player.queue.value.length === 0" @move-end="seek" />
         <div class="bottom-bar">
             <!-- FA being a POS means need to make own mods to it -->
             <i
