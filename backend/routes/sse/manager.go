@@ -2,6 +2,7 @@ package sse
 
 import (
 	"log"
+	"musicplayer/routes/rooms"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,15 +12,15 @@ import (
 
 // It keeps a list of clients those are currently attached
 // and broadcasting events to those clients.
-type Event struct {
+type sseEvent struct {
 	// Events are pushed to this channel by everyone
-	Message chan Message
+	Message chan message
 
 	// New client connections
-	NewClients chan ClientConfig
+	NewClients chan clientConfig
 
 	// Closed client connections
-	ClosedClients chan ClientConfig
+	ClosedClients chan clientConfig
 
 	// Total client connections
 	TotalClients map[string]clientsMap
@@ -27,25 +28,27 @@ type Event struct {
 
 type clientsMap map[chan string]bool
 
-type ClientConfig struct {
+type clientConfig struct {
 	Channel chan string
 	Room    string
 }
 
-type Message struct {
+type message struct {
 	Room    string
 	Message string
 }
 
 // New event messages are broadcast to all registered client connection channels
-type ClientChan chan string
+type clientChan chan string
+
+// ───────────────────────────────────────────────────────────────────
 
 // Initialize event and Start processing requests
-func NewServer() (event *Event) {
-	event = &Event{
-		Message:       make(chan Message),
-		NewClients:    make(chan ClientConfig),
-		ClosedClients: make(chan ClientConfig),
+func newServer() (event *sseEvent) {
+	event = &sseEvent{
+		Message:       make(chan message),
+		NewClients:    make(chan clientConfig),
+		ClosedClients: make(chan clientConfig),
 		TotalClients:  make(map[string]clientsMap),
 	}
 
@@ -56,7 +59,7 @@ func NewServer() (event *Event) {
 
 // It Listens all incoming requests from clients.
 // Handles addition and removal of clients and broadcast messages to clients.
-func (stream *Event) listen() {
+func (stream *sseEvent) listen() {
 	for {
 		select {
 		// Add new available client
@@ -85,14 +88,20 @@ func (stream *Event) listen() {
 	}
 }
 
-func (stream *Event) serveHTTP() gin.HandlerFunc {
+// Middleware for configuring SSE
+func (stream *sseEvent) serveHTTP() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Initialize client channel
-		clientChan := make(ClientChan)
-		room := "" // TODO: Get room
+		clientChan := make(clientChan)
+		room := c.Params.ByName("id")
+		exists, _, _ := rooms.Exists(room, "")
+		if !exists {
+			c.AbortWithStatus(404)
+			return
+		}
 
 		// Send new connection to event server
-		stream.NewClients <- ClientConfig{
+		stream.NewClients <- clientConfig{
 			Channel: clientChan,
 			Room:    room,
 		}
@@ -101,7 +110,7 @@ func (stream *Event) serveHTTP() gin.HandlerFunc {
 			<-c.Writer.CloseNotify()
 
 			// Send closed connection to event server
-			stream.ClosedClients <- ClientConfig{
+			stream.ClosedClients <- clientConfig{
 				Channel: clientChan,
 				Room:    room,
 			}

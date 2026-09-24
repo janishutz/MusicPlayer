@@ -32,7 +32,7 @@ func Create(uid string, name string, antiTamper bool) bool {
 }
 
 // Check if a room exists and the specified user is the admin
-func Exists(name string, uid string) (bool, bool, bool) {
+func Exists(name string, uid string) (exists bool, owned bool, antiTamper bool) {
 	if roomNames[name] {
 		return true, rooms[name].uid == uid, rooms[name].antiTamper
 	} else {

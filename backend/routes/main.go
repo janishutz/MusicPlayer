@@ -37,7 +37,10 @@ func AddRoutes(r *gin.Engine, configuration config.Config) {
 	// Get updates by calling this endpoint with a time offset.
 	r.GET("/room/:id/poll", pollHandler)
 
-	sse.Init(r, configuration)
+	// Initialize SSE if enabled in config
+	if configuration.ClientMode == "sse" {
+		sse.Init(r)
+	}
 
 	conf = configuration
 }

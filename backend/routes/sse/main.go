@@ -3,19 +3,18 @@ package sse
 import (
 	"io"
 	"log"
-	"musicplayer/config"
-
 	"github.com/gin-gonic/gin"
 )
 
-func Init(r *gin.Engine, configuration config.Config) {
-	// Get updates faster via SSE (but at higher server cost)
-	if configuration.ClientMode == "sse" {
-		log.Println("SSE enabled")
-		r.GET("/room/:id/sse", headersMiddleware(), handler)
-	}
+// Get updates faster via SSE (but at higher server cost)
+func Init(r *gin.Engine) {
+	controller := newServer()
+	log.Println("[SSE] Enabled by configuration, clients will default to using it")
+	r.GET("/room/:id/sse", headersMiddleware(), controller.serveHTTP(), handler)
 }
 
+// This is mostly from https://github.com/gin-gonic/examples/blob/master/server-sent-event/main.go
+// with some adaptions, especially in the manager.go file
 func headersMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Content-Type", "text/event-stream")
@@ -31,7 +30,7 @@ func handler(c *gin.Context) {
 	if !ok {
 		return
 	}
-	clientChan, ok := v.(ClientChan)
+	clientChan, ok := v.(clientChan)
 	if !ok {
 		return
 	}
