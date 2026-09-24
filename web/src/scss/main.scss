@@ -1,5 +1,6 @@
 button {
-  color: white;
+  /* TODO: Colours */
+  color: var(--primary-color);
   padding: 7px;
   background: var(--accent-background);
   border-radius: 20px;
@@ -15,6 +16,7 @@ button {
   }
 
   &.fancy-button {
+    color: white;
     text-decoration: none;
     padding: 20px;
     background: linear-gradient(45deg, rgb(0, 33, 139), rgb(151, 0, 0));

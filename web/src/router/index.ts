@@ -28,6 +28,15 @@ const router = createRouter( {
             }
         },
         {
+            'path': '/app/bar',
+            'name': 'bar',
+            'component': () => import( '@/views/BarView.vue' ),
+            'meta': {
+                'title': 'Bar Utility',
+                'auth': false
+            }
+        },
+        {
             'path': '/share/:name',
             'name': 'share',
             'component': () => import( '@/views/SharedView.vue' ),
