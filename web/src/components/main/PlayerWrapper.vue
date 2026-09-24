@@ -37,7 +37,7 @@
         position: fixed;
         bottom: 0;
         left: 0;
-        background-color: var(--secondary-color);
+        background-color: var(--theme-bg-2);
         transition: bottom 1s ease;
         transition-delay: 0.25s;
         overflow: hidden;
