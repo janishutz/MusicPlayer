@@ -11,8 +11,6 @@ import (
 )
 
 func AdminHandler(c *gin.Context) {
-	// TODO: Only one admin connection? In that case, if new connection, old one killed
-
 	// Check if should even connect (i.e. room exists, and: is using anti-tamper or is admin)
 	roomID, found := c.Params.Get("id")
 	if !found || roomID == "" {

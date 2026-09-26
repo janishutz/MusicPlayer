@@ -2,6 +2,7 @@ package websocket
 
 import (
 	"log"
+	"musicplayer/config"
 	"musicplayer/routes/rooms"
 	"net/http"
 	"time"
@@ -16,11 +17,14 @@ const (
 	pingPeriod = (pongWait * 9) / 10 // must be less than pongWait
 )
 
-var upgrader = websocket.Upgrader{
-	// TODO: CORS
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
+var upgrader websocket.Upgrader
+
+func Init(conf config.Config) {
+	upgrader = websocket.Upgrader{
+		CheckOrigin: func(r *http.Request) bool {
+			return r.Header.Get("Origin") == conf.Urls.FrontendURL
+		},
+	}
 }
 
 func Handler(c *gin.Context) {

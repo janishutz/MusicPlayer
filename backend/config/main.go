@@ -32,9 +32,10 @@ type AppleMusicApiConfig struct {
 }
 
 type ApplicationURLs struct {
-	FrontendURL     string `json:"frontendURL"`
-	DefaultRedirect string `json:"defaultRedirect"`
-	BackendURL      string `json:"backendURL"`
+	FrontendURL     string   `json:"frontendURL"`
+	DefaultRedirect string   `json:"defaultRedirect"`
+	BackendURL      string   `json:"backendURL"`
+	TrustedProxies  []string `json:"trustedProxies"`
 }
 
 func LoadConfig() Config {

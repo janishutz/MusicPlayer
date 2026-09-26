@@ -69,7 +69,7 @@ func devTokenHandler(conf config.Config) gin.HandlerFunc {
 				"iss":    conf.AppleMusicApi.TeamID,
 				"iat":    now.Unix(),
 				"exp":    now.Add(time.Second * time.Duration(86400)).Unix(),
-				"origin": []string{"http://localhost:8081"}, // TODO: Update this
+				"origin": []string{conf.Urls.FrontendURL},
 			},
 			Signature: string(sig),
 		}

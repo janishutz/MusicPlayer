@@ -10,6 +10,7 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/gorilla/websocket v1.5.3
 	github.com/janishutz/oidclogin v1.3.1
+	golang.org/x/time v0.16.0
 )
 
 require (

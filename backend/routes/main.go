@@ -15,6 +15,7 @@ var conf config.Config
 func AddRoutes(r *gin.Engine, configuration config.Config) {
 	initializeDevTokenGenerator(configuration)
 	rooms.Init()
+	websocket.Init(configuration)
 
 	// Get the apple music token
 	r.GET("/dev-token", oidclogin.EnsureLogin(false), devTokenHandler(configuration))

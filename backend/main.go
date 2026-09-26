@@ -6,6 +6,7 @@ import (
 
 	"musicplayer/config"
 	"musicplayer/routes"
+	"musicplayer/util"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
@@ -19,15 +20,19 @@ func main() {
 
 	conf := config.LoadConfig()
 
-	// TODO: Security stuff (and auto-config frontend and load config, parse that, etc, etc)
+
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:8081"},
+		AllowOrigins:     []string{conf.Urls.FrontendURL},
 		AllowMethods:     []string{"GET", "POST", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
+
+	r.Use(util.DefaultHeaders)
+	r.Use(util.RateLimiter())
+	r.SetTrustedProxies(conf.Urls.TrustedProxies)
 
 	r.LoadHTMLGlob("templates/*.tmpl")
 
