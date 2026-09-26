@@ -100,3 +100,12 @@ button {
     }
   }
 }
+
+input, select {
+  background: none;
+  border-radius: 10px;
+  border: solid 1px var(--theme-on-app);
+  color: var(--theme-on-app);
+  padding: 5px;
+  font-size: 0.9rem;
+}

@@ -9,6 +9,7 @@
 - [ ] SSE connection
 - [ ] Anti-Tamper
 - [ ] Remote showcase views
+- [ ] Login on auth failure
 - [X] Login
 - [ ] About page
 - [X] Apple-Music signin

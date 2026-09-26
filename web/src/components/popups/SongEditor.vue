@@ -49,28 +49,61 @@
 </script>
 
 <template>
-    <div>
-        <PopupElement v-model="model" show-close>
-            <h2>Edit Song</h2>
-            <button @click="search">
-                Search song on Apple Music
-            </button>
+    <PopupElement v-model="model" show-close>
+        <h2>Edit Song</h2>
+        <button @click="search">
+            Search song on Apple Music
+        </button>
 
-            <label for="song-name">Song title</label>
-            <input id="song-name" v-model="localSong.name" type="text">
+        <table class="song-editor">
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="song-name">Song title</label>
+                    </td>
+                    <td>
+                        <input id="song-name" v-model="localSong.name" type="text">
+                    </td>
+                </tr>
 
-            <label for="song-artist">Artist</label>
-            <input id="song-artist" v-model="localSong.artist" type="text">
+                <tr>
+                    <td>
+                        <label for="song-artist">Artist</label>
+                    </td>
+                    <td>
+                        <input id="song-artist" v-model="localSong.artist" type="text">
+                    </td>
+                </tr>
 
-            <label for="song-artwork">Artwork URL</label>
-            <input id="song-artwork" v-model="localSong.artwork" type="text">
+                <tr>
+                    <td>
+                        <label for="song-artwork">Artwork URL</label>
+                    </td>
+                    <td>
+                        <input id="song-artwork" v-model="localSong.artwork" type="text">
+                    </td>
+                </tr>
 
-            <label for="song-add-info">Additional Info</label>
-            <input id="song-add-info" v-model="localSong['additional-info']" type="text">
-
-            <button @click="save">
-                Save
-            </button>
-        </PopupElement>
-    </div>
+                <tr>
+                    <td>
+                        <label for="song-add-info">Additional Info</label>
+                    </td>
+                    <td>
+                        <input id="song-add-info" v-model="localSong['additional-info']" type="text">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button @click="save">
+            Save
+        </button>
+    </PopupElement>
 </template>
+
+<style lang="scss" scoped>
+.song-editor {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+</style>

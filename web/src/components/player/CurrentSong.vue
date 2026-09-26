@@ -27,7 +27,7 @@
                 {{ song?.name ?? 'Not playing' }}
             </h1>
             <p>{{ song?.artist ?? 'No artist' }}</p>
-            <p v-if="props.showAdditionalInfo">
+            <p v-if="props.showAdditionalInfo && song?.['additional-info']">
                 {{ song?.['additional-info'] }}
             </p>
         </div>
@@ -52,6 +52,7 @@
         >img, .fa-solid {
             height: 100%;
             font-size: 40vh;
+            border-radius: 10px;
         }
     }
 

@@ -45,7 +45,8 @@
             <div v-else>
                 <!-- TODO: Need to explain and add controls -->
                 <!-- TODO: How to handle anti-tamper? -->
-                <p>Connected</p>
+                <p>Connected. To connect another device, enter the link below or scan the QR code.</p>
+                <p>Anti-Tamper is enabled. To connect a client to be surveyed, enter the following link:</p>
                 <button @click="stopShare">
                     End share
                 </button>

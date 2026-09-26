@@ -22,7 +22,7 @@
 </script>
 
 <template>
-    <div>
+    <div id="main">
         <notifications
             position="top center"
             :duration="5000"
@@ -31,13 +31,13 @@
             width="400px"
             :max="3"
         />
-        <button
+        <i
             id="theme-selector"
+            class="fa-solid fa-moon"
             title="Toggle between light and dark mode"
             @click="changeTheme();"
         >
-            Theme <!-- TODO: Icon -->
-        </button>
+        </i>
         <div
             id="theme-selection-panel"
             :class="showThemePanel ? 'shown' : undefined"
@@ -71,18 +71,25 @@
 @include gen-theme('.theme-white-light', $theme-white-light);
 @include gen-theme('.theme-white-dark', $theme-white-dark);
 
+#main {
+    width: 100%;
+}
+
 #theme-selector {
     position: fixed;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    left: 10px;
     font-size: 1rem;
+    z-index: 1000;
+    cursor: pointer;
 }
 
 // TODO: Switches
 #theme-selection-panel {
     position: fixed;
+    z-index: 1000;
     top: calc(5px + 3rem);
-    right: -220px;
+    left: -220px;
     width: 200px;
     height: 250px;
     background-color: var(--theme-primary);
@@ -93,10 +100,10 @@
     flex-direction: column;
     overflow: hidden;
     border-radius: 20px;
-    transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: left 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     &.shown {
-        right: 5px;
+        left: 5px;
     }
 }
 </style>

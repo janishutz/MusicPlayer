@@ -14,7 +14,7 @@ export const currentQueueIdx = ref( -1 );
 
 export const startTime = ref( new Date().getTime() );
 
-export const showArtworks = ref( false );
+export const showArtworks = ref( true );
 
 export const enableAntiTamper = ref( location.pathname.includes( 'fancy' ) );
 

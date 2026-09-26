@@ -2,6 +2,7 @@
     import {
         currentQueue,
         currentQueueIdx,
+        isPlaying,
         playbackTime,
         showArtworks
     } from '@/ts/shared/state';
@@ -30,7 +31,12 @@
     <div class="queue-viewer">
         <div class="queue-container">
             <div v-if="songs.length > 0" class="queue-scroll">
-                <div v-for="(song, index) in songs" :key="index" class="song-list-element">
+                <div
+                    v-for="(song, index) in songs"
+                    :key="index"
+                    class="song-list-element"
+                    style="margin-bottom: 5px;"
+                >
                     <div class="song-cover-wrapper">
                         <img
                             v-if="song.artwork && showArtworks"
@@ -45,7 +51,7 @@
                         <p>{{ song.artist }}</p>
                         <p>{{ song['additional-info'] }}</p>
                     </div>
-                    <div class="song-actions">
+                    <div v-if="isPlaying" class="song-actions">
                         <p>In {{ '<' + timeToPlay( index ) }}min</p>
                     </div>
                 </div>

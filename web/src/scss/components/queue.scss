@@ -22,6 +22,8 @@
         width: 7rem;
         position: relative;
         margin-right: 20px;
+        overflow: hidden;
+        border-radius: 10px;
 
         .song-cover,
         .fa-solid {
@@ -62,6 +64,7 @@
         align-items: flex-start;
         text-wrap: nowrap;
         width: calc(100% - 18rem);
+        margin-right: auto;
 
         >* {
           margin: 5px;
@@ -80,7 +83,6 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-        margin-left: auto;
         margin-right: 10px;
 
         >* {

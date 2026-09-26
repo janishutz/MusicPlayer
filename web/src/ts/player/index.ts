@@ -16,10 +16,15 @@ import {
 } from './state';
 import {
     duration,
-    playbackPercentage,
-    startTracking,
-    stopTracking
+    playbackPercentage
 } from './status-tracking';
+import {
+    next,
+    pause,
+    play,
+    prev,
+    seekTo
+} from './controls';
 import type {
     RepeatMode
 } from '../dtype/player';
@@ -32,49 +37,9 @@ import {
 import {
     playIndex
 } from './playlists';
-
-const next = () => {
-    playIndex( ( queueIdx.value + 1 ) % queue.value.length );
-};
-
-const prev = () => {
-    if ( playbackPercentage.value * duration.value > 7 )
-        return seekTo( 0 );
-
-    playIndex( ( queueIdx.value - 1 + queue.value.length ) % queue.value.length );
-};
-
-const play = () => {
-    if ( currentSource.value === '' ) return;
-
-    isPlaying.value = true;
-
-    sources[currentSource.value]?.play();
-    startTracking();
-    document.dispatchEvent( new CustomEvent( 'musicplayer:playpause' ) );
-};
-
-const pause = () => {
-    if ( currentSource.value === '' ) return;
-
-    isPlaying.value = false;
-
-    sources[currentSource.value]?.pause();
-    stopTracking();
-    document.dispatchEvent( new CustomEvent( 'musicplayer:playpause' ) );
-};
-
-/**
- * Seek to a specific point in the song
- * @param pos - Percentage of song, value in [0, 1]
- */
-const seekTo = ( pos: number ) => {
-    if ( currentSource.value === '' ) return;
-
-    sources[currentSource.value]?.seekTo( pos );
-    playbackPercentage.value = pos;
-    document.dispatchEvent( new CustomEvent( 'musicplayer:seek' ) );
-};
+import {
+    useKeyboardListener
+} from './binds';
 
 const skip10 = () => {
     if ( currentSource.value === '' ) return;
@@ -159,6 +124,8 @@ const addSongFromSource = async ( source: string, cb?: ( songs: Song[] ) => void
 
     return true;
 };
+
+useKeyboardListener();
 
 export default {
     play,
