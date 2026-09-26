@@ -1,0 +1,32 @@
+$theme-shared-dark: (
+  on-bg: #ffffff,
+  bg: #000000,
+  app: #000000,
+  on-app: #ffffff,
+  primary: #410f0c,
+  primary-hover: #910f0c,
+  on-primary: #feffd1,
+  shadow: rgba(0, 0, 0, 0.7),
+);
+
+$theme-shared-light: (
+  on-bg: #000000,
+  bg: #cacad3,
+  on-app: #000000,
+  app: #fefefe,
+  on-primary: #ffffff,
+  primary: #04305c,
+  primary-hover: #08328c,
+  on-secondary: #ffffff,
+  secondary: #7583da,
+  secondary-hover: #7593c0,
+  shadow: rgba(0, 0, 0, 0.7),
+);
+
+@mixin gen-shared-theme ($selector, $theme) {
+  #{$selector} {
+    @each $var, $value in $theme {
+      --theme-#{$var}: #{$value};
+    }
+  }
+}

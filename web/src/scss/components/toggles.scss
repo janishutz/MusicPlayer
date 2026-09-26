@@ -1,0 +1,56 @@
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+
+  >input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked+.slider {
+      background-color: var(--theme-secondary-hover);
+    }
+
+    &:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+  }
+
+  >.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--theme-secondary);
+    -webkit-transition: .4s;
+    transition: .4s;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--theme-on-secondary);
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    /* Rounded sliders */
+    &.round {
+      border-radius: 34px;
+
+      &:before {
+        border-radius: 50%;
+      }
+    }
+  }
+}

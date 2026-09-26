@@ -4,13 +4,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
+  background-color: var(--theme-bg);
+  color: var(--theme-on-bg);
 
   .panel {
-    width: 45%;
+    width: 90%;
     margin-left: 2.5%;
     margin-right: 2.5%;
-    height: 100%;
+    height: 45%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,7 +29,8 @@
 
     >.time {
       display: flex;
-      width: 85%;
+      margin-top: 5px;
+      width: 95%;
       margin-left: auto;
       margin-right: auto;
 
@@ -39,6 +42,15 @@
       >.duration {
         margin-left: auto;
       }
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    flex-direction: row;
+
+    .panel {
+      width: 45%;
+      height: 100%;
     }
   }
 }

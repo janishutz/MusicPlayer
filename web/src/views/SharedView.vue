@@ -64,7 +64,7 @@
 </script>
 
 <template>
-    <div class="shared-view">
+    <div class="shared-view theme-shared-light">
         <InformationPopup v-model="showInfoPopup" :title="popupTitle" :msg="popupMsg" />
         <div class="panel">
             <div class="current-song-wrapper">
@@ -88,4 +88,5 @@
 
 <style lang="scss" scoped>
     @use '@/scss/shared/main.scss';
+    @use '@/scss/shared/theme.scss';
 </style>

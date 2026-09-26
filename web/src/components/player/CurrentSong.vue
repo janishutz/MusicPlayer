@@ -26,8 +26,10 @@
             <h1>
                 {{ song?.name ?? 'Not playing' }}
             </h1>
-            <p>{{ song?.artist ?? 'No artist' }}</p>
-            <p v-if="props.showAdditionalInfo && song?.['additional-info']">
+            <p class="artist">
+                {{ song?.artist ?? 'No artist' }}
+            </p>
+            <p v-if="props.showAdditionalInfo && song?.['additional-info']" class="additional-info">
                 {{ song?.['additional-info'] }}
             </p>
         </div>
@@ -57,9 +59,40 @@
     }
 
     .song-details {
+        width: 100%;
+        overflow-x: hidden;
+
         >* {
             margin: 10px;
         }
+
+        h1 {
+            width: 100%;
+            font-size: 2.5rem;
+            text-wrap: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .artist {
+            font-size: 1.5rem;
+            margin-bottom: 0px;
+        }
+
+        .additional-info {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-top: 0px;
+        }
+    }
+}
+
+@keyframes slide {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 100%;
     }
 }
 </style>

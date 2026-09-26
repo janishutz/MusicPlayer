@@ -3,6 +3,7 @@
         isConnected
     } from '@/ts/messages';
     import PopupElement from '../popups/PopupElement.vue';
+    import SwitchOption from '../SwitchOption.vue';
     import {
         ref
     } from 'vue';
@@ -29,15 +30,18 @@
     <div>
         <PopupElement v-model="showPopup" show-close>
             <h2>Share</h2>
-            <div v-if="!isConnected">
+            <div v-if="!isConnected" class="share-wrapper">
                 <p>
                     You can use a share to show what you are currently listening to (and the progress) on a page.
                 </p>
                 <p>{{ errorMessage }}</p>
-                <label for="share-name">Share Name</label>
-                <input id="share-name" v-model="shareName" type="text">
-                <label for="share-anti-tamper">Use Anti-Tamper</label>
-                <input id="share-anti-tamper" v-model="useAntiTamper" type="checkbox">
+                <div
+                    class="create-share-view"
+                >
+                    <label for="share-name">Share Name</label>
+                    <input id="share-name" v-model="shareName" type="text">
+                    <SwitchOption v-model="useAntiTamper" text="Use Anti-Tamper" />
+                </div>
                 <button @click="startShare">
                     Create Share
                 </button>
@@ -54,3 +58,12 @@
         </PopupElement>
     </div>
 </template>
+
+<style lang="scss" scoped>
+    .create-share-view {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 80%;
+    }
+</style>

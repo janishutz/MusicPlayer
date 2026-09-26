@@ -10,6 +10,7 @@
     import {
         RouterView
     } from 'vue-router';
+    import SwitchOption from './components/SwitchOption.vue';
     import {
         ref
     } from 'vue';
@@ -48,8 +49,7 @@
                     {{ val }}
                 </option>
             </select>
-            <label for="light-mode-toggle">Dark Mode</label>
-            <input id="light-mode-toggle" v-model="darkMode" type="checkbox">
+            <SwitchOption v-model="darkMode" text="Dark mode" />
         </div>
         <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition ? String( route.meta.transition ) : 'fade'" mode="out-in">
@@ -70,6 +70,8 @@
 @include gen-theme('.theme-black-dark', $theme-black-dark);
 @include gen-theme('.theme-white-light', $theme-white-light);
 @include gen-theme('.theme-white-dark', $theme-white-dark);
+@include gen-shared-theme('.theme-shared-light', $theme-shared-light);
+@include gen-shared-theme('.theme-shared-dark', $theme-shared-dark);
 
 #main {
     width: 100%;
@@ -88,10 +90,11 @@
 #theme-selection-panel {
     position: fixed;
     z-index: 1000;
-    top: calc(5px + 3rem);
+    top: calc(5px + 2rem);
     left: -220px;
-    width: 200px;
-    height: 250px;
+    width: 180px;
+    height: 200px;
+    padding: 20px;
     background-color: var(--theme-primary);
     color: var(--theme-on-primary);
     display: flex;
@@ -104,6 +107,11 @@
 
     &.shown {
         left: 5px;
+    }
+
+    >select {
+        width: 100%;
+        margin-bottom: 10px;
     }
 }
 </style>

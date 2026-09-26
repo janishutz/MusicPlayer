@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import UserPlaylists from '../playlists/UserPlaylists.vue';
-
 </script>
 
 <template>
@@ -14,5 +13,6 @@
 .playlist-main {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 </style>
