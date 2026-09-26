@@ -1,0 +1,11 @@
+# NOTE: This is not complete yet and image names are TBD
+services:
+  frontend:
+    image: ghcr.io/janishutz/MusicPlayerFrontend
+    ports:
+      - 3000:3000
+
+  backend:
+    image: ghcr.io/janishutz/MusicPlayerBackend
+    ports:
+      - 8080:8080

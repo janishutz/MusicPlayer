@@ -1,3 +1,5 @@
+git.janishutz.com/janishutz-store/go-sdk v1.0.0 h1:jFGVASW1HznhxsH3880hDmkdqNLC/kq+DE71yAywDdw=
+git.janishutz.com/janishutz-store/go-sdk v1.0.0/go.mod h1:YFOWPKPxHsRhNmz8dVFgE/1yZq8RIVL9yharGPaVfDY=
 github.com/bytedance/gopkg v0.1.4 h1:oZnQwnX82KAIWb7033bEwtxvTqXcYMxDBaQxo5JJHWM=
 github.com/bytedance/gopkg v0.1.4/go.mod h1:v1zWfPm21Fb+OsyXN2VAHdL6TBb2L88anLQgdyje6R4=
 github.com/bytedance/sonic v1.15.4 h1:FgtV/4aBHpla9AxuMpuuzVUpa/Cf3izufkxNmnEzdI8=

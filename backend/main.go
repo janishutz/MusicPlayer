@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"time"
 
 	"musicplayer/config"
@@ -20,7 +19,10 @@ func main() {
 
 	conf := config.LoadConfig()
 
+	// Load templates
+	r.LoadHTMLGlob("templates/*.tmpl")
 
+	// Security configuration
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{conf.Urls.FrontendURL},
 		AllowMethods:     []string{"GET", "POST", "DELETE", "OPTIONS"},
@@ -29,13 +31,11 @@ func main() {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
-
 	r.Use(util.DefaultHeaders)
 	r.Use(util.RateLimiter())
 	r.SetTrustedProxies(conf.Urls.TrustedProxies)
 
-	r.LoadHTMLGlob("templates/*.tmpl")
-
+	// Session management
 	// FIXME: Choose session store (probably best to support both redis and memstore or memcache)
 	// TODO: Secret via env var as well
 	store := memstore.NewStore([]byte("secret"))
@@ -43,8 +43,9 @@ func main() {
 
 	routes.AddRoutes(r, conf)
 
-	log.Println("Redirect URL: ", conf.Urls.DefaultRedirect)
+	// Set up SDKs for login and store
 	oidclogin.Configure(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, true)
+	util.Init(conf)
 
 	// Healthcheck
 	r.GET("/healthz", func(c *gin.Context) { c.JSON(200, gin.H{"status": true}) })

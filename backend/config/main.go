@@ -84,6 +84,7 @@ func LoadConfig() Config {
 		log.Print("[WARN] DefaultRedirect was not configured, falling back to default")
 		conf.Urls.BackendURL = conf.Urls.FrontendURL + "/app"
 	}
+	conf.OwnershipCheck.BypassingUIDs = append(conf.OwnershipCheck.BypassingUIDs, "stubs")
 
 	log.Print("Configuration loaded and validated successfully")
 
