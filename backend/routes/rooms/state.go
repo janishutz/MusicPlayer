@@ -1,7 +1,6 @@
 package rooms
 
 import (
-	"log"
 	"musicplayer/routes/types"
 	"sync"
 	"time"
@@ -83,7 +82,6 @@ func GetState(roomId string, lastUpdate int, sse bool) *StateUpdate {
 }
 
 func UpdateState(roomId string, playing bool, index int, start int, offset float64) bool {
-	log.Print("Updating state")
 	if roomNames[roomId] {
 		rooms[roomId].state.LastUpdate = int(time.Now().Unix())
 		rooms[roomId].state.Index = index
@@ -96,7 +94,6 @@ func UpdateState(roomId string, playing bool, index int, start int, offset float
 }
 
 func UpdatePlaylist(roomId string, playlist types.Songs) bool {
-	log.Print("Updating Playlist")
 	if roomNames[roomId] {
 		rooms[roomId].playlist.LastUpdate = int(time.Now().Unix())
 		rooms[roomId].playlist.Playlist = playlist
