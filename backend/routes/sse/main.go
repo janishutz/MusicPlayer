@@ -1,16 +1,28 @@
 package sse
 
 import (
+	"github.com/gin-gonic/gin"
 	"io"
 	"log"
-	"github.com/gin-gonic/gin"
 )
+
+var controller *broker
 
 // Get updates faster via SSE (but at higher server cost)
 func Init(r *gin.Engine) {
-	controller := newServer()
+	controller = newServer()
 	log.Println("[SSE] Enabled by configuration, clients will default to using it")
 	r.GET("/room/:id/sse", headersMiddleware(), controller.serveHTTP(), handler)
+}
+
+// Send an update via sse to all connected clients
+func SendUpdate(msg string, roomId string) {
+	if controller != nil {
+		controller.Message <- message{
+			Message: msg,
+			Room:    roomId,
+		}
+	}
 }
 
 // This is mostly from https://github.com/gin-gonic/examples/blob/master/server-sent-event/main.go
@@ -34,6 +46,8 @@ func handler(c *gin.Context) {
 	if !ok {
 		return
 	}
+	c.Writer.Write([]byte("connected"))
+	c.Writer.Flush()
 	c.Stream(func(w io.Writer) bool {
 		if msg, ok := <-clientChan; ok {
 			c.SSEvent("message", msg)

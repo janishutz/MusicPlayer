@@ -1,25 +1,26 @@
 # Frontend
 - [ ] Status tracking (position, etc)
-- [ ] Change metadata association for automated association
-- [ ] Move songs with D&D, or index assignment?
+- [X] Change metadata association for automated association
+- [X] Move songs with D&D, or index assignment?
 - [ ] Explain additional info
 - [ ] Tour
-- [ ] Get player working
-- [ ] Save playlists locally or on backend
+- [X] Get player working
+- [X] Save playlists locally or on backend
 - [ ] SSE connection
 - [ ] Anti-Tamper
 - [ ] Remote showcase views
-- [ ] Login
+- [X] Login
 - [ ] About page
-- [ ] Apple-Music signin
-- [ ] Loading existing playlists with local music and association of that
+- [X] Apple-Music signin
+- [X] Loading existing playlists with local music and association of that
 - [ ] Remote screens can use polling (once a minute or so) or SSE for updating (/fancy uses SSE by default, /share uses polling by default). Should reduce server load
 - [ ] Comply with AGPL (link source code somewhere)
+- [ ] Keybinds in player
 
 # Backend
-- [ ] Implement all endpoints
+- [X] Implement all endpoints
 - [ ] Integrate with store and auth sdks
-- [ ] Create FOSS solution for above (single user)
+- [X] Create FOSS solution for above (single user)
 - [ ] Setup guide
 - [ ] Docker containers
 - [ ] CI

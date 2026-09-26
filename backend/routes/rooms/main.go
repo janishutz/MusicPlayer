@@ -20,11 +20,3 @@ func Init() {
 		Rooms: map[string]roomClient{},
 	}
 }
-
-func GetChannel(roomId string) (chan string, bool) {
-	if roomNames[roomId] {
-		return rooms[roomId].Message, true
-	} else {
-		return nil, true
-	}
-}

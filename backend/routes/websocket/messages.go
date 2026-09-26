@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"musicplayer/routes/rooms"
+	"musicplayer/routes/sse"
 	"musicplayer/routes/types"
 
 	"github.com/gorilla/websocket"
@@ -13,7 +14,7 @@ type UpdateMessage struct {
 	Playing  *bool        `json:"playing"`
 	Index    *int         `json:"index"`
 	Start    *int         `json:"start"`
-	Offset   *float64         `json:"offset"`
+	Offset   *float64     `json:"offset"`
 	Playlist *types.Songs `json:"playlist"`
 }
 
@@ -36,6 +37,8 @@ func broadcast(roomId string, message []byte) {
 			log.Println("Broadcast for room ", roomId, " failed with error ", err)
 		}
 	}
+
+	sse.SendUpdate(string(message), roomId)
 }
 
 func adminMessage(roomId string, message []byte) {

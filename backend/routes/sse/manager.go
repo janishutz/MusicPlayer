@@ -12,7 +12,7 @@ import (
 
 // It keeps a list of clients those are currently attached
 // and broadcasting events to those clients.
-type sseEvent struct {
+type broker struct {
 	// Events are pushed to this channel by everyone
 	Message chan message
 
@@ -44,8 +44,8 @@ type clientChan chan string
 // ───────────────────────────────────────────────────────────────────
 
 // Initialize event and Start processing requests
-func newServer() (event *sseEvent) {
-	event = &sseEvent{
+func newServer() (event *broker) {
+	event = &broker{
 		Message:       make(chan message),
 		NewClients:    make(chan clientConfig),
 		ClosedClients: make(chan clientConfig),
@@ -59,11 +59,14 @@ func newServer() (event *sseEvent) {
 
 // It Listens all incoming requests from clients.
 // Handles addition and removal of clients and broadcast messages to clients.
-func (stream *sseEvent) listen() {
+func (stream *broker) listen() {
 	for {
 		select {
 		// Add new available client
 		case client := <-stream.NewClients:
+			if stream.TotalClients[client.Room] == nil {
+				stream.TotalClients[client.Room] = map[chan string]bool{}
+			}
 			stream.TotalClients[client.Room][client.Channel] = true
 			log.Printf("Client added. %d registered clients", len(stream.TotalClients))
 
@@ -89,7 +92,7 @@ func (stream *sseEvent) listen() {
 }
 
 // Middleware for configuring SSE
-func (stream *sseEvent) serveHTTP() gin.HandlerFunc {
+func (stream *broker) serveHTTP() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Initialize client channel
 		clientChan := make(clientChan)

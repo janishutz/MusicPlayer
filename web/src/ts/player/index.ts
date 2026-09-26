@@ -72,6 +72,7 @@ const seekTo = ( pos: number ) => {
     if ( currentSource.value === '' ) return;
 
     sources[currentSource.value]?.seekTo( pos );
+    playbackPercentage.value = pos;
     document.dispatchEvent( new CustomEvent( 'musicplayer:seek' ) );
 };
 

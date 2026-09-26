@@ -40,12 +40,26 @@ export const savePlaylist = () => {
     savePlaylists();
 };
 
+let playlistOperationLock = false;
+
+// Rate limited
 export const getPlaylists = async () => {
+    if ( playlistOperationLock ) return;
+
+    playlistOperationLock = true;
     playlists.value = ( await ( await request.get( '/user/playlists' ) ).json() ).playlists;
     editingPlaylists.value = playlists.value.map( () => false );
+
+    setTimeout( () => {
+        playlistOperationLock = false;
+    }, 1000 );
 };
 
+// Rate limit
 export const savePlaylists = async () => {
+    if ( playlistOperationLock ) return;
+
+    playlistOperationLock = true;
     const notifications = useNotification();
 
     try {
@@ -66,4 +80,8 @@ export const savePlaylists = async () => {
             'title': 'Playlists'
         } );
     }
+
+    setTimeout( () => {
+        playlistOperationLock = false;
+    }, 1000 );
 };

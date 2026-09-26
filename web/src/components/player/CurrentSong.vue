@@ -20,7 +20,7 @@
                 alt="Song cover"
                 class="song-cover"
             >
-            <i v-else class="fa-solid fa-music song-cover"></i>
+            <img v-else class="song-cover" src="/logo.jpg">
         </div>
         <div class="song-details">
             <h1>
