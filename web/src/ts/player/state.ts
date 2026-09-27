@@ -38,6 +38,8 @@ export const repeat: Ref<RepeatMode> = ref( 'off' );
 
 export const fullPlayer = ref( false );
 
+export const disableKeyHandler = ref( false );
+
 const initSources = async () => {
     try {
         sources['applemusic'] = await useMusicKit();

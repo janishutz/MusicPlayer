@@ -75,6 +75,12 @@ button {
     background-color: var(--theme-primary-hover);
   }
 
+  &.inactive {
+    cursor: not-allowed;
+    background-color: var(--theme-secondary);
+    color: var(--theme-on-secondary);
+  }
+
   // TODO: Update these buttons
   &.fancy-button {
     color: white;

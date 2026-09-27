@@ -5,10 +5,14 @@
         results,
         searchOpts
     } from './searchManager';
+    import {
+        ref,
+        watch
+    } from 'vue';
     import PopupElement from '@/components/popups/PopupElement.vue';
     import {
-        ref
-    } from 'vue';
+        disableKeyHandler
+    } from '@/ts/player/state';
 
     const isSearching = ref( false );
     const addedIndex = ref( -1 );
@@ -16,6 +20,10 @@
     let addedTimeout = -1;
     let timeout = -1;
     let searchedForQuery = '';
+
+    watch( isShowingSearchView, () => {
+        disableKeyHandler.value = isShowingSearchView.value;
+    } );
 
     const search = ( ev: KeyboardEvent ) => {
         if ( ev.key === 'Enter' ) {

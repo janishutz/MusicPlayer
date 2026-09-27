@@ -7,6 +7,9 @@
     import type {
         Song
     } from '@/ts/dtype/playlist';
+    import {
+        disableKeyHandler
+    } from '@/ts/player/state';
     import player from '@/ts/player';
 
     const model = defineModel<boolean>( {
@@ -24,6 +27,11 @@
         'identifier': '',
         'source': 'local'
     } );
+
+    watch( model, () => {
+        disableKeyHandler.value = model.value;
+    } );
+
 
     watch( props, () => {
         if ( props.song )

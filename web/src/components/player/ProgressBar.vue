@@ -13,7 +13,11 @@
     const isMoving = ref( false );
     const bar = useTemplateRef( 'bar' );
     const props = defineProps<{
-        'disallowMove'?: boolean
+        'disallowMove'?: boolean,
+        /**
+         * Choose whether to enable light or dark mode. If unset, then will use theme colour
+         */
+        'lightMode'?: 'light' | 'dark',
     }>();
 
     const start = ( ev: MouseEvent ) => {
@@ -48,8 +52,13 @@
 
 <template>
     <div class="progressbar">
-        <div ref="bar" class="back">
-            <div :style="`width: ${ isMoving ? moveVal * 100 : val * 100 }%;`"></div>
+        <div
+            ref="bar"
+            :class="['back', props.lightMode ? (props.lightMode === 'light' ? 'light' : 'dark') : undefined ]"
+        >
+            <div
+                :style="`width: ${ isMoving ? moveVal * 100 : val * 100 }%;`"
+            ></div>
         </div>
         <div
             :class="['click-target', offset >= 0 ? 'active' : undefined, props.disallowMove ? 'disallowed' : undefined]"

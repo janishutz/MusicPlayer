@@ -15,6 +15,22 @@
       background-color: var(--theme-primary-hover);
       height: 10px;
     }
+
+    &.light {
+      background-color: #080808;
+
+      >div {
+        background-color: #333333;
+      }
+    }
+
+    &.dark {
+      background-color: #fafafa;
+
+      >div {
+        background-color: #aaaaaa;
+      }
+    }
   }
 
   >.click-target {

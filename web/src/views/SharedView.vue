@@ -2,7 +2,8 @@
     import {
         type ComputedRef,
         computed,
-        onMounted
+        onMounted,
+        ref
     } from 'vue';
     import {
         currentQueue,
@@ -30,6 +31,13 @@
 
     shared.connect();
 
+    const lightTheme = ref( localStorage.getItem( 'shared-theme' ) === 'light' );
+
+    const changeTheme = () => {
+        lightTheme.value = !lightTheme.value;
+        localStorage.setItem( 'shared-theme', lightTheme.value ? 'light' : 'dark' );
+    };
+
     onMounted( () => {
         setInterval( () => {
             if ( !isPlaying.value ) return;
@@ -46,6 +54,8 @@
                     isPlaying.value = false;
             }
         }, 250 );
+        document.getElementById( 'theme-selector' )!.style = 'display: none;';
+        document.getElementById( 'theme-selection-panel' )!.style = 'display: none;';
     } );
     const song: ComputedRef<Song> = computed( () => {
         if ( currentQueueIdx.value >= 0 && currentQueue.value.length > currentQueueIdx.value )
@@ -64,13 +74,18 @@
 </script>
 
 <template>
-    <div class="shared-view theme-shared-light">
+    <div :class="['shared-view', 'theme-shared-' + (lightTheme ? 'light' : 'dark')]">
+        <i
+            id="shared-theme-selector"
+            :class="['fa-solid', lightTheme ? 'fa-sun' : 'fa-moon']"
+            @click="changeTheme"
+        ></i>
         <InformationPopup v-model="showInfoPopup" :title="popupTitle" :msg="popupMsg" />
         <div class="panel">
             <div class="current-song-wrapper">
                 <CurrentSong v-model="song" :show-additional-info="true" />
             </div>
-            <ProgressBar v-model="playbackProgress" :disallow-move="true" />
+            <ProgressBar v-model="playbackProgress" :disallow-move="true" :light-mode="lightTheme ? 'light' : 'dark'" />
             <div class="time">
                 <p class="current">
                     {{ beautifyTime( song.duration >= 0 ? playbackTime : -1 ) }}
@@ -88,5 +103,4 @@
 
 <style lang="scss" scoped>
     @use '@/scss/shared/main.scss';
-    @use '@/scss/shared/theme.scss';
 </style>

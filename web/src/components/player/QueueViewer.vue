@@ -39,6 +39,8 @@
     };
 
     const editSong = ( idx: number ) => {
+        if ( queue.value.length === 0 ) return;
+
         showEditSong.value = true;
         editingSong.value = player.queue.value[ idx + queueIdx.value + 1 ]!;
     };
@@ -59,7 +61,7 @@
                 <i class="fa-solid fa-xmark"></i>
                 Clear
             </button>
-            <button @click="editSong( -1 )">
+            <button :class="queue.length === 0 ? 'inactive' : undefined" @click="editSong( -1 )">
                 <i class="fa-solid fa-pen-to-square"></i>
                 Edit Current
             </button>

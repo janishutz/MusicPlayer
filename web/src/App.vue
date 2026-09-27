@@ -82,14 +82,14 @@
     top: 10px;
     left: 10px;
     font-size: 1rem;
-    z-index: 1000;
+    z-index: 100;
     cursor: pointer;
 }
 
 // TODO: Switches
 #theme-selection-panel {
     position: fixed;
-    z-index: 1000;
+    z-index: 100;
     top: calc(5px + 2rem);
     left: -220px;
     width: 180px;

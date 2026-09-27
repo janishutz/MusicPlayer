@@ -7,6 +7,15 @@
   flex-direction: column;
   background-color: var(--theme-bg);
   color: var(--theme-on-bg);
+  transition: background-color 0.5s;
+
+  #shared-theme-selector {
+    position: fixed;
+    top: 10px;
+    font-size: 1.25rem;
+    right: 10px;
+    cursor: pointer;
+  }
 
   .panel {
     width: 90%;

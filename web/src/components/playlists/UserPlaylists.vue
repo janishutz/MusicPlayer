@@ -18,11 +18,15 @@
     } from 'vue';
     import AddPlaylist from './AddPlaylist.vue';
     import router from '@/router';
+    import {
+        disableKeyHandler
+    } from '@/ts/player/state';
 
     const checkingStatus = ref( true );
     const dots = ref( 0 );
     const showAddPlaylist = ref( false );
 
+    let editingCount = 0;
     let interval = -1;
 
     const loadPlaylists = async () => {
@@ -60,6 +64,14 @@
 
     const togglePlaylistEditing = ( idx: number ) => {
         editingPlaylists.value[ idx ] = !editingPlaylists.value[ idx ];
+
+        if ( editingPlaylists.value[ idx ] ) {
+            editingCount += 1;
+        } else {
+            editingCount -= 1;
+        }
+
+        disableKeyHandler.value = editingCount > 0;
     };
 </script>
 

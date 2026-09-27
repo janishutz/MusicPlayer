@@ -1,11 +1,19 @@
 <script setup lang="ts">
+    import {
+        ref,
+        watch
+    } from 'vue';
     import PopupElement from '../popups/PopupElement.vue';
     import {
-        ref
-    } from 'vue';
+        disableKeyHandler
+    } from '@/ts/player/state';
 
     const showPopup = defineModel<boolean>( {
         'required': true
+    } );
+
+    watch( showPopup, () => {
+        disableKeyHandler.value = showPopup.value;
     } );
 
     const addPlaylist = () => {
