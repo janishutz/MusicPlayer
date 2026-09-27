@@ -34,20 +34,13 @@ and the [accompanying browser solution](https://github.com/janishutz/oidc-login-
 # MusicPlayer
 A music player, specifically created for displaying song information on multiple different displays that are connected to the same network, just from the browser. 
 
-I also offer a [hosted solution](https://music.janishutz.com), running the exact same code base as the open source version.
-This solution has the benefit of being set up for you already, but is subscription-based and available on my [store](https://store.janishutz.com/product/com.janishutz).
-
-<div id="donate" align="center">
-    <a href="https://store.janishutz.com/donate" target="_blank"><img src="https://store-cdn.janishutz.com/static/support-me.jpg" width="150px"></a>
-</div>
 
 
-## Limitations
-- You can either use OpenID Connect for sign in or no sign in at all. There are plans to eventually also add local authentication, but that is low priority (since ProxyAuth is a thing).
-- In Anti-Tamper mode, only websockets can be used for the clients with Anti-Tamper enabled.
-- As an intentional design choice, users on the default share settings, or all users on shares without Anti-Tamper, cannot use websockets and must instead rely on the polling or SSE options.
-- The player that created the share must use WebSockets.
-- If you want to offer a hosted service for MusicPlayer, currently only my store is supported for ownership check. Implementing your own solution is fairly easy however.
+## Getting Started
+There are two main ways to use MusicPlayer:
+- Self Host it (see below)
+- [Hosted version](https://music.janishutz.com). This has the benefit of not requiring an Apple Developer Subscription and any setup. It is however a subscription service.
+See the [store page](https://store.janishutz.com/product/com.janishutz.MusicPlayer)
 
 
 ## Features
@@ -58,6 +51,19 @@ This solution has the benefit of being set up for you already, but is subscripti
 - Client displays show the playback position and all information from song metadata fetched from the Apple Music API
 - Play most common music files
 - No setup required when using the hosted version at [music.janishutz.com](https://music.janishutz.com)
+
+
+## Limitations
+- You can either use OpenID Connect for sign in or no sign in at all. There are plans to eventually also add local authentication, but that is low priority (since ProxyAuth is a thing).
+- In Anti-Tamper mode, only websockets can be used for the clients with Anti-Tamper enabled.
+- As an intentional design choice, users on the default share settings, or all users on shares without Anti-Tamper, cannot use websockets and must instead rely on the polling or SSE options.
+- The player that created the share must use WebSockets.
+- If you want to offer a hosted service for MusicPlayer, currently only my store is supported for ownership check. Implementing your own solution is fairly easy however.
+
+
+<div id="donate" align="center">
+    <a href="https://store.janishutz.com/donate" target="_blank"><img src="https://store-cdn.janishutz.com/static/support-me.jpg" width="150px"></a>
+</div>
 
 
 ## Contributing
