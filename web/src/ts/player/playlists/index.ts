@@ -16,7 +16,7 @@ import {
  * @param idx - The index in the queue to play at
  */
 export const playIndex = ( idx: number ) => {
-    if ( queue.value.length === 0 ) return;
+    if ( queue.value.length === 0 ) return false;
 
     if ( idx >= queue.value.length ) {
         idx = repeat.value === 'all' ? 0 : -1;
@@ -47,4 +47,6 @@ export const playIndex = ( idx: number ) => {
     setTimeout( () => {
         document.dispatchEvent( new CustomEvent( 'musicplayer:playindex', {} ) );
     }, 500 );
+
+    return true;
 };

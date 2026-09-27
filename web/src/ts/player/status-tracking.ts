@@ -5,6 +5,9 @@ import {
     sources
 } from './state';
 import {
+    pause
+} from './controls';
+import {
     playIndex
 } from './playlists';
 import {
@@ -37,7 +40,10 @@ const tracker = () => {
             sources[currentSource.value]?.seekTo( 0 );
         } else {
             stopTracking();
-            playIndex( queueIdx.value + 1 );
+
+            if ( !playIndex( queueIdx.value + 1 ) ) {
+                pause();
+            }
         }
     }
 };

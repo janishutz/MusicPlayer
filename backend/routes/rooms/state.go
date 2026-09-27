@@ -1,6 +1,7 @@
 package rooms
 
 import (
+	"log"
 	"musicplayer/routes/types"
 	"sync"
 	"time"
@@ -67,14 +68,14 @@ func GetState(roomId string, lastUpdate int, sse bool) *StateUpdate {
 				Playlist:   &room.playlist.Playlist,
 				State:      room.state,
 				AntiTamper: room.antiTamper,
-				Mode: sse,
+				Mode:       sse,
 			}
 		} else {
 			return &StateUpdate{
 				Playlist:   nil,
 				State:      room.state,
 				AntiTamper: room.antiTamper,
-				Mode: sse,
+				Mode:       sse,
 			}
 		}
 	}
@@ -83,6 +84,7 @@ func GetState(roomId string, lastUpdate int, sse bool) *StateUpdate {
 
 func UpdateState(roomId string, playing bool, index int, start int, offset float64) bool {
 	if roomNames[roomId] {
+		log.Println("State updating")
 		rooms[roomId].state.LastUpdate = int(time.Now().Unix())
 		rooms[roomId].state.Index = index
 		rooms[roomId].state.Start = start
@@ -95,6 +97,7 @@ func UpdateState(roomId string, playing bool, index int, start int, offset float
 
 func UpdatePlaylist(roomId string, playlist types.Songs) bool {
 	if roomNames[roomId] {
+		log.Println("Playlist updating")
 		rooms[roomId].playlist.LastUpdate = int(time.Now().Unix())
 		rooms[roomId].playlist.Playlist = playlist
 		return true

@@ -5,6 +5,7 @@
         useAntiTamper
     } from '@/ts/messages';
     import PopupElement from '../popups/PopupElement.vue';
+    import Qrcode from 'qrcode.vue';
     import SwitchOption from '../SwitchOption.vue';
     import {
         ref
@@ -54,12 +55,13 @@
         <div v-else>
             <!-- TODO: Need to explain and add controls -->
             <!-- TODO: How to handle anti-tamper? -->
-            <!-- TODO: QR Code -->
             <p>
                 Connected. To connect another device, enter the link below or scan the QR code.
                 <br>
                 <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}share/{{ room }}</a>
             </p>
+            <Qrcode :value="baseURL + 'fancy/' + room" class="qrcode" :size="200" />
+            <br>
             <p v-if="useAntiTamper">
                 Anti-Tamper is enabled. To connect a client to be surveyed, enter the following link:
                 <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}fancy/{{ room }}</a>

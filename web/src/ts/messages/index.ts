@@ -113,12 +113,14 @@ const connect = (): Promise<boolean> => {
     } );
 };
 
-// FIXME: This is not a sensible solution, but easy for now (i.e. solve properly)
 let playlistLock = false;
 let stateLock = false;
 
 const sendPlaylistData = () => {
+    console.log( 'Trying to send playlist data' );
+
     if ( isConnected.value && !playlistLock ) {
+        console.log( 'Sending playlist data' );
         playlistLock = true;
 
         connection!.send( JSON.stringify( {
@@ -133,7 +135,10 @@ const sendPlaylistData = () => {
 };
 
 const sendStateData = async () => {
+    console.log( 'Trying to send state data' );
+
     if ( isConnected.value && !stateLock ) {
+        console.log( 'Sending state data' );
         stateLock = true;
 
         connection!.send( JSON.stringify( {

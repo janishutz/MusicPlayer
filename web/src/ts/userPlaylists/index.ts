@@ -22,7 +22,6 @@ export const removePlaylist = ( idx: number ) => {
 };
 
 export const selectPlaylist = ( idx: number ) => {
-    // FIXME: playlistIdx changes somehow before save?
     player.clearQueue();
     playlistIdx.value = idx;
     player.loadPlaylist( playlists.value[ idx ]!.songs );
