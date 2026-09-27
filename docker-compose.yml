@@ -1,4 +1,7 @@
 # NOTE: This is not complete yet and image names are TBD
+volumes:
+  data:
+
 services:
   frontend:
     image: ghcr.io/janishutz/MusicPlayerFrontend
@@ -7,5 +10,9 @@ services:
 
   backend:
     image: ghcr.io/janishutz/MusicPlayerBackend
+    volumes:
+      - data:/app/data
+      - ./config.yml:/app/config.yml
+      - ./apple_private_key.p8:/app/apple_private_key.p8
     ports:
       - 8080:8080
