@@ -54,7 +54,7 @@ func Handler(c *gin.Context) {
 
 	// Add client and add cleanup function
 	rooms.AddClient(roomID, conn)
-	defer rooms.RemoveClient(roomID, conn)
+	defer rooms.RemoveClient(roomID, conn, adminMessage)
 
 	// Ping-Pong
 	conn.SetReadDeadline(time.Now().Add(pongWait))

@@ -20,12 +20,13 @@ func AddClient(roomId string, conn *websocket.Conn) {
 }
 
 // Remove a websocket client
-func RemoveClient(roomId string, conn *websocket.Conn) {
+func RemoveClient(roomId string, conn *websocket.Conn, cb func(roomId string, msg []byte)) {
 	log.Print("[WS] Ending connection for room: ", roomId, " (as normal client)")
 	Clients.Lock.Lock()
 	defer Clients.Lock.Unlock()
 	delete(Clients.Rooms[roomId].Members, conn)
 	conn.Close()
+	cb(roomId, []byte("disconnect"))
 }
 
 // Add a websocket admin client (this is the only allowed client to send updates)

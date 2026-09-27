@@ -18,6 +18,14 @@ type UpdateMessage struct {
 	Playlist *types.Songs `json:"playlist"`
 }
 
+func derefOrDefault[T any](value *T, default_value T) T {
+	if value != nil {
+		return *value
+	} else {
+		return default_value
+	}
+}
+
 func broadcast(roomId string, message []byte) {
 	rooms.Clients.Lock.RLock()
 	defer rooms.Clients.Lock.RUnlock()
@@ -27,7 +35,7 @@ func broadcast(roomId string, message []byte) {
 		log.Print("Failed to unmarshal: ", err)
 	} else {
 		if data.Playing != nil {
-			rooms.UpdateState(roomId, *data.Playing, *data.Index, *data.Start, *data.Offset)
+			rooms.UpdateState(roomId, derefOrDefault(data.Playing, false), derefOrDefault(data.Index, -1), derefOrDefault(data.Start, -1), derefOrDefault(data.Offset, 0))
 		} else if data.Playlist != nil {
 			rooms.UpdatePlaylist(roomId, *data.Playlist)
 		}
