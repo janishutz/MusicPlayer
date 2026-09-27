@@ -13,13 +13,19 @@
 </script>
 
 <template>
-    <div>
-        <PopupElement v-model="show">
+    <PopupElement v-model="show">
+        <div class="info-popup">
             <h2>{{ props.title }}</h2>
             <p>{{ props.msg }}</p>
             <button @click="close">
                 Ok
             </button>
-        </PopupElement>
-    </div>
+        </div>
+    </PopupElement>
 </template>
+
+<style lang="scss" scoped>
+.info-popup {
+    max-width: 60vw;
+}
+</style>

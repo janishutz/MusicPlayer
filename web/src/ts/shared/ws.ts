@@ -83,7 +83,12 @@ const connectHandler = (): Promise<boolean> => {
     } );
 };
 
+const sendMessage = ( msg: string ) => {
+    connection?.send( msg );
+};
+
 export default {
     connect,
-    disconnect
+    disconnect,
+    sendMessage
 };

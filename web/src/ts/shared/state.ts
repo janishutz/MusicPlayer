@@ -14,9 +14,13 @@ export const currentQueueIdx = ref( -1 );
 
 export const startTime = ref( new Date().getTime() );
 
-export const showArtworks = ref( true );
+export const showArtworks = ref( location.pathname.includes( 'fancy' ) );
 
-export const enableAntiTamper = ref( location.pathname.includes( 'fancy' ) );
+export const allowAntiTamper = ref( location.pathname.includes( 'fancy' ) );
+
+export const enableFancyBackground = ref( location.pathname.includes( 'fancy' ) );
+
+export const isAntiTamperEnabled = ref( false );
 
 export const playbackTime = ref( 0 );
 
@@ -29,3 +33,5 @@ export const popupTitle = ref( '' );
 export const popupMsg = ref( '' );
 
 export const showInfoPopup = ref( false );
+
+export const clientName = ref( '' );

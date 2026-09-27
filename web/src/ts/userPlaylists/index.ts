@@ -22,6 +22,8 @@ export const removePlaylist = ( idx: number ) => {
 };
 
 export const selectPlaylist = ( idx: number ) => {
+    // FIXME: Sometimes auto-start not working with Apple Music Song
+    // Option: Make that default behaviour?
     playlistIdx.value = idx;
     player.clearQueue();
     player.loadPlaylist( playlists.value[ idx ]!.songs );

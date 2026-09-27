@@ -14,7 +14,8 @@ import router from './router';
 
 configure( {
     'backendURL': new URL( import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:8080' ),
-    'defaultAuthErrorResolution': 'resolve'
+    'defaultAuthErrorResolution': 'resolve',
+    'authErrorEvent': 'autherror'
 } );
 
 const app = createApp( App );

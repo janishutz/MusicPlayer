@@ -1,0 +1,59 @@
+.background-animation {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 1;
+
+  >img {
+    position: absolute;
+    top: calc(-0.1 * max(200vw, 200vh));
+    left: calc(-0.075 * max(200vw, 200vh));
+    width: max(200vw, 200vh);
+    height: max(200vw, 200vh);
+    filter: blur(30px) brightness(35%);
+    animation: bg-move infinite cubic-bezier(0.52, 0.08, 0.52, 0.88) 120s;
+  }
+}
+
+@keyframes bg-move {
+  0% {
+    top: calc(-0.1 * max(200vw, 200vh));
+    left: calc(-0.075 * max(200vw, 200vh));
+    width: max(200vw, 200vh);
+    height: max(200vw, 200vh);
+  }
+
+  20% {
+    top: 0;
+    left: calc(-0.5 * max(200vw, 200vh));
+  }
+
+  30% {
+    top: calc(-0.4 * max(200vw, 200vh));
+    left: calc(-0.4 * max(200vw, 200vh));
+  }
+
+  40% {
+    top: calc(-0.5 * max(200vw, 200vh));
+    left: calc(-0.5 * max(200vw, 200vh));
+  }
+
+  55% {
+    top: calc(-0.4 * max(200vw, 200vh));
+    left: 0;
+  }
+
+  70% {
+    top: calc(-0.3 * max(200vw, 200vh));
+    left: calc(-0.5 * max(200vw, 200vh));
+    width: max(200vw, 200vh);
+    height: max(200vw, 200vh);
+  }
+
+  90% {
+    top: -50%;
+    left: -50%;
+    width: max(150vw, 150vh);
+    height: max(150vw, 150vh);
+  }
+}

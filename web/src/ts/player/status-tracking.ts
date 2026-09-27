@@ -32,7 +32,7 @@ export const startTracking = () => {
 const tracker = () => {
     playbackPercentage.value = sources[currentSource.value]?.getPlaybackPos() ?? -1;
 
-    if ( playbackPercentage.value > 0.995 && duration.value > 0 ) {
+    if ( playbackPercentage.value > 0.998 && duration.value > 0 ) {
         if ( repeat.value === 'one' ) {
             sources[currentSource.value]?.seekTo( 0 );
         } else {

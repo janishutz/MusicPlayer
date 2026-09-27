@@ -17,10 +17,10 @@
         ref
     } from 'vue';
     import AddPlaylist from './AddPlaylist.vue';
-    import router from '@/router';
     import {
         disableKeyHandler
     } from '@/ts/player/state';
+    import router from '@/router';
 
     const checkingStatus = ref( true );
     const dots = ref( 0 );

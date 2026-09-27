@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import messages, {
-        isConnected
+        isConnected,
+        room,
+        useAntiTamper
     } from '@/ts/messages';
     import PopupElement from '../popups/PopupElement.vue';
     import SwitchOption from '../SwitchOption.vue';
@@ -12,11 +14,11 @@
         'required': true
     } );
     const shareName = ref( '' );
-    const useAntiTamper = ref( false );
+    const enableAntiTamper = ref( false );
     const errorMessage = ref( '' );
 
     const startShare = async () => {
-        if ( !await messages.createRoom( shareName.value, useAntiTamper.value ) ) {
+        if ( !await messages.createRoom( shareName.value, enableAntiTamper.value ) ) {
             errorMessage.value = 'Invalid room name';
         }
     };
@@ -24,6 +26,8 @@
     const stopShare = () => {
         messages.closeRoom();
     };
+
+    const baseURL = ref( location.protocol + '//' + location.host + '/' );
 </script>
 
 <template>
@@ -40,7 +44,7 @@
                 >
                     <label for="share-name">Share Name</label>
                     <input id="share-name" v-model="shareName" type="text">
-                    <SwitchOption v-model="useAntiTamper" text="Use Anti-Tamper" />
+                    <SwitchOption v-model="enableAntiTamper" text="Use Anti-Tamper" />
                 </div>
                 <button @click="startShare">
                     Create Share
@@ -49,8 +53,16 @@
             <div v-else>
                 <!-- TODO: Need to explain and add controls -->
                 <!-- TODO: How to handle anti-tamper? -->
-                <p>Connected. To connect another device, enter the link below or scan the QR code.</p>
-                <p>Anti-Tamper is enabled. To connect a client to be surveyed, enter the following link:</p>
+                <!-- TODO: QR Code -->
+                <p>
+                    Connected. To connect another device, enter the link below or scan the QR code.
+                    <br>
+                    <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}share/{{ room }}</a>
+                </p>
+                <p v-if="useAntiTamper">
+                    Anti-Tamper is enabled. To connect a client to be surveyed, enter the following link:
+                    <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}fancy/{{ room }}</a>
+                </p>
                 <button @click="stopShare">
                     End share
                 </button>

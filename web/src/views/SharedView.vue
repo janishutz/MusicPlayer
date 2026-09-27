@@ -8,6 +8,8 @@
     import {
         currentQueue,
         currentQueueIdx,
+        enableFancyBackground,
+        isAntiTamperEnabled,
         isPlaying,
         playbackOffset,
         playbackProgress,
@@ -17,6 +19,7 @@
         showInfoPopup,
         startTime
     } from '@/ts/shared/state';
+    import BackgroundAnimation from '@/components/shared/BackgroundAnimation.vue';
     import CurrentSong from '@/components/player/CurrentSong.vue';
     import InformationPopup from '@/components/shared/InformationPopup.vue';
     import ProgressBar from '@/components/player/ProgressBar.vue';
@@ -74,8 +77,10 @@
 </script>
 
 <template>
-    <div :class="['shared-view', 'theme-shared-' + (lightTheme ? 'light' : 'dark')]">
+    <div :class="['shared-view', 'theme-shared-' + (lightTheme && !enableFancyBackground ? 'light' : 'dark')]">
+        <BackgroundAnimation v-if="enableFancyBackground" :image="song.artwork" />
         <i
+            v-if="!enableFancyBackground"
             id="shared-theme-selector"
             :class="['fa-solid', lightTheme ? 'fa-sun' : 'fa-moon']"
             @click="changeTheme"
@@ -85,7 +90,11 @@
             <div class="current-song-wrapper">
                 <CurrentSong v-model="song" :show-additional-info="true" />
             </div>
-            <ProgressBar v-model="playbackProgress" :disallow-move="true" :light-mode="lightTheme ? 'light' : 'dark'" />
+            <ProgressBar
+                v-model="playbackProgress"
+                :disallow-move="true"
+                :light-mode="lightTheme && !enableFancyBackground ? 'light' : 'dark'"
+            />
             <div class="time">
                 <p class="current">
                     {{ beautifyTime( song.duration >= 0 ? playbackTime : -1 ) }}
@@ -98,6 +107,12 @@
         <div class="panel">
             <SharedQueue />
         </div>
+        <i
+            v-if="isAntiTamperEnabled"
+            id="anti-tamper-symbol"
+            class="fa-solid fa-lock"
+            title="Anti-Tamper is enabled. Tampering with this screen in any way will send a notification to the admin"
+        ></i>
     </div>
 </template>
 

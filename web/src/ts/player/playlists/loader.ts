@@ -13,6 +13,9 @@ import type {
 import {
     openAssociationManager
 } from '@/composables/associationManager';
+import {
+    playIndex
+} from '.';
 
 export const load = ( playlist: PlaylistSongs ) => {
     queue.value = playlist;
@@ -54,4 +57,6 @@ export const load = ( playlist: PlaylistSongs ) => {
     }
 
     fullPlayer.value = true;
+
+    playIndex( 0 );
 };

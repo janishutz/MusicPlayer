@@ -11,6 +11,11 @@
     justify-content: center;
     align-items: center;
 
+    .queue-empty {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
     .song-list-element {
       display: flex;
       justify-content: center;
@@ -67,14 +72,14 @@
         margin-right: auto;
 
         >* {
-          margin: 5px;
+          margin: 2px;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+          max-width: 100%;
         }
 
         >h3 {
           font-size: 1.2rem;
-          text-overflow: ellipsis;
-          overflow-x: hidden;
-          max-width: 100%;
         }
       }
 

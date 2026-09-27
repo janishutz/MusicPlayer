@@ -18,9 +18,9 @@
     const titleContainer = useTemplateRef( 'title-container' );
     const title = useTemplateRef( 'title' );
     const doScroll = ref( false );
-    const SCROLLBACK_DURATION = 500;
-    const WAIT_DURATION = 5000;
-    const MOVE_SPEED = 2;
+    const SCROLLBACK_DURATION = 100;
+    const WAIT_DURATION = 7000;
+    const MOVE_SPEED = 1.5;
 
     let animation: null | Animation = null;
 
@@ -62,7 +62,7 @@
                 if ( animation !== null )
                     animation?.cancel();
             }
-        }, 1000 );
+        }, 500 );
     };
 
     watch( song, updateScrollRule );
@@ -98,81 +98,5 @@
 </template>
 
 <style lang="scss" scoped>
-.current-song {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    .artwork {
-        width: 100%;
-        height: 100%;
-        max-height: calc(100% - 9rem);
-
-        >img, .fa-solid {
-            height: 100%;
-            font-size: 40vh;
-            border-radius: 10px;
-        }
-    }
-
-    .song-details {
-        width: 100%;
-        overflow-x: hidden;
-
-        >* {
-            margin: 10px;
-        }
-
-        >div {
-            height: 4rem;
-            h1 {
-                font-size: 2.5rem;
-                text-wrap: nowrap;
-                margin: 0;
-            }
-
-            &.scroll {
-                width: 100%;
-                position: relative;
-
-                h1 {
-                    position: absolute;
-                    left: 0;
-                    // animation: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-                    // animation: slide ease 20s infinite;
-                }
-            }
-        }
-
-        .artist {
-            font-size: 1.5rem;
-            margin-bottom: 0px;
-        }
-
-        .additional-info {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-top: 0px;
-        }
-    }
-}
-
-@keyframes slide {
-    0% {
-        transform: translateX(0);
-    }
-    40% {
-        transform: translateX(0);
-    }
-    95% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
+@use '@/scss/components/currentsong.scss';
 </style>

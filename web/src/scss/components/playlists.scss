@@ -3,6 +3,7 @@
   width: 100%;
   position: relative;
   flex-shrink: 1;
+  overflow-x: hidden;
 
   >.playlist-wrapper {
     width: 100%;
@@ -12,6 +13,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-y: hidden;
 
     >.playlist-container {
       width: 100%;
@@ -20,7 +22,7 @@
       display: flex;
       align-items: center;
       flex-direction: column;
-      overflow-x: scroll;
+      overflow-y: scroll;
 
       >.playlist {
         width: 50%;

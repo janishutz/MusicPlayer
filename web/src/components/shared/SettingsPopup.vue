@@ -3,6 +3,8 @@
 
     const show = defineModel<boolean>();
 
+    // TODO: Tampering notification for opening settings
+
     const close = () => {
         show.value = false;
     };
@@ -10,7 +12,6 @@
 
 <template>
     <div>
-        <!-- TODO: Beacon request when exiting browser (and confirm popup for that!) -->
         <PopupElement v-model="show">
             <h2>Settings</h2>
             <button @click="close">

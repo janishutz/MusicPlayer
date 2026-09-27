@@ -1,10 +1,11 @@
 // TODO: Persist settings in local storage
 import {
-    enableAntiTamper,
+    allowAntiTamper,
     popupMsg,
     popupTitle,
     showInfoPopup
 } from './state';
+import antiTamper from './anti-tamper';
 import poll from './poll';
 import sse from './sse';
 import ws from './ws';
@@ -16,12 +17,15 @@ const connect = async () => {
     try {
         const conf = await poll.poll( room );
 
-        if ( enableAntiTamper.value && conf.antiTamper ) {
+        if ( allowAntiTamper.value && conf.antiTamper ) {
             console.warn( 'Anti Tamper Enabled!' );
+            antiTamper.start();
             ws.connect( room );
+            showInfoPopup.value = true;
+            popupMsg.value = `Please allow notifications for this page, to make people trying to tamper aware that they are not allowed to do that.
+You may also consider adding a name for this client using the settings icon in the top left corner`;
+            popupTitle.value = 'Anti-Tamper Enabled';
         } else {
-            // TODO: SSE?
-            // SSE would only update the state, if the playlist changes, a special event is dispatched and new data is fetched
             if ( conf.sse ) {
                 sse.connect( room );
             } else {

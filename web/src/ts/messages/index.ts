@@ -9,6 +9,7 @@ import {
     ref,
     watch
 } from 'vue';
+import antiTamper from './anti-tamper';
 import {
     playbackPercentage
 } from '../player/status-tracking';
@@ -26,9 +27,6 @@ export const room = ref( localStorage.getItem( 'room' ) ?? '' );
 export const isConnected = ref( false );
 
 export const useAntiTamper = ref( false );
-
-// TODO: Anit-Tamper
-// const antiTamperClients = [];
 
 let connection: null | WebSocket = null;
 let retries = 0;
@@ -95,7 +93,7 @@ const connect = (): Promise<boolean> => {
         };
 
         connection.onmessage = msg => {
-            console.log( msg );
+            antiTamper.handler( msg );
         };
 
         connection.onerror = () => {
