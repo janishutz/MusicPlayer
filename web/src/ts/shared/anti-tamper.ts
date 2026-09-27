@@ -19,11 +19,13 @@ const handleVisibilityChange = () => {
 
 let notificationLock = false;
 
-const sendMessage = ( event: string ) => {
+const sendMessage = ( event: string, notification?: string ) => {
+    if ( !isAntiTamperEnabled.value ) return;
+
     if ( !notificationLock ) {
         notificationLock = true;
         new Notification( 'WARNING', {
-            'body': 'Please return to MusicPlayer immediately!',
+            'body': notification ?? 'Please return to MusicPlayer immediately!',
             'requireInteraction': true
         } );
 
@@ -39,5 +41,6 @@ const sendMessage = ( event: string ) => {
 };
 
 export default {
-    start
+    start,
+    sendMessage
 };

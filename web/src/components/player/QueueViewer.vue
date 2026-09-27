@@ -61,7 +61,7 @@
                 <i class="fa-solid fa-xmark"></i>
                 Clear
             </button>
-            <button :class="queue.length === 0 ? 'inactive' : undefined" @click="editSong( -1 )">
+            <button :class="player.queue.value.length === 0 ? 'inactive' : undefined" @click="editSong( -1 )">
                 <i class="fa-solid fa-pen-to-square"></i>
                 Edit Current
             </button>
@@ -90,7 +90,9 @@
                     <div class="song-details">
                         <h3>{{ song.name }}</h3>
                         <p>{{ song.artist }}</p>
-                        <p>{{ song['additional-info'] }}</p>
+                        <p v-if="song['additional-info']" class="additional-info">
+                            {{ song['additional-info'] }}
+                        </p>
                     </div>
                     <div class="song-actions">
                         <p>{{ beautifyTime( song.duration ) }}</p>

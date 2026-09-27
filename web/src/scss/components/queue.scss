@@ -1,12 +1,12 @@
 .queue-viewer {
   height: 100%;
-  width: 90%;
+  width: 100%;
   overflow: hidden;
 
   >.queue-container {
     display: flex;
     width: 100%;
-    height: 90%;
+    height: 95%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -20,13 +20,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: calc(100% - 1.5rem);
+      width: 100%;
+      margin-left: 7px;
 
       >.song-cover-wrapper {
-        height: 7rem;
-        width: 7rem;
+        height: 4rem;
+        width: 4rem;
         position: relative;
-        margin-right: 20px;
+        margin-right: 10px;
         overflow: hidden;
         border-radius: 10px;
 
@@ -34,7 +35,7 @@
         .fa-solid {
           height: 100%;
           width: 100%;
-          font-size: 6rem;
+          font-size: 3.5rem;
           line-height: 100%;
           display: flex;
           justify-content: center;
@@ -68,18 +69,27 @@
         justify-content: flex-start;
         align-items: flex-start;
         text-wrap: nowrap;
-        width: calc(100% - 18rem);
+        width: calc(100% - 3.5rem);
         margin-right: auto;
 
         >* {
-          margin: 2px;
+          margin: 0px;
           text-overflow: ellipsis;
           overflow-x: hidden;
           max-width: 100%;
         }
 
         >h3 {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
+        }
+
+        >p {
+          font-size: 1rem;
+        }
+
+        >.additional-info {
+          font-size: 0.9rem;
+          font-style: italic;
         }
       }
 
@@ -97,6 +107,50 @@
         >.fa-solid {
           font-size: 1.25rem;
           cursor: pointer;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    width: 90%;
+
+    >.queue-container {
+      height: 90%;
+
+      .song-list-element {
+        width: calc(100% - 1.5rem);
+        margin-left: 0;
+
+        >.song-cover-wrapper {
+          height: 7rem;
+          width: 7rem;
+          margin-right: 20px;
+
+          .fa-solid {
+            font-size: 6rem;
+          }
+        }
+
+        >.song-details {
+          text-wrap: nowrap;
+          width: calc(100% - 18rem);
+
+          >* {
+            margin: 2px;
+          }
+
+          >h3 {
+            font-size: 1.4rem;
+          }
+
+          >p {
+            font-size: 1.1rem;
+          }
+
+          >.additional-info {
+            font-size: 0.9rem;
+          }
         }
       }
     }

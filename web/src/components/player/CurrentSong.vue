@@ -13,7 +13,8 @@
         'required': true
     } );
     const props = defineProps<{
-        'showAdditionalInfo'?: boolean
+        'showAdditionalInfo'?: boolean,
+        'compactLayout'?: boolean
     }>();
     const titleContainer = useTemplateRef( 'title-container' );
     const title = useTemplateRef( 'title' );
@@ -71,7 +72,7 @@
 </script>
 
 <template>
-    <div class="current-song">
+    <div :class="['current-song', props.compactLayout ? 'compact' : undefined]">
         <div class="artwork">
             <img
                 v-if="song?.artwork"

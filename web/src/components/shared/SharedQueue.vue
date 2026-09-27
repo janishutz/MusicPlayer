@@ -1,15 +1,19 @@
 <script setup lang="ts">
     import {
+        computed,
+        onMounted,
+        useTemplateRef
+    } from 'vue';
+    import {
         currentQueue,
         currentQueueIdx,
         isPlaying,
         playbackTime,
         showArtworks
     } from '@/ts/shared/state';
-    import {
-        computed
-    } from 'vue';
 
+    const compactMode = defineModel<boolean>();
+    const scrollContainer = useTemplateRef( 'scroll-container' );
     const songs = computed( () => currentQueue.value?.slice( currentQueueIdx.value + 1 ) ?? [] );
     const timeToPlay = computed( () => {
         return ( idx: number ) => {
@@ -25,12 +29,19 @@
             return Math.ceil( total / 60 );
         };
     } );
+
+    onMounted( () => {
+        scrollContainer.value?.addEventListener( 'scroll', () => {
+            compactMode.value = ( scrollContainer.value?.scrollTop ?? 0 ) > 100;
+        } );
+    } );
 </script>
 
 <template>
     <div class="queue-viewer">
         <div class="queue-container">
-            <div v-if="songs.length > 0" class="queue-scroll">
+            <div v-if="songs.length > 0" ref="scroll-container" class="queue-scroll">
+                <div class="placeholder"></div>
                 <div
                     v-for="(song, index) in songs"
                     :key="index"
@@ -49,7 +60,9 @@
                     <div class="song-details">
                         <h3>{{ song.name }}</h3>
                         <p>{{ song.artist }}</p>
-                        <p>{{ song['additional-info'] }}</p>
+                        <p v-if="song['additional-info']" class="additional-info">
+                            {{ song['additional-info'] }}
+                        </p>
                     </div>
                     <div v-if="isPlaying" class="song-actions">
                         <p>In {{ '<' + timeToPlay( index ) }}min</p>
@@ -66,11 +79,18 @@
 <style lang="scss" scoped>
     @use '@/scss/components/queue.scss';
 
+    @media screen and (max-width: 900px) {
+        .placeholder {
+            height: 42vh;
+        }
+    }
+
     .queue-scroll {
         height: 100%;
         width: 100%;
         margin-top: 20px;
         justify-content: flex-start !important;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 </style>

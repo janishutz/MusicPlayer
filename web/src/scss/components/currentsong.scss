@@ -10,7 +10,7 @@
   .artwork {
     width: 100%;
     height: 100%;
-    max-height: calc(100% - 9rem);
+    max-height: calc(100% - 6rem);
 
     >img,
     .fa-solid {
@@ -25,10 +25,10 @@
     overflow-x: hidden;
 
     >div {
-      height: 3.5rem;
+      height: 2.4rem;
 
       h1 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         text-wrap: nowrap;
         margin: 0;
       }
@@ -45,14 +45,72 @@
     }
 
     .artist {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       margin: 0px;
     }
 
     .additional-info {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: bold;
       margin: 0px;
+    }
+  }
+
+  // Compact layout of the top
+  @media screen and (max-width: 900px) {
+    &.compact {
+      flex-direction: row;
+      position: relative;
+
+      .artwork {
+        max-height: unset;
+        width: min-content;
+      }
+
+      .song-details {
+        text-align: start;
+        margin-left: 10px;
+
+        >div {
+          height: 2rem;
+
+          >h1 {
+            font-size: 1.6rem;
+          }
+        }
+
+        .artist {
+          font-size: 1.1rem;
+        }
+
+        .additional-info {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    .artwork {
+      max-height: calc(100% - 9rem);
+    }
+
+    .song-details {
+      >div {
+        height: 3.5rem;
+
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+
+      .artist {
+        font-size: 1.5rem;
+      }
+
+      .additional-info {
+        font-size: 1.25rem;
+      }
     }
   }
 }

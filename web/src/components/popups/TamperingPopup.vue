@@ -11,7 +11,8 @@
     } = {
         'visibility': 'leaving the browser window',
         'blur': 'leaving the browser window',
-        'disconnect': 'disconnection from the WebSocket (this could also have happened due to network conditions)'
+        'disconnect': 'disconnection from the WebSocket (this could also have happened due to network conditions)',
+        'settings': 'Client settings were opened'
     };
 
     const dismiss = () => {

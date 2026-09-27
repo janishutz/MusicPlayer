@@ -35,7 +35,9 @@ export const savePlaylist = () => {
         playlistIdx.value = playlists.value.length - 1;
     }
 
-    playlists.value[ playlistIdx.value ]!.songs = rawQueue.value;
+    console.log( 'Saving to playlsit with idx', playlistIdx.value );
+
+    playlists.value[ playlistIdx.value ]!.songs = queue.value;
 
     savePlaylists();
 };
