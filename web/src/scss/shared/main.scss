@@ -123,7 +123,7 @@
     }
   }
 
-  @media screen and (min-width: 900px) {
+  @media screen and (min-aspect-ratio: 0.9) {
     flex-direction: row;
 
     .panel {
