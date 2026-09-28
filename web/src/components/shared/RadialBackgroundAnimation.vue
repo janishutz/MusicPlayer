@@ -22,7 +22,7 @@
 
         loader.value!.onload = async () => {
             const cols = await getPalette( loader.value!, {
-                'colorCount': 5
+                'colorCount': 10
             } );
 
             bgGradient.value = `conic-gradient( ${ cols?.map( v => {
@@ -55,7 +55,7 @@
     width: 200vw;
     height: 200vw;
     left: -50vw;
-    top: calc(-50vw - 50vh);
+    top: calc(-100vw + 50vh);
     position: fixed;
     z-index: 1;
     filter: blur(30px) brightness(0.4);
