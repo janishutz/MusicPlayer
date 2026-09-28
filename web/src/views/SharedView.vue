@@ -6,6 +6,7 @@
         ref
     } from 'vue';
     import {
+        backgroundAnimation,
         currentQueue,
         currentQueueIdx,
         enableFancyBackground,
@@ -23,6 +24,7 @@
     import CurrentSong from '@/components/player/CurrentSong.vue';
     import InformationPopup from '@/components/shared/InformationPopup.vue';
     import ProgressBar from '@/components/player/ProgressBar.vue';
+    import RadialBackgroundAnimation from '@/components/shared/RadialBackgroundAnimation.vue';
     import SettingsPopup from '@/components/shared/SettingsPopup.vue';
     import SharedQueue from '@/components/shared/SharedQueue.vue';
     import type {
@@ -90,7 +92,8 @@
             'theme-shared-' + (lightTheme && !enableFancyBackground ? 'light' : 'dark'),
         ]"
     >
-        <BackgroundAnimation v-if="enableFancyBackground" :image="song.artwork" />
+        <BackgroundAnimation v-if="enableFancyBackground && backgroundAnimation === 'image'" :image="song.artwork" />
+        <RadialBackgroundAnimation v-if="enableFancyBackground && backgroundAnimation === 'radial'" :image="song.artwork" />
         <div class="credits">
             Created by
             <a href="https://janishutz.com" target="_blank">Janis Hutz</a>

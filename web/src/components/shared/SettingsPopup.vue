@@ -1,5 +1,7 @@
 <script setup lang="ts">
     import {
+        backgroundAnimation,
+        backgroundAnimationTypes,
         clientName,
         enableFancyBackground,
         showArtworks
@@ -44,6 +46,16 @@
                             <SwitchOption v-model="enableFancyBackground" text="" />
                         </td>
                     </tr>
+                    <tr v-if="enableFancyBackground">
+                        <td>Select the background animation</td>
+                        <td>
+                            <select v-model="backgroundAnimation">
+                                <option v-for="(item, index) in backgroundAnimationTypes" :key="index" :value="item">
+                                    {{ item.slice( 0, 1 ).toLocaleUpperCase() + item.substring(1) }}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
                     <tr>
                         <td>Show Artwork for upcoming songs (uses more bandwidth)</td>
                         <td>
@@ -58,3 +70,9 @@
         </PopupElement>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.settings-opts {
+    text-align: start;
+}
+</style>

@@ -20,6 +20,13 @@ export const allowAntiTamper = ref( location.pathname.includes( 'fancy' ) );
 
 export const enableFancyBackground = ref( location.pathname.includes( 'fancy' ) );
 
+export const backgroundAnimationTypes = [
+    'image',
+    'radial'
+] as const;
+
+export const backgroundAnimation: Ref<typeof backgroundAnimationTypes[number]> = ref( 'image' );
+
 export const isAntiTamperEnabled = ref( false );
 
 export const playbackTime = ref( 0 );
