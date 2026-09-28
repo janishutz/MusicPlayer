@@ -44,7 +44,7 @@ func main() {
 	routes.AddRoutes(r, conf)
 
 	// Set up SDKs for login and store
-	oidclogin.Configure(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, true)
+	oidclogin.Configure(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, true, util.OwnershipCheck)
 	util.Init(conf)
 
 	// Healthcheck

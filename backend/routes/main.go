@@ -5,6 +5,7 @@ import (
 	"musicplayer/routes/rooms"
 	"musicplayer/routes/sse"
 	"musicplayer/routes/websocket"
+	"musicplayer/util"
 
 	"github.com/gin-gonic/gin"
 	"github.com/janishutz/oidclogin"
@@ -18,16 +19,16 @@ func AddRoutes(r *gin.Engine, configuration config.Config) {
 	websocket.Init(configuration)
 
 	// Get the apple music token
-	r.GET("/dev-token", oidclogin.EnsureLogin(false), devTokenHandler(configuration))
+	r.GET("/dev-token", oidclogin.EnsureLogin(false), util.SessionOwnershipCheck, devTokenHandler(configuration))
 
 	// Get the user's playlists
 	r.GET("/user/playlists", oidclogin.EnsureLogin(false), playlistGetHandler)
 
 	// Update the user's playlists
-	r.POST("/user/playlists", oidclogin.EnsureLogin(false), playlistPostHandler)
+	r.POST("/user/playlists", oidclogin.EnsureLogin(false), util.SessionOwnershipCheck, playlistPostHandler)
 
 	// Create a room
-	r.POST("/room/create", oidclogin.EnsureLogin(false), createRoomHandler)
+	r.POST("/room/create", oidclogin.EnsureLogin(false), util.SessionOwnershipCheck, createRoomHandler)
 
 	// Connect to the websocket here
 	r.GET("/room/:id/ws", websocket.Handler)
