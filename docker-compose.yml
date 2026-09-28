@@ -4,7 +4,7 @@ volumes:
 
 services:
   frontend:
-    image: ghcr.io/janishutz/MusicPlayerFrontend
+    image: ghcr.io/janishutz/musicplayer-frontend
     ports:
       - 3000:3000
 
