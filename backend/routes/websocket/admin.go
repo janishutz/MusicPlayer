@@ -67,5 +67,6 @@ func AdminHandler(c *gin.Context) {
 		if string(message) == "close-room" {
 			rooms.Close(uid.(string), roomID)
 		}
+		log.Println("Iterating admin websocket listener")
 	}
 }
