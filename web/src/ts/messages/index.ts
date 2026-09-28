@@ -20,13 +20,15 @@ import {
     request
 } from '@janishutz/oidc-login-sdk-browser';
 
-const RETRY_CAP = 10;
+const RETRY_CAP = 20;
 
 export const room = ref( localStorage.getItem( 'room' ) ?? '' );
 
 export const isConnected = ref( false );
 
 export const useAntiTamper = ref( false );
+
+export const showShareFailedPopup = ref( false );
 
 let connection: null | WebSocket = null;
 let retries = 0;
@@ -42,6 +44,12 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
     } catch ( err ) {
         if ( err === 'ERR_409' ) {
             return await connect();
+        } else if ( err instanceof request.AuthError ) {
+            isConnected.value = false;
+            console.debug( '[REAUTH] Neeed to re-authenticate user due to unauthentication error' );
+            reauth();
+
+            return false;
         }
     }
 
@@ -49,7 +57,7 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
     useAntiTamper.value = antiTamper;
     room.value = name;
 
-    document.addEventListener( 'autherror', reauth );
+    document.addEventListener( 'musicplayer:reauth', reconnectRoom );
 
     try {
         return await connect();
@@ -60,6 +68,11 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
     }
 };
 
+const reconnectRoom = () => {
+    console.log( 'RE-CREATING' );
+    createRoom( room.value, useAntiTamper.value );
+};
+
 const closeRoom = async () => {
     isConnected.value = false;
     localStorage.removeItem( 'room' );
@@ -67,12 +80,16 @@ const closeRoom = async () => {
     connection?.close();
 
     try {
-        document.removeEventListener( 'autherror', reauth );
+        document.removeEventListener( 'musicplayer:reauth', reconnectRoom );
     } catch { /* empty */ }
 };
 
+let reconnectLock = false;
+
 const connect = (): Promise<boolean> => {
     return new Promise( ( resolve, reject ) => {
+        stateLock = false;
+        playlistLock = false;
         const url = request.getBackendURL();
 
         if ( url.protocol === 'https:' )
@@ -96,7 +113,10 @@ const connect = (): Promise<boolean> => {
             antiTamper.handler( msg );
         };
 
-        connection.onerror = () => {
+        const errorHandler = () => {
+            if ( reconnectLock ) return;
+
+            reconnectLock = true;
             connection?.close();
             console.error( '[WS] Reconnecting due to error' );
 
@@ -108,8 +128,15 @@ const connect = (): Promise<boolean> => {
                 setTimeout( () => {
                     createRoom( room.value, useAntiTamper.value );
                 }, 1000 * retries );
+            } else {
+                showShareFailedPopup.value = true;
+                isConnected.value = false;
             }
         };
+
+        connection.onerror = errorHandler;
+        connection.onclose = errorHandler;
+        reconnectLock = false;
     } );
 };
 
@@ -120,6 +147,9 @@ const sendPlaylistData = () => {
     console.log( 'Trying to send playlist data' );
 
     if ( isConnected.value && !playlistLock ) {
+        setTimeout( () => {
+            playlistLock = false;
+        }, 1000 );
         console.log( 'Sending playlist data' );
         playlistLock = true;
 
@@ -127,10 +157,6 @@ const sendPlaylistData = () => {
             'type': 'playlist',
             'playlist': queue.value
         } ) );
-
-        setTimeout( () => {
-            playlistLock = false;
-        }, 500 );
     }
 };
 
@@ -139,6 +165,9 @@ const sendStateData = async () => {
 
     if ( isConnected.value && !stateLock ) {
         console.log( 'Sending state data' );
+        setTimeout( () => {
+            stateLock = false;
+        }, 500 );
         stateLock = true;
 
         connection!.send( JSON.stringify( {
@@ -148,10 +177,6 @@ const sendStateData = async () => {
             'start': new Date().getTime() - 100,
             'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
         } ) );
-
-        setTimeout( () => {
-            stateLock = false;
-        }, 500 );
     }
 };
 

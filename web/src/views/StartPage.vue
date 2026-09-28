@@ -29,7 +29,7 @@
 
     const isAuthorizedHandler = () => {
         if ( localStorage.getItem( 'close-tab' ) === 'true' ) {
-            localStorage.setItem( 'login-ok', 'true' );
+            localStorage.setItem( 'reauth-ok', 'true' );
             localStorage.removeItem( 'close-tab' );
 
             return window.close();

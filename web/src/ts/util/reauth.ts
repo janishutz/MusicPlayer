@@ -1,5 +1,12 @@
+import {
+    ref
+} from 'vue';
+
+export const showReauthPopup = ref( false );
+
 export const reauth = () => {
     localStorage.setItem( 'close-tab', 'true' );
+    showReauthPopup.value = true;
 
     const listener = () => {
         if ( localStorage.getItem( 'reauth-ok' ) === 'true' ) {
@@ -9,6 +16,7 @@ export const reauth = () => {
 
             localStorage.removeItem( 'reauth-ok' );
 
+            console.debug( '[REAUTH] Complete!' );
             document.dispatchEvent( new CustomEvent( 'musicplayer:reauth' ) );
         }
     };

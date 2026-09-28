@@ -4,6 +4,7 @@
         backgroundAnimationTypes,
         clientName,
         enableFancyBackground,
+        isAntiTamperEnabled,
         showArtworks
     } from '@/ts/shared/state';
     import PopupElement from '../popups/PopupElement.vue';
@@ -32,7 +33,7 @@
             <h2>Settings</h2>
             <table class="settings-opts">
                 <tbody>
-                    <tr>
+                    <tr v-if="isAntiTamperEnabled">
                         <td>
                             <label for="client-name">Anti-Tamper Client Name</label>
                         </td>

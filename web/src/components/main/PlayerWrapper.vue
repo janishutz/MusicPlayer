@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import AssociationView from '@/composables/AssociationView.vue';
     import PlayerComponent from './PlayerComponent.vue';
+    import ReauthPopup from '../popups/ReauthPopup.vue';
     import SmallPlayerComponent from './SmallPlayerComponent.vue';
     import TamperingPopup from '../popups/TamperingPopup.vue';
     import {
@@ -23,6 +24,7 @@
 <template>
     <div class="player-wrapper">
         <TamperingPopup />
+        <ReauthPopup />
         <AssociationView />
         <SmallPlayerComponent v-model="fullPlayer" />
         <div :class="['player-container', fullPlayer ? undefined : 'hidden']">

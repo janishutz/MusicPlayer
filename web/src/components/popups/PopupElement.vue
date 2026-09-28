@@ -49,6 +49,8 @@
         .popup-main {
             width: fit-content;
             height: fit-content;
+            max-width: 90%;
+            max-height: 90%;
             background-color: var( --theme-app );
             color: var( --theme-on-app );
             padding: 2.5%;
