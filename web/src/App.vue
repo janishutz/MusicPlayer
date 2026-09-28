@@ -66,10 +66,8 @@
 @include gen-theme('.theme-blue-light', $theme-blue-light);
 @include gen-theme('.theme-purple-dark', $theme-purple-dark);
 @include gen-theme('.theme-purple-light', $theme-purple-light);
-@include gen-theme('.theme-black-light', $theme-black-light);
-@include gen-theme('.theme-black-dark', $theme-black-dark);
-@include gen-theme('.theme-white-light', $theme-white-light);
-@include gen-theme('.theme-white-dark', $theme-white-dark);
+@include gen-theme('.theme-black-white-light', $theme-black-white-light);
+@include gen-theme('.theme-black-white-dark', $theme-black-white-dark);
 @include gen-shared-theme('.theme-shared-light', $theme-shared-light);
 @include gen-shared-theme('.theme-shared-dark', $theme-shared-dark);
 
@@ -115,6 +113,9 @@
     >select {
         width: 100%;
         margin-bottom: 10px;
+        color: var(--theme-on-primary);
+        border-color: var(--theme-on-primary);
+        background-color: var(--theme-primary);
     }
 }
 </style>

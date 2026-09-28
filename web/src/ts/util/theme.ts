@@ -7,7 +7,7 @@ import {
 const themes: Ref<string[]> = ref( [
     'Blue',
     'Red',
-    'Black',
+    'Black-White',
     'Purple'
 ] );
 // TODO: Detect light or dark theme preference from browser and store
