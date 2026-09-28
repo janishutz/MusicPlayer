@@ -1,8 +1,3 @@
-export interface Playlist {
-    'name': string;
-    'songs': PlaylistSongs;
-}
-
 export type PlaylistSongs = Song[];
 
 export interface UrlToFileMapping {

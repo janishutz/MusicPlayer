@@ -9,6 +9,7 @@ type Playlists []Playlist
 type Playlist struct {
 	Name  string `json:"name"`
 	Songs Songs  `json:"songs"`
+	Icon  string `json:"icon"`
 }
 
 type Songs []Song

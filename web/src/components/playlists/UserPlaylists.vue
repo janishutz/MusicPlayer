@@ -5,10 +5,6 @@
         selectPlaylist
     } from '@/ts/userPlaylists';
     import {
-        editingPlaylists,
-        playlists
-    } from '@/ts/userPlaylists/state';
-    import {
         getPlaylists,
         savePlaylists
     } from '@/ts/userPlaylists/save';
@@ -16,17 +12,19 @@
         onMounted,
         ref
     } from 'vue';
-    import AddPlaylist from './AddPlaylist.vue';
     import {
-        disableKeyHandler
-    } from '@/ts/player/state';
+        playlistIdx,
+        playlists
+    } from '@/ts/userPlaylists/state';
+    import AddPlaylist from './AddPlaylist.vue';
+    import EditPlaylist from './EditPlaylist.vue';
     import router from '@/router';
 
     const checkingStatus = ref( true );
     const dots = ref( 0 );
     const showAddPlaylist = ref( false );
+    const editingPlaylist = ref( -1 );
 
-    let editingCount = 0;
     let interval = -1;
 
     const loadPlaylists = async () => {
@@ -62,22 +60,20 @@
         showAddPlaylist.value = true;
     };
 
-    const togglePlaylistEditing = ( idx: number ) => {
-        editingPlaylists.value[ idx ] = !editingPlaylists.value[ idx ];
+    const openEditPlaylistPopup = ( index: number ) => {
+        editingPlaylist.value = index;
+    };
 
-        if ( editingPlaylists.value[ idx ] ) {
-            editingCount += 1;
-        } else {
-            editingCount -= 1;
-        }
-
-        disableKeyHandler.value = editingCount > 0;
+    const deletePlaylist = () => {
+        removePlaylist( editingPlaylist.value );
+        editingPlaylist.value = -1;
     };
 </script>
 
 <template>
     <div class="playlists">
         <AddPlaylist v-model="showAddPlaylist" @add-playlist="addPlaylist" />
+        <EditPlaylist v-model="playlists[editingPlaylist]" @delete-playlist="deletePlaylist" />
         <div v-if="checkingStatus" class="playlist-wrapper">
             Loading{{ '.'.repeat( dots ) }}
         </div>
@@ -105,13 +101,16 @@
             </div>
             <div class="playlist-container">
                 <div v-for="(playlist, index) in playlists" :key="index" class="playlist">
-                    <i class="fa-solid fa-circle-play" @click="() => selectPlaylist( index )"></i>
-                    <input v-if="editingPlaylists[ index ]" v-model="playlist.name" type="text">
-                    <h2 v-else @click="() => selectPlaylist( index )">
-                        {{ playlist.name }}
-                    </h2>
-                    <i class="fa-solid fa-pen-to-square" @click="() => togglePlaylistEditing( index )"></i>
-                    <i class="fa-solid fa-trash" @click="() => removePlaylist( index )"></i>
+                    <div class="playlist-icon" @click="() => selectPlaylist( index )">
+                        <i v-if="index === playlistIdx" class="fa-solid fa-circle-play"></i>
+                        <i v-else :class="['fa-solid', playlist.icon ? 'fa-' + playlist.icon : 'fa-music']"></i>
+                    </div>
+                    <div class="playlist-details">
+                        <h2 @click="() => selectPlaylist( index )">
+                            {{ playlist.name }}
+                        </h2>
+                        <i class="fa-solid fa-sliders" @click="() => openEditPlaylistPopup( index )"></i>
+                    </div>
                 </div>
             </div>
         </div>

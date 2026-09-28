@@ -16,6 +16,9 @@ import type {
     Song
 } from '@/ts/dtype/playlist';
 import {
+    playlistIdx
+} from '@/ts/userPlaylists/state';
+import {
     setPlaylistIdx
 } from '@/ts/userPlaylists';
 
@@ -30,6 +33,7 @@ export const clearQueue = () => {
     rawQueue.value = [];
     sources[currentSource.value]?.stop();
     duration.value = -1;
+    playlistIdx.value = -1;
     playbackPercentage.value = 1;
     isPlaying.value = false;
     repeat.value = 'off';

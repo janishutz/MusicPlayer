@@ -53,43 +53,4 @@
         margin-bottom: 10px;
     }
 }
-.song-sources {
-    display: flex;
-    flex-wrap: wrap;
-    width: 50vw;
-    height: 40vh;
-    justify-content: center;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-    >div {
-        width: 45%;
-        margin: 0.5%;
-        height: 60%;
-        background-color: var(--theme-primary);
-        color: var(--theme-on-primary);
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        flex-direction: column;
-
-        >div {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            >.fa-solid {
-                font-size: 1.5rem;
-            }
-        }
-
-        >.not-auth-notice {
-            font-size: 0.6rem;
-            margin: 0;
-            width: 70%;
-        }
-    }
-}
 </style>

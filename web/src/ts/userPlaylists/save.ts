@@ -1,5 +1,4 @@
 import {
-    editingPlaylists,
     playlistIdx,
     playlists
 } from './state';
@@ -52,7 +51,6 @@ export const getPlaylists = async () => {
 
     playlistOperationLock = true;
     playlists.value = ( await ( await request.get( '/user/playlists' ) ).json() ).playlists;
-    editingPlaylists.value = playlists.value.map( () => false );
 
     setTimeout( () => {
         playlistOperationLock = false;

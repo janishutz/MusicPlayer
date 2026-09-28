@@ -16,45 +16,68 @@
     overflow-y: hidden;
 
     >.playlist-container {
-      width: 100%;
-      height: 100%;
+      width: 80%;
+      margin-top: 20px;
+      height: calc(100% - 20px);
       flex-shrink: 1;
       display: flex;
-      align-items: center;
-      flex-direction: column;
+      flex-direction: row;
       overflow-y: scroll;
+      overflow-x: hidden;
 
       >.playlist {
-        width: 50%;
+        width: 17rem;
+        height: 17rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 10px;
-        height: 3rem;
+        flex-direction: column;
+        border: solid 1px var(--theme-on-bg);
+        border-radius: 20px;
+        margin-right: 10px;
+        overflow: hidden;
 
-        >h2,
-        >input {
-          margin: 0;
-          margin-right: auto;
-          margin-left: 10px;
-          width: 100%;
-          text-align: start;
+        >.playlist-icon {
+          padding: 10px;
+          width: calc(100% - 20px);
+          height: 100%;
+          background-color: var(--theme-primary);
+          display: flex;
+          justify-content: center;
+          align-items: center;
           cursor: pointer;
+
+          >.fa-solid {
+            color: var(--theme-on-primary);
+            font-size: 10rem;
+          }
         }
 
-        >input {
-          margin-right: auto;
-          margin-left: 10px;
-          width: 50%;
-          min-width: 200px;
-        }
+        >.playlist-details {
+          display: flex;
+          width: calc(100% - 20px);
+          justify-content: center;
+          align-items: center;
+          border-top: solid 1px var(--theme-on-bg);
+          color: var(--theme-on-primary);
+          background-color: var(--theme-primary-hover);
+          padding: 10px;
 
-        >.fa-circle-play {
-          font-size: 1.5rem;
-        }
+          >h2{
+            margin: 0;
+            margin-right: auto;
+            margin-left: 10px;
+            width: calc(100% - 6rem);
+            text-align: start;
+            cursor: pointer;
+            height: 100%;
+            text-wrap: no-wrap;
+            text-overflow: ellipsis;
+          }
 
-        >.fa-solid {
-          cursor: pointer;
+          >.fa-solid {
+            cursor: pointer;
+          }
         }
       }
     }

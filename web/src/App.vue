@@ -66,8 +66,8 @@
 @include gen-theme('.theme-blue-light', $theme-blue-light);
 @include gen-theme('.theme-purple-dark', $theme-purple-dark);
 @include gen-theme('.theme-purple-light', $theme-purple-light);
-@include gen-theme('.theme-black-white-light', $theme-black-white-light);
-@include gen-theme('.theme-black-white-dark', $theme-black-white-dark);
+@include gen-theme('.theme-monochrome-light', $theme-monochrome-light);
+@include gen-theme('.theme-monochrome-dark', $theme-monochrome-dark);
 @include gen-shared-theme('.theme-shared-light', $theme-shared-light);
 @include gen-shared-theme('.theme-shared-dark', $theme-shared-dark);
 
@@ -87,17 +87,17 @@
     cursor: pointer;
 }
 
-// TODO: Switches
 #theme-selection-panel {
     position: fixed;
     z-index: 100;
     top: calc(5px + 2rem);
-    left: -220px;
+    left: -230px;
     width: 180px;
     height: 200px;
     padding: 20px;
     background-color: var(--theme-primary);
     color: var(--theme-on-primary);
+    border: solid 1px var(--theme-on-bg);
     display: flex;
     justify-content: center;
     align-items: center;

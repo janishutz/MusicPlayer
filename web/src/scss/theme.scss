@@ -3,11 +3,11 @@
 // TODO: Update colours
 $theme-red-light: (
   on-bg: #040404,
-  bg: #fae3e3,
+  bg: #ffe0e0,
   app: #eeeeee,
   on-app: #040404,
-  primary: #ca0808,
-  primary-hover: #8a0808,
+  primary: #b50808,
+  primary-hover: #820808,
   on-primary: #ffffff,
   secondary: #fa5347,
   secondary-hover: #ca2745,
@@ -67,7 +67,7 @@ $theme-purple-light: (
   app: #ffffff,
   on-app: #000000,
   primary: #800580,
-  primary-hover: #400340,
+  primary-hover: #500340,
   on-primary: #ffffff,
   secondary: #9040a5,
   secondary-hover: #503060,
@@ -91,7 +91,7 @@ $theme-purple-dark: (
   shadow: rgba(0, 0, 0, 0.7),
 );
 
-$theme-black-white-light: (
+$theme-monochrome-light: (
   on-bg: #000000,
   bg: #e0e0e0,
   app: #ffffff,
@@ -106,12 +106,12 @@ $theme-black-white-light: (
   shadow: rgba(0, 0, 0, 0.7),
 );
 
-$theme-black-white-dark: (
+$theme-monochrome-dark: (
   on-bg: #ffffff,
   bg: #101010,
   app: #000000,
   on-app: #ffffff,
-  primary: #777777,
+  primary: #666666,
   primary-hover: #333333,
   on-primary: #ffffff,
   secondary: #555555,

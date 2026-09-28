@@ -10,5 +10,6 @@ interface UserPlaylistFile {
 
 interface Playlist {
     'name': string;
+    'icon': string;
     'songs': PlaylistSongs;
 }
