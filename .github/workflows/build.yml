@@ -17,7 +17,7 @@ jobs:
       - name: Build Frontend image
         run: docker buildx build ./web --tag ghcr.io/janishutz/musicplayer-frontend --build-arg GIT_REF="$( git rev-parse HEAD )"
       - name: Build Backend image
-        run: docker buildx build ./web --tag ghcr.io/janishutz/musicplayer
+        run: docker buildx build ./backend --tag ghcr.io/janishutz/musicplayer
       - name: Login to registry
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
