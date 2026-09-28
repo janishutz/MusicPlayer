@@ -77,16 +77,14 @@ button {
 
   &.inactive {
     cursor: not-allowed;
-    background-color: var(--theme-secondary);
-    color: var(--theme-on-secondary);
+    filter: saturate(0.2);
   }
 
-  // TODO: Update these buttons
   &.fancy-button {
-    color: white;
+    color: var(--theme-on-primary);
     text-decoration: none;
     padding: 20px;
-    background: linear-gradient(45deg, rgb(0, 33, 139), rgb(151, 0, 0));
+    background: linear-gradient(45deg, var(--theme-primary), var(--theme-secondary));
     font-size: larger;
     transition: all 0.5s;
     background-size: 150%;
@@ -97,7 +95,6 @@ button {
     }
 
     &.inactive {
-      background: linear-gradient(45deg, rgba(0, 33, 139, 0.6), rgba(151, 0, 0, 0.6));
       cursor: not-allowed;
 
       &:hover {

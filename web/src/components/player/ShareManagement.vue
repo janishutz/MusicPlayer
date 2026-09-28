@@ -37,8 +37,8 @@
         <div v-if="!isConnected" class="share-wrapper">
             <p>
                 You can use a share to show what you are currently listening to (and the progress) on a page.
-                When you enable anit-tamper, you will have access to a special page, on which any tampering with the page will
-                trigger a notification you can see on the player. Users are further informed about being surveiled.
+                When you enable anit-tamper, any tampering on a client with it enabled, too, will show a notification on this device.
+                <a href="https://github.com/MusicPlayer/wiki/Anti-Tamper">More information</a>
             </p>
             <p>{{ errorMessage }}</p>
             <div
@@ -52,18 +52,16 @@
                 Create Share
             </button>
         </div>
-        <div v-else>
-            <!-- TODO: Need to explain and add controls -->
-            <!-- TODO: How to handle anti-tamper? -->
+        <div v-else class="share-wrapper">
             <p>
-                Connected. To connect another device, enter the link below or scan the QR code.
+                Connected. To connect another device, enter the link below on that device or scan the QR code.
                 <br>
                 <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}share/{{ room }}</a>
             </p>
             <Qrcode :value="baseURL + 'fancy/' + room" class="qrcode" :size="200" />
             <br>
             <p v-if="useAntiTamper">
-                Anti-Tamper is enabled. To connect a client to be surveyed, enter the following link:
+                <a href="https://github.com/janishutz/MusicPlayer/wiki/Anti-Tamper">Anti-Tamper</a> is enabled. To connect a client to be surveyed, enter the following link instead:
                 <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}fancy/{{ room }}</a>
             </p>
             <button @click="stopShare">

@@ -25,9 +25,10 @@
 This branch is for the upcoming version 4 of Music Player and is in fairly late stages of development
 
 It switches to a backend written in `Go`, as opposed to `node.js` and should perform a lot better.
-Furthermore, the entire frontend has been rewritten from scratch to be more user-friendly.
+Furthermore, the entire frontend has been rewritten from scratch to be *much* more user-friendly.
 
-It uses my manually created [types for MusicKitJS](https://github.com/janishutz/musickit-v3-types), as well as my [OpenID Connect Login SDK for Go](https://github.com/janishutz/oidclogin)
+It uses my manually created [types for MusicKitJS](https://github.com/janishutz/musickit-v3-types),
+as well as my [OpenID Connect Login SDK for Go](https://github.com/janishutz/oidclogin)
 and the [accompanying browser solution](https://github.com/janishutz/oidc-login-sdk/tree/main/browser)
 
 
@@ -38,7 +39,7 @@ A music player, specifically created for displaying song information on multiple
 
 ## Getting Started
 There are two main ways to use MusicPlayer:
-- Self Host it (see below)
+- Self Host it, for instructions, see [the Wiki](https://github.com/janishutz/MusicPlayer/wiki)
 - [Hosted version](https://music.janishutz.com). This has the benefit of not requiring an Apple Developer Subscription and any setup. It is however a subscription service.
 See the [store page](https://store.janishutz.com/product/com.janishutz.MusicPlayer)
 
@@ -51,14 +52,6 @@ See the [store page](https://store.janishutz.com/product/com.janishutz.MusicPlay
 - Client displays show the playback position and all information from song metadata fetched from the Apple Music API
 - Play most common music files
 - No setup required when using the hosted version at [music.janishutz.com](https://music.janishutz.com)
-
-
-## Limitations
-- You can either use OpenID Connect for sign in or no sign in at all. There are plans to eventually also add local authentication, but that is low priority (since ProxyAuth is a thing).
-- In Anti-Tamper mode, only websockets can be used for the clients with Anti-Tamper enabled.
-- As an intentional design choice, users on the default share settings, or all users on shares without Anti-Tamper, cannot use websockets and must instead rely on the polling or SSE options.
-- The player that created the share must use WebSockets.
-- If you want to offer a hosted service for MusicPlayer, currently only my store is supported for ownership check. Implementing your own solution is fairly easy however.
 
 
 <div id="donate" align="center">

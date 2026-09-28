@@ -19,6 +19,8 @@ import {
 } from '@kyvg/vue3-notification';
 
 export const savePlaylist = () => {
+    if ( queue.value.length === 0 ) return;
+
     rawQueue.value = queue.value;
     shuffle.value = false;
 

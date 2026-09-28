@@ -65,7 +65,7 @@
                 <i class="fa-solid fa-pen-to-square"></i>
                 Edit Current
             </button>
-            <button @click="savePlaylist">
+            <button :class="player.queue.value.length === 0 ? 'inactive' : undefined" @click="savePlaylist">
                 <i class="fa-solid fa-save"></i>
                 Save
             </button>

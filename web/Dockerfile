@@ -1,7 +1,10 @@
 FROM node:25-alpine3.21 AS build
 
 # Frontend Build stage
+ARG GIT_REF="MusicPlayer"
+
 WORKDIR /usr/src/build
+ENV VITE_GIT_REF="${GIT_REF}"
 
 COPY . /usr/src/build
 

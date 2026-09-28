@@ -25,8 +25,6 @@
         }
 
         isLoggingIn.value = false;
-
-        // TODO: Logout button
     } );
 
     const isAuthorizedHandler = () => {
@@ -47,6 +45,9 @@
         sdk.auth.login();
         isLoggingIn.value = false;
     };
+
+    const version = ( import.meta.env.VITE_GIT_REF ? ( import.meta.env.VITE_GIT_REF as string ).slice( 0, 10 ) : 'dev' ) + ( import.meta.env.PROD ? '-prod' : '-dev' );
+    const gitRef = import.meta.env.VITE_GIT_REF;
 </script>
 
 <template>
@@ -55,5 +56,24 @@
         <button :class="['fancy-button', isLoggingIn ? 'inactive' : undefined]" @click="login">
             Log In
         </button>
+
+        <div class="version">
+            <a :href="gitRef ? 'https://github.com/janishutz/MusicPlayer/compare/' + gitRef + '...main' : 'https://github.com/janishutz/MusicPlayer'" target="_blank">
+                MusicPlayer {{ version }}
+            </a>
+        </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.version {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+
+    >a {
+        font-size: 0.8rem;
+        text-decoration: none;
+    }
+}
+</style>

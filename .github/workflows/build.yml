@@ -1,0 +1,26 @@
+name: Create and publish container
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+jobs:
+  build_container:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+      - name: Build Frontend image
+        run: docker buildx build ./web --tag ghcr.io/janishutz/MusicPlayerFrontend --build-arg GIT_REF="$( git rev-parse HEAD )"
+      - name: Build Backend image
+        run: docker buildx build ./web --tag ghcr.io/janishutz/MusicPlayer
+      - name: Login to registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Publish to GitHub Container Registry
+        run: |
+          docker push ghcr.io/janishutz/MusicPlayerFrontend && docker push ghcr.io/janishutz/MusicPlayer

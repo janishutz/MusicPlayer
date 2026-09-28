@@ -8,7 +8,7 @@
                 "sse",
                 "poll"
             ],
-            "default": "poll",
+            "default": "sse",
             "description": "Default information retrieval mode for the basic remote displays. Polling is slightly cheaper than websockets at the cost of responsiveness"
         },
         "urls": {

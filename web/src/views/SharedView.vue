@@ -76,7 +76,7 @@
                 'duration': -1,
                 'name': 'Not playing',
                 'artwork': '',
-                'additional-info': 'Test',
+                'additional-info': '',
                 'identifier': 'nosong-ident',
                 'source': 'local'
             };
@@ -92,7 +92,10 @@
     >
         <BackgroundAnimation v-if="enableFancyBackground" :image="song.artwork" />
         <div class="credits">
-            <a href="https://github.com/janishutz/MusicPlayer">MusicPlayer</a> created by <a href="https://janishutz.com">Janis Hutz</a> (without any AI)
+            Created by
+            <a href="https://janishutz.com" target="_blank">Janis Hutz</a>
+            (without any AI).
+            <a href="https://github.com/janishutz/MusicPlayer" target="_blank">Source</a>
         </div>
         <i
             v-if="!enableFancyBackground"

@@ -1,1 +1,36 @@
-# yaml-language-server: $schema=config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/janishutz/MusicPlayer/refs/heads/dev/backend/config.schema.json
+
+# Also see https://github.com/janishutz/MusicPlayer/wiki/Configuration
+
+# The mode that clients should use for data retrieval, if Anti-Tamper is disabled
+# May be poll or sse. Note that if set to `poll`, SSE (Server Sent Events) will be disabled
+clientMode: sse
+
+# URLs that MusicPlayer needs for CORS (Cross Origin Resource Sharing), redirects and more.
+urls:
+  # The default URL to redirect to after a successful login or logout.
+  # This is sometimes overridden by the frontend
+  defaultRedirect: http://localhost:8081
+
+  # The URL (protocol://hostname[:port] is the scheme) of the frontend, e.g. https://music.janishutz.com
+  frontendURL: http://localhost:8081
+  
+  # The URL (protocol://hostname[:port] is the scheme) of the backend, e.g. https://api.music.janishutz.com
+  backendURL: http://localhost:8080
+
+# MusicPlayer needs an Apple Music Developer Token to authenticate requests against the Apple Music API.
+# See https://github.com/janishutz/MusicPlayer/wiki/Installation for how to set this up
+appleMusicApi:
+  teamID: TEAMID
+  keyID: KEYID
+  storefront: us
+  keyPath: ./apple_private_key.p8
+
+# Settings for ownership check.
+# You typically want to disable this, as only my store system is currently supported.
+ownershipCheck:
+  enabled: false
+
+# The directory to store the users' playlists in. Leaving it at the default is fine in most cases.
+# When running in docker, you *should not* change this, unless also updating the docker compose file.
+dataDir: ./data

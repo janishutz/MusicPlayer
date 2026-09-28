@@ -9,7 +9,7 @@ services:
       - 3000:3000
 
   backend:
-    image: ghcr.io/janishutz/MusicPlayerBackend
+    image: ghcr.io/janishutz/MusicPlayer
     volumes:
       - data:/app/data
       - ./config.yml:/app/config.yml
