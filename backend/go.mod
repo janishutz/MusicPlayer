@@ -1,16 +1,16 @@
 module musicplayer
 
-go 1.27.1
+go 1.26.1
 
 require (
-	git.janishutz.com/janishutz-store/go-sdk v1.0.0
+	git.janishutz.com/janishutz-store/go-sdk v1.0.1
 	github.com/gin-contrib/cors v1.7.8
 	github.com/gin-contrib/sessions v1.1.2
 	github.com/gin-gonic/gin v1.12.0
 	github.com/goccy/go-yaml v1.19.2
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/gorilla/websocket v1.5.3
-	github.com/janishutz/oidclogin v1.4.2
+	github.com/janishutz/oidclogin v1.4.3
 	golang.org/x/time v0.16.0
 )
 
