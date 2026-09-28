@@ -1,4 +1,4 @@
-FROM node:25-alpine3.21 AS build
+FROM node:26-alpine3.23 AS build
 
 # Frontend Build stage
 ARG GIT_REF="MusicPlayer"

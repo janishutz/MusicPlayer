@@ -29,7 +29,7 @@
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tsconfig/node24": "^24.0.4",
-    "@types/node": "^24.13.3",
+    "@types/node": "^24.19.0",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/tsconfig": "^0.9.1",
     "eslint": "^10.9.1",
@@ -45,6 +45,6 @@
     "vue-tsc": "^3.3.7"
   },
   "engines": {
-    "node": "^22.18.0 || >=24.12.0"
+    "node": ">=24.12.0"
   }
 }

@@ -18,6 +18,7 @@
             "node"
         ],
         "typeRoots": [
+            "./node_modules/@types",
             "./src/ts/dtype/global.d.ts"
         ],
         // Disable emitting output during `vue-tsc --build`, which is used for type-checking only.

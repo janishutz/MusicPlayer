@@ -39,7 +39,8 @@ export const load = ( cb: ( songs: Song[] ) => void ) => {
         'name': 'From Disk',
         'process': process,
         'type': 'file',
-        'mime': 'audio/aac,audio/mpeg,audio/wav,audio/mp4,audio/ogg'
+        'mime': 'audio/aac,audio/mpeg,audio/wav,audio/mp4,audio/ogg',
+        'autoClose': false
     } );
 
     const generateSongObject = async ( file: File ): Promise<Song> => {
