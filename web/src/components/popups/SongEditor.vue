@@ -58,53 +58,56 @@
 
 <template>
     <PopupElement v-model="model" show-close>
-        <h2>Edit Song</h2>
-        <button @click="search">
-            Search song on Apple Music
-        </button>
+        <div class="song-editor">
+            <h2>Edit Song</h2>
+            <button @click="search">
+                Search song on Apple Music
+            </button>
 
-        <table class="song-editor">
-            <tbody>
-                <tr>
-                    <td>
-                        <label for="song-name">Song title</label>
-                    </td>
-                    <td>
-                        <input id="song-name" v-model="localSong.name" type="text">
-                    </td>
-                </tr>
+            <table class="song-details">
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="song-name">Song title</label>
+                        </td>
+                        <td>
+                            <input id="song-name" v-model="localSong.name" type="text">
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td>
-                        <label for="song-artist">Artist</label>
-                    </td>
-                    <td>
-                        <input id="song-artist" v-model="localSong.artist" type="text">
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <label for="song-artist">Artist</label>
+                        </td>
+                        <td>
+                            <input id="song-artist" v-model="localSong.artist" type="text">
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td>
-                        <label for="song-artwork">Artwork URL</label>
-                    </td>
-                    <td>
-                        <input id="song-artwork" v-model="localSong.artwork" type="text">
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <label for="song-artwork">Artwork URL</label>
+                        </td>
+                        <td>
+                            <input id="song-artwork" v-model="localSong.artwork" type="text">
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td>
-                        <label for="song-add-info">Additional Info</label>
-                    </td>
-                    <td>
-                        <input id="song-add-info" v-model="localSong['additional-info']" type="text">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button @click="save">
-            Save
-        </button>
+                    <tr>
+                        <td>
+                            <label for="song-add-info">Additional Info</label>
+                        </td>
+                        <td>
+                            <input id="song-add-info" v-model="localSong['additional-info']" type="text">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <i>Additional Info is displayed on the remote display. Could be dancing style</i>
+            <button @click="save">
+                Save
+            </button>
+        </div>
     </PopupElement>
 </template>
 
@@ -113,5 +116,18 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
+    text-align: start;
+
+    >i {
+        font-size: 0.8rem;
+        color: var(--theme-dimmed);
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
+    >.song-details {
+        margin-top: 10px;
+    }
 }
 </style>

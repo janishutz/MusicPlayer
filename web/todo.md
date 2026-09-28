@@ -1,5 +1,5 @@
 # Frontend
-- [ ] Status tracking (position, etc)
+- [X] Status tracking (position, etc)
 - [X] Change metadata association for automated association
 - [X] Move songs with D&D, or index assignment?
 - [ ] Explain additional info

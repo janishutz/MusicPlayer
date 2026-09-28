@@ -12,7 +12,7 @@
 
 <template>
     <div class="main-app">
-        <i class="fa-solid fa-right-from-bracket" @click="logout()"></i>
+        <i class="fa-solid fa-right-from-bracket" title="Log out" @click="logout()"></i>
         <LogoutPopup v-model="showLogoutPopup" />
         <PlaylistsComponent />
         <PlayerWrapper />

@@ -109,7 +109,11 @@
                         <h2 @click="() => selectPlaylist( index )">
                             {{ playlist.name }}
                         </h2>
-                        <i class="fa-solid fa-sliders" @click="() => openEditPlaylistPopup( index )"></i>
+                        <i
+                            class="fa-solid fa-sliders"
+                            title="Edit the playlist or delete it"
+                            @click="() => openEditPlaylistPopup( index )"
+                        ></i>
                     </div>
                 </div>
             </div>

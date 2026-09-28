@@ -77,6 +77,6 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        width: 60vw;
+        width: 50vw;
     }
 </style>
