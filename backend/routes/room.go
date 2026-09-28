@@ -41,7 +41,6 @@ func createRoomHandler(c *gin.Context) {
 		return
 	}
 	if len(body.RoomId) > 20 || len(body.RoomId) < 3 {
-		log.Print("Room ID violates constraints")
 		c.AbortWithStatus(400)
 		return
 	}

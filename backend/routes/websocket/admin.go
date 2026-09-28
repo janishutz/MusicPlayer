@@ -21,7 +21,6 @@ func AdminHandler(c *gin.Context) {
 	uid := session.Get("jhid_uid")
 	exists, isAdmin, _ := rooms.Exists(roomID, uid.(string))
 	if !exists {
-		log.Print("Room does not exist")
 		c.AbortWithStatus(404)
 		return
 	} else if exists && !isAdmin {
@@ -67,6 +66,5 @@ func AdminHandler(c *gin.Context) {
 		if string(message) == "close-room" {
 			rooms.Close(uid.(string), roomID)
 		}
-		log.Println("Iterating admin websocket listener")
 	}
 }

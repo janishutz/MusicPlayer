@@ -36,11 +36,9 @@ func Handler(c *gin.Context) {
 	}
 	exists, _, hasAntiTamper := rooms.Exists(roomID, "")
 	if !exists {
-		log.Print("Room does not exist")
 		c.AbortWithStatus(404)
 		return
 	} else if exists && !hasAntiTamper {
-		log.Print("Room exists and anti-tamper not enabled. Not allowing WS connection")
 		c.AbortWithStatus(418)
 		return
 	}

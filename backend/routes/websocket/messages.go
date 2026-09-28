@@ -27,7 +27,6 @@ func derefOrDefault[T any](value *T, default_value T) T {
 }
 
 func broadcast(roomId string, message []byte) {
-	log.Println("Trying to update")
 	rooms.Clients.Lock.RLock()
 	defer rooms.Clients.Lock.RUnlock()
 
@@ -41,16 +40,13 @@ func broadcast(roomId string, message []byte) {
 			rooms.UpdatePlaylist(roomId, *data.Playlist)
 		}
 	}
-	log.Println("State update succeeded")
 	for conn := range rooms.Clients.Rooms[roomId].Members {
 		if err := conn.WriteMessage(websocket.TextMessage, message); err != nil {
 			log.Println("Broadcast for room ", roomId, " failed with error ", err)
 		}
 	}
 
-	log.Println("Room update succeeded")
 	sse.SendUpdate(string(message), roomId)
-	log.Println("SSE updates sent")
 }
 
 func adminMessage(roomId string, message []byte) {
