@@ -16,6 +16,7 @@ WORKDIR /app
 ENV GIN_MODE=release
 
 COPY --from=build /usr/src/build/musicplayer /app/musicplayer
-COPY ./templates/ /app/
+COPY ./templates/ /app/templates
+RUN ls /app
 
 CMD ["/app/musicplayer"]
