@@ -69,7 +69,6 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
 };
 
 const reconnectRoom = () => {
-    console.log( 'RE-CREATING' );
     createRoom( room.value, useAntiTamper.value );
 };
 
@@ -135,7 +134,13 @@ const connect = (): Promise<boolean> => {
         };
 
         connection.onerror = errorHandler;
-        connection.onclose = errorHandler;
+
+        connection.onclose = () => {
+            if ( !isConnected.value ) return;
+
+            errorHandler();
+        };
+
         reconnectLock = false;
     } );
 };

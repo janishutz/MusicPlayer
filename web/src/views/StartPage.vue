@@ -51,13 +51,21 @@
 </script>
 
 <template>
-    <div>
-        <h1>MusicPlayer</h1>
-        <button :class="['fancy-button', isLoggingIn ? 'inactive' : undefined]" @click="login">
-            Log In
-        </button>
+    <div class="home-page">
+        <div class="side-container">
+            <h1>MusicPlayer</h1>
+            <p>Free and Open Source MusicPlayer combining multiple sources with a shareable playback status page</p>
+            <button :class="['fancy-button', isLoggingIn ? 'inactive' : undefined]" @click="login">
+                Log in / Sign up
+            </button>
+            <i>Functional cookies will be used to provide login</i>
+        </div>
+        <div class="side-container">
+            <img src="/logo.jpg" alt="MusicPlayer Logo">
+        </div>
 
         <div class="version">
+            <i class="fa-solid fa-github"></i>
             <a :href="gitRef ? 'https://github.com/janishutz/MusicPlayer/compare/' + gitRef + '...main' : 'https://github.com/janishutz/MusicPlayer'" target="_blank">
                 MusicPlayer {{ version }}
             </a>
@@ -66,14 +74,5 @@
 </template>
 
 <style lang="scss" scoped>
-.version {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-
-    >a {
-        font-size: 0.8rem;
-        text-decoration: none;
-    }
-}
+    @use '@/scss/home.scss';
 </style>
