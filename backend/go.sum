@@ -56,6 +56,8 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/janishutz/oidclogin v1.4.3 h1:AAJ3YCHKs7T1qWfIshy/sg0GlLi4emPvBi4b7ZOOOds=
 github.com/janishutz/oidclogin v1.4.3/go.mod h1:OCPVvCsrrGP5DfYpvvxjgEm7/SRsxzenT+x1/Kd74xs=
+github.com/janishutz/oidclogin v1.4.4 h1:V5S7iv0stES7kd1yoqMz80r+hyuWnc+1LkLF/dXNDhY=
+github.com/janishutz/oidclogin v1.4.4/go.mod h1:OCPVvCsrrGP5DfYpvvxjgEm7/SRsxzenT+x1/Kd74xs=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/klauspost/cpuid/v2 v2.4.0 h1:S6Hrbc7+ywsr0r+RLapfGBHfyefhCTwEh3A0tV913Dw=
