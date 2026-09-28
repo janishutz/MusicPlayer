@@ -4,28 +4,35 @@
         onMounted,
         ref
     } from 'vue';
+    import UnownedPopup from '@/components/popups/UnownedPopup.vue';
     import router from '@/router';
     import {
         useAuthStore
     } from '@/stores/authstore';
 
     const isLoggingIn = ref( true );
+    const isUnowned = ref( false );
     const store = useAuthStore();
 
-    onMounted( async () => {
+    const check = async ( force?: boolean ) => {
+        isLoggingIn.value = true;
+
         try {
-            store.isAuth = await sdk.auth.check();
+            store.isAuth = await sdk.auth.check( force ? 'force=true' : undefined );
 
             if ( store.isAuth )
                 isAuthorizedHandler();
         } catch ( e ) {
             if ( e instanceof sdk.request.AuthError ) {
                 throw e;
+            } else if ( ( e as Error ).message === 'ERR_402' ) {
+                isUnowned.value = true;
+                console.log( 'Error' );
             }
         }
 
         isLoggingIn.value = false;
-    } );
+    };
 
     const isAuthorizedHandler = () => {
         if ( localStorage.getItem( 'close-tab' ) === 'true' ) {
@@ -48,10 +55,13 @@
 
     const version = ( import.meta.env.VITE_GIT_REF ? ( import.meta.env.VITE_GIT_REF as string ).slice( 0, 10 ) : 'dev' ) + ( import.meta.env.PROD ? '-prod' : '-dev' );
     const gitRef = import.meta.env.VITE_GIT_REF;
+
+    onMounted( check );
 </script>
 
 <template>
     <div class="home-page">
+        <UnownedPopup v-model="isUnowned" @recheck="check" />
         <div class="side-container">
             <h1>MusicPlayer</h1>
             <p>Free and Open Source MusicPlayer combining multiple sources with a shareable playback status page</p>
