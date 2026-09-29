@@ -12,8 +12,17 @@ import {
 } from 'pinia';
 import router from './router';
 
+// Detect backend URL
+let backendURL: string;
+
+if ( import.meta.env.PROD ) {
+    backendURL = import.meta.env.VITE_BACKEND_URL ?? ( location.protocol + '//api.' + location.hostname );
+} else {
+    backendURL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:8080';
+}
+
 configure( {
-    'backendURL': new URL( import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:8080' ),
+    'backendURL': new URL( backendURL ),
     'defaultAuthErrorResolution': 'resolve',
     'authErrorEvent': 'autherror'
 } );

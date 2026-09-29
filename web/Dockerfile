@@ -9,6 +9,7 @@ ENV VITE_GIT_REF="${GIT_REF}"
 COPY . /usr/src/build
 
 RUN npm i
+ENV VITE_GIT_REF=${GIT_REF}
 RUN npm run build
 
 # Build final image
