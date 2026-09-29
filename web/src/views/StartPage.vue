@@ -75,7 +75,7 @@
         </div>
 
         <div class="version">
-            <i class="fa-solid fa-code"></i>
+            <i class="fa-solid fa-code-branch"></i>
             <a :href="gitRef ? 'https://github.com/janishutz/MusicPlayer/compare/' + gitRef + '...main' : 'https://github.com/janishutz/MusicPlayer'" target="_blank">
                 MusicPlayer {{ version }}
             </a>
