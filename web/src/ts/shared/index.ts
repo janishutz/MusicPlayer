@@ -23,7 +23,8 @@ const connect = async () => {
             ws.connect( room );
             showInfoPopup.value = true;
             popupMsg.value = `Please allow notifications for this page, to make people trying to tamper aware that they are not allowed to do that.
-You may also consider adding a name for this client using the settings icon in the top left corner`;
+You may also consider adding a name for this client using the settings icon in the top left corner.
+If you do not wish to use Anti-Tamper, replace "fancy" in the URL with "share".`;
             popupTitle.value = 'Anti-Tamper Enabled';
         } else {
             if ( conf.sse ) {

@@ -10,7 +10,6 @@ const themes: Ref<string[]> = ref( [
     'Monochrome',
     'Purple'
 ] );
-// TODO: Detect light or dark theme preference from browser and store
 const darkMode: Ref<boolean> = ref( localStorage.getItem( 'theme-mode' ) !== 'light' );
 const selectedTheme = ref( themes.value[ 0 ]! );
 

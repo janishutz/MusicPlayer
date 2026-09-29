@@ -6,22 +6,22 @@
 - [ ] Tour
 - [X] Get player working
 - [X] Save playlists locally or on backend
-- [ ] SSE connection
-- [ ] Anti-Tamper
-- [ ] Remote showcase views
-- [ ] Login on auth failure
+- [X] SSE connection
+- [X] Anti-Tamper
+- [X] Remote showcase views
+- [X] Login on auth failure
 - [X] Login
-- [ ] About page
+- ~[ ] About page~
 - [X] Apple-Music signin
 - [X] Loading existing playlists with local music and association of that
-- [ ] Remote screens can use polling (once a minute or so) or SSE for updating (/fancy uses SSE by default, /share uses polling by default). Should reduce server load
-- [ ] Comply with AGPL (link source code somewhere)
-- [ ] Keybinds in player
+- [X] Remote screens can use polling (once a minute or so) or SSE for updating (/fancy uses SSE by default, /share uses polling by default). Should reduce server load
+- [X] Comply with AGPL (link source code somewhere)
+- [X] Keybinds in player
 
 # Backend
 - [X] Implement all endpoints
-- [ ] Integrate with store and auth sdks
+- [X] Integrate with store and auth sdks
 - [X] Create FOSS solution for above (single user)
 - [ ] Setup guide
-- [ ] Docker containers
-- [ ] CI
+- [X] Docker containers
+- [X] CI

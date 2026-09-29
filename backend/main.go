@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+	"os"
 	"time"
 
 	"musicplayer/config"
@@ -37,8 +39,12 @@ func main() {
 
 	// Session management
 	// FIXME: Choose session store (probably best to support both redis and memstore or memcache)
-	// TODO: Secret via env var as well
-	store := memstore.NewStore([]byte("secret"))
+	secret, ok := os.LookupEnv("MUSICPLAYER_SESSION_SECRET")
+	if !ok {
+		log.Println("[WARN] Missing secret (MUSICPLAYER_SESSION_SECRET is unset), using unsafe default")
+		secret = "secret"
+	}
+	store := memstore.NewStore([]byte(secret))
 	r.Use(sessions.Sessions("jhid", store))
 
 	routes.AddRoutes(r, conf)

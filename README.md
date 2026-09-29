@@ -22,19 +22,19 @@
 </div>
 
 # Development Branch
-This branch is for the upcoming version 4 of Music Player and is in fairly late stages of development
+This branch is for the upcoming version 4 of MusicPlayer and is in late stages of development
 
 It switches to a backend written in `Go`, as opposed to `node.js` and should perform a lot better.
 Furthermore, the entire frontend has been rewritten from scratch to be *much* more user-friendly.
 
+
+# MusicPlayer
+A free and open source music player integrating multiple music sources (currently local and Apple Music) into a single playlist,
+with the option of sharing current playback status with other people on the internet via a link.
+
 It uses my manually created [types for MusicKitJS](https://github.com/janishutz/musickit-v3-types),
 as well as my [OpenID Connect Login SDK for Go](https://github.com/janishutz/oidclogin)
 and the [accompanying browser solution](https://github.com/janishutz/oidc-login-sdk/tree/main/browser)
-
-
-# MusicPlayer
-A music player, specifically created for displaying song information on multiple different displays that are connected to the same network, just from the browser. 
-
 
 
 ## Getting Started
@@ -45,12 +45,12 @@ See the [store page](https://store.janishutz.com/product/com.janishutz.MusicPlay
 
 
 ## Features
-**NOTICE:** This section has not been updated for the new version of MusicPlayer yet
-- Browser based App that runs on all OS (Linux, MacOS, Windows, iOS, Android, iPadOS, ...)
-- Fully featured Music Player
-- Show all song information over the Internet on any amount of client displays
-- Client displays show the playback position and all information from song metadata fetched from the Apple Music API
-- Play most common music files
+- Browser based, meaning it can run on all devices. Note on mobile devices: The player interface is not yet mobile optimized.
+- Combine songs from multiple sources into a single playlist
+- Show song information and playback status over the Internet to any number of other devices, if you wish
+- Tampering notifications for these devices on a specific page
+- Use the Apple Music API to get song details for local songs. This process is automated, but you can still manually change the details if you so choose.
+- Performant backend written in Go, easy installation with a Docker Compose file
 - No setup required when using the hosted version at [music.janishutz.com](https://music.janishutz.com)
 
 

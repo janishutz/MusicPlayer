@@ -64,6 +64,7 @@
             <div v-if="needsFiles">
                 <p>Some songs in this playlist require local files.</p>
                 <!-- TODO: probably need to list songs here somehow -->
+                <!-- TODO: Design -->
                 <input
                     ref="fileinput"
                     type="file"

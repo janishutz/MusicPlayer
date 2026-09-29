@@ -1,4 +1,3 @@
-# NOTE: This is not complete yet and image names are TBD
 volumes:
   data:
 
@@ -14,5 +13,6 @@ services:
       - data:/app/data
       - ./config.yml:/app/config.yml
       - ./apple_private_key.p8:/app/apple_private_key.p8
+    env_file: .env
     ports:
       - 8080:8080

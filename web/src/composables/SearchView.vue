@@ -41,12 +41,12 @@
         }
     };
 
-    const doSearch = async () => {
+    const doSearch = async ( offset?: number ) => {
         if ( query.value === searchedForQuery ) return;
 
         isSearching.value = true;
         searchedForQuery = query.value;
-        results.value = await searchOpts.value?.search( query.value, 0 ) ?? [];
+        results.value = await searchOpts.value?.search( query.value, offset ?? 0 ) ?? [];
         isSearching.value = false;
     };
 

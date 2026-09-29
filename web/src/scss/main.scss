@@ -53,10 +53,9 @@ a {
     }
 }
 
-// TODO: Colour
 ::selection {
-    background-color: #7c8cec;
-    color: white;
+    background-color: var(--theme-secondary);
+    color: var(--theme-on-secondary);
 }
 
 button {
