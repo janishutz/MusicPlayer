@@ -50,14 +50,19 @@ export const getPlaylists = async () => {
     if ( playlistOperationLock ) return;
 
     playlistOperationLock = true;
-    playlists.value = ( await ( await request.get( '/user/playlists' ) ).json() ).playlists;
+
+    try {
+        playlists.value = ( await ( await request.get( '/user/playlists' ) ).json() ).playlists;
+    } catch ( e ) {
+        console.error( e );
+    }
 
     setTimeout( () => {
         playlistOperationLock = false;
     }, 1000 );
 };
 
-// Rate limit
+// Rate limited
 export const savePlaylists = async () => {
     if ( playlistOperationLock ) return;
 
