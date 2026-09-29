@@ -25,3 +25,9 @@ else
         read -p "Installing backend through docker, will download docker compose file. Enter to proceed, Ctrl + C to cancel"
     fi
 fi
+
+echo "Downloading config file"
+
+echo "Creating .env file"
+
+echo "Please edit the .env and config file."
