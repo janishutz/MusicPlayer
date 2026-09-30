@@ -45,7 +45,7 @@ const tracker = () => {
 
     if ( playbackPercentage.value > 0.998 && duration.value > 0 ) {
         if ( repeat.value === 'one' ) {
-            sources[currentSource.value]?.seekTo( 0 );
+            playIndex( queueIdx.value );
         } else {
             stopTracking();
 
