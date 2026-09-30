@@ -5,7 +5,8 @@ import {
     isAntiTamperPossiblePage,
     popupMsg,
     popupTitle,
-    showInfoPopup
+    showInfoPopup,
+    showShareNotFoundPopup
 } from './state';
 import antiTamper from './anti-tamper';
 import poll from './poll';
@@ -54,9 +55,7 @@ const connect = async () => {
         const error = await e as Error;
 
         if ( error.message === 'ERR_404' ) {
-            popupTitle.value = 'Share not found';
-            popupMsg.value = 'The share you have specified does not currently exist. Please try again later';
-            showInfoPopup.value = true;
+            showShareNotFoundPopup.value = true;
         } else {
             console.error( e );
         }

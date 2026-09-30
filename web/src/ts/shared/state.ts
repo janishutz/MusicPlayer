@@ -13,6 +13,8 @@ export const isPlaying = ref( false );
 
 export const currentQueueIdx = ref( -1 );
 
+export const showShareNotFoundPopup = ref( false );
+
 export const startTime = ref( new Date().getTime() );
 
 export const showArtworks = ref( location.pathname.includes( 'fancy' ) );

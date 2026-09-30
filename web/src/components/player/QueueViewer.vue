@@ -97,8 +97,12 @@
                     </div>
                     <div class="song-actions">
                         <p>{{ beautifyTime( song.duration ) }}</p>
-                        <i v-if="index !== 0" class="fa-solid fa-trash-can" @click="() => deleteSong( index )"></i>
-                        <i class="fa-solid fa-pen-to-square" @click="() => editSong( index )"></i>
+                        <i
+                            class="fa-solid fa-trash-can"
+                            title="Remove from playlist"
+                            @click="() => deleteSong( index )"
+                        ></i>
+                        <i class="fa-solid fa-pen-to-square" title="Edit song" @click="() => editSong( index )"></i>
                     </div>
                 </div>
             </SortableList>

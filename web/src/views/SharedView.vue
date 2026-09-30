@@ -27,6 +27,7 @@
     import ProgressBar from '@/components/player/ProgressBar.vue';
     import RadialBackgroundAnimation from '@/components/shared/RadialBackgroundAnimation.vue';
     import SettingsPopup from '@/components/shared/SettingsPopup.vue';
+    import ShareNotFoundPopup from '@/components/shared/ShareNotFoundPopup.vue';
     import SharedQueue from '@/components/shared/SharedQueue.vue';
     import type {
         Song
@@ -119,9 +120,10 @@
             class="fa-solid fa-gear"
             @click="openSettings"
         ></i>
+        <SettingsPopup v-model="showSettings" />
         <InformationPopup v-model="showInfoPopup" :title="popupTitle" :msg="popupMsg" />
         <UseAntiTamper />
-        <SettingsPopup v-model="showSettings" />
+        <ShareNotFoundPopup />
 
         <div id="shared-song-panel" :class="['panel', compactLayout ? 'compact' : undefined] ">
             <div class="current-song-wrapper">
