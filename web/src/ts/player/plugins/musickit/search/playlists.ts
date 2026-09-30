@@ -53,7 +53,7 @@ export const searchPlaylists = async ( cb: ( songs: Song[] ) => void ) => {
                         'artist': val.attributes.artistName,
                         'name': val.attributes.name,
                         'artwork': window.MusicKit.formatArtworkURL( val.attributes.artwork, 1000, 1000 ),
-                        'duration': val.attributes.durationInMillis * 1000,
+                        'duration': Math.round( val.attributes.durationInMillis / 1000 ),
                         'source': 'applemusic'
                     };
                 } );

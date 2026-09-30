@@ -153,7 +153,7 @@
             :style="style(index)"
         >
             <slot :item="item" :index="index"></slot>
-            <i class="fa-solid fa-grip-vertical" @mousedown="( e ) => start( e, index )"></i>
+            <i class="fa-solid fa-grip-vertical" title="Reorder" @mousedown="( e ) => start( e, index )"></i>
         </div>
     </div>
 </template>

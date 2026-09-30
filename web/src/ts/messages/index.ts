@@ -149,13 +149,10 @@ let playlistLock = false;
 let stateLock = false;
 
 const sendPlaylistData = () => {
-    console.log( 'Trying to send playlist data' );
-
     if ( isConnected.value && !playlistLock ) {
         setTimeout( () => {
             playlistLock = false;
         }, 1000 );
-        console.log( 'Sending playlist data' );
         playlistLock = true;
 
         connection!.send( JSON.stringify( {
@@ -166,10 +163,7 @@ const sendPlaylistData = () => {
 };
 
 const sendStateData = async () => {
-    console.log( 'Trying to send state data' );
-
     if ( isConnected.value && !stateLock ) {
-        console.log( 'Sending state data' );
         setTimeout( () => {
             stateLock = false;
         }, 500 );

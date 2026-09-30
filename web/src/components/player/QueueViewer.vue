@@ -5,6 +5,10 @@
         computed,
         ref
     } from 'vue';
+    import {
+        queueIdx,
+        rawQueue
+    } from '@/ts/player/state';
     import AddSong from '../popups/AddSong.vue';
     import type {
         Song
@@ -15,9 +19,6 @@
         beautifyTime
     } from '@/ts/util/time';
     import player from '@/ts/player';
-    import {
-        queueIdx
-    } from '@/ts/player/state';
     import {
         savePlaylist
     } from '@/ts/userPlaylists/save';
@@ -39,7 +40,7 @@
     };
 
     const editSong = ( idx: number ) => {
-        if ( queue.value.length === 0 ) return;
+        if ( rawQueue.value.length === 0 ) return;
 
         showEditSong.value = true;
         editingSong.value = player.queue.value[ idx + queueIdx.value + 1 ]!;

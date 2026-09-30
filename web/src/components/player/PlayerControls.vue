@@ -51,14 +51,14 @@
     <div class="mp-player">
         <ShareManagement v-model="showShareMenu" />
         <div class="controls">
-            <i class="fa-solid fa-backward-step" @click="player.prev"></i>
+            <i class="fa-solid fa-backward-step" title="Previous song" @click="player.prev"></i>
             <i class="fa-solid fa-arrow-rotate-left quick-seek" @click="player.back10"></i>
             <div :class="['play-pause', player.isPlaying.value ? undefined : 'paused']">
-                <i class="fa-solid fa-play" @click="player.play"></i>
-                <i class="fa-solid fa-pause" @click="player.pause"></i>
+                <i class="fa-solid fa-play" title="Play" @click="player.play"></i>
+                <i class="fa-solid fa-pause" title="Pause" @click="player.pause"></i>
             </div>
             <i class="fa-solid fa-arrow-rotate-right quick-seek" @click="player.skip10"></i>
-            <i class="fa-solid fa-forward-step" @click="player.next"></i>
+            <i class="fa-solid fa-forward-step" title="Next song" @click="player.next"></i>
         </div>
 
         <div class="time">
@@ -80,10 +80,12 @@
                     repeatMode === 'one' ? 'once' : undefined,
                     repeatMode === 'all' ? 'all' : undefined
                 ]"
+                title="Repeat"
                 @click="toggleRepeatMode"
             ></i>
-            <i class="fa-solid fa-share-from-square" @click="openShareMenu"></i>
+            <i class="fa-solid fa-share-from-square" title="Share live status" @click="openShareMenu"></i>
             <i
+                title="Shuffle"
                 :class="['fa-solid', 'fa-shuffle', shuffleMode ? 'active' : undefined]"
                 @click="player.setShuffle( !shuffleMode )"
             ></i>

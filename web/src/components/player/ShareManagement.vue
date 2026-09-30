@@ -37,15 +37,24 @@
         <div v-if="!isConnected" class="share-wrapper">
             <p>
                 You can use a share to show what you are currently listening to (and the progress) on a page.
-                When you enable anit-tamper, any tampering on a client with it enabled, too, will show a notification on this device.
-                <a href="https://github.com/MusicPlayer/wiki/Anti-Tamper">More information</a>
+                <br>
+                When you enable anti-tamper, any tampering on a client with it enabled, too, will show a notification on this device.
+                <a href="https://github.com/janishutz/MusicPlayer/wiki/Anti%E2%80%90Tamper" target="_blank">More information</a>
             </p>
-            <p>{{ errorMessage }}</p>
+            <p style="color: red;">
+                {{ errorMessage }}
+            </p>
+            <i class="details">
+                The share name is what is displayed at the end of the URL.
+                Should ideally be short and may only contain alphanumeric characters,
+                as well as hyphens and must be between 3 and 20 characters
+            </i>
             <div
                 class="create-share-view"
             >
                 <label for="share-name">Share Name </label>
                 <input id="share-name" v-model="shareName" type="text">
+                <br>
                 <SwitchOption v-model="enableAntiTamper" text="Use Anti-Tamper" />
             </div>
             <button @click="startShare">
@@ -59,13 +68,13 @@
                 <a :href="baseURL + 'share/' + room" target="_blank">{{ baseURL }}share/{{ room }}</a>
             </p>
             <Qrcode :value="baseURL + 'share/' + room" class="qrcode" :size="200" />
-            <br>
+            <i class="details">This is the link you can and should share with other people</i>
             <p>
-                For a fancy-by-default view, connect to
+                For a fancy-by-default view (should <i>ideally</i> only be used for a central screen), connect to
                 <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}fancy/{{ room }}</a>
             </p>
             <p v-if="useAntiTamper">
-                <a href="https://github.com/janishutz/MusicPlayer/wiki/Anti-Tamper">Anti-Tamper</a> is enabled.
+                <a href="https://github.com/janishutz/MusicPlayer/wiki/Anti%E2%80%90Tamper" target="_blank">Anti-Tamper</a> is enabled.
                 To connect a client to be surveyed, connect to the above URL and click "Yes"
             </p>
             <button @click="stopShare">
@@ -84,6 +93,13 @@
         width: 50vw;
 
         p {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .details {
+            font-size: 0.8rem;
+            color: var(--theme-dimmed);
             margin-top: 5px;
             margin-bottom: 10px;
         }
