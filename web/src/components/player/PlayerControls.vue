@@ -23,13 +23,13 @@
     const toggleRepeatMode = () => {
         switch ( repeatMode.value ) {
             case 'one':
-                player.setRepeat( 'all' );
+                player.setRepeat( 'off' );
                 break;
             case 'off':
-                player.setRepeat( 'one' );
+                player.setRepeat( 'all' );
                 break;
             case 'all':
-                player.setRepeat( 'off' );
+                player.setRepeat( 'one' );
         }
     };
 
