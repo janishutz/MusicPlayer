@@ -10,6 +10,7 @@
         currentQueue,
         currentQueueIdx,
         enableFancyBackground,
+        hideBranding,
         isAntiTamperActive,
         isPlaying,
         playbackOffset,
@@ -95,7 +96,7 @@
     >
         <BackgroundAnimation v-if="enableFancyBackground && backgroundAnimation === 'image'" :image="song.artwork" />
         <RadialBackgroundAnimation v-if="enableFancyBackground && backgroundAnimation === 'radial'" :image="song.artwork" />
-        <div class="credits">
+        <div v-if="!hideBranding" class="credits">
             Created by
             <a href="https://janishutz.com" target="_blank">Janis Hutz</a>
             (without any AI).

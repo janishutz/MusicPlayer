@@ -53,6 +53,8 @@ export const popupMsg = ref( '' );
 
 export const showInfoPopup = ref( false );
 
+export const hideBranding = ref( false );
+
 export const clientName = ref( sessionStorage.getItem( 'anti-tamper-client-name' ) ?? '' );
 
 watch( clientName, () => {

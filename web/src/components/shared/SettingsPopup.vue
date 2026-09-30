@@ -5,6 +5,7 @@
         backgroundAnimationTypes,
         clientName,
         enableFancyBackground,
+        hideBranding,
         isAntiTamperActive,
         isAntiTamperAvailable,
         showArtworks
@@ -69,6 +70,12 @@
                         <td>Show Artwork for upcoming songs (uses more bandwidth)</td>
                         <td>
                             <SwitchOption v-model="showArtworks" text="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hide branding (left or bottom) :(</td>
+                        <td>
+                            <SwitchOption v-model="hideBranding" text="" />
                         </td>
                     </tr>
                 </tbody>
