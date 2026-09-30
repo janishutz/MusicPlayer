@@ -1,8 +1,4 @@
 <script setup lang="ts">
-    import {
-        ref,
-        watch
-    } from 'vue';
     import type {
         Playlist
     } from '@/ts/userPlaylists/file';
@@ -10,19 +6,23 @@
     import {
         disableKeyHandler
     } from '@/ts/player/state';
+    import {
+        showPlaylistEdit
+    } from '@/ts/player/playlists';
+    import {
+        watch
+    } from 'vue';
 
     const playlist = defineModel<Playlist | undefined>( {
         'required': true
     } );
-    const showPopup = ref( false );
 
-    watch( playlist, () => {
-        showPopup.value = !!playlist.value;
-        disableKeyHandler.value = showPopup.value;
+    watch( showPlaylistEdit, () => {
+        disableKeyHandler.value = showPlaylistEdit.value;
     } );
 
     const save = () => {
-        showPopup.value = false;
+        showPlaylistEdit.value = false;
     };
 
     const selectIcon = ( index: number ) => {
@@ -73,14 +73,14 @@
     const deletePlaylist = () => {
         if ( confirm( 'Do you really want to delete this playlist?' ) ) {
             emit( 'delete-playlist' );
-            showPopup.value = false;
+            showPlaylistEdit.value = false;
         }
     };
 </script>
 
 <template>
     <div>
-        <PopupElement v-model="showPopup" show-close>
+        <PopupElement v-model="showPlaylistEdit" show-close>
             <div class="edit-playlist">
                 <h1>Edit Playlist</h1>
                 <div class="playlist-edit-align">

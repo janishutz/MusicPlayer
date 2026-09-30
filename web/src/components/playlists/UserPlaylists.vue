@@ -19,6 +19,9 @@
     import AddPlaylist from './AddPlaylist.vue';
     import EditPlaylist from './EditPlaylist.vue';
     import router from '@/router';
+    import {
+        showPlaylistEdit
+    } from '@/ts/player/playlists';
 
     const checkingStatus = ref( true );
     const dots = ref( 0 );
@@ -61,6 +64,7 @@
     };
 
     const openEditPlaylistPopup = ( index: number ) => {
+        showPlaylistEdit.value = true;
         editingPlaylist.value = index;
     };
 

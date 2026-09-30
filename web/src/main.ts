@@ -16,8 +16,9 @@ import router from './router';
 let backendURL: string;
 
 if ( import.meta.env.PROD ) {
-    backendURL = import.meta.env.VITE_BACKEND_URL ?? ( location.protocol + '//api.' + location.hostname );
+    backendURL = import.meta.env.VITE_BACKEND_URL ?? ( location.protocol + '//api.' + location.host );
 } else {
+    console.warn( '[BACKEND] Development backend enabled' );
     backendURL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:8080';
 }
 

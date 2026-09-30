@@ -10,6 +10,11 @@ import {
     startTracking,
     stopTracking
 } from '../status-tracking';
+import {
+    ref
+} from 'vue';
+
+export const showPlaylistEdit = ref( false );
 
 /**
  * Play a song at the given index of the queue. Wraps to 0 and end if index below 0 or above end
