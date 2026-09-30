@@ -85,6 +85,8 @@ const setShuffle = ( enabled: boolean ) => {
             queue.value.push( rawQueue.value[i]! );
         }
     }
+
+    document.dispatchEvent( new CustomEvent( 'musicplayer:shuffle' ) );
 };
 
 /**

@@ -149,6 +149,8 @@ let playlistLock = false;
 let stateLock = false;
 
 const sendPlaylistData = () => {
+    console.log( 'Trying to send playlist data' );
+
     if ( isConnected.value && !playlistLock ) {
         setTimeout( () => {
             playlistLock = false;
@@ -159,6 +161,7 @@ const sendPlaylistData = () => {
             'type': 'playlist',
             'playlist': queue.value
         } ) );
+        console.log( 'Playlist data sent' );
     }
 };
 
@@ -187,6 +190,7 @@ const useRoomWatchers = () => {
         document.addEventListener( 'musicplayer:seek', sendStateData );
         document.addEventListener( 'musicplayer:playpause', sendStateData );
         document.addEventListener( 'musicplayer:update', sendPlaylistData );
+        document.addEventListener( 'musicplayer:shuffle', sendStateData );
     } );
 
     onUnmounted( () => {
@@ -204,6 +208,10 @@ const useRoomWatchers = () => {
 
         try {
             document.addEventListener( 'musicplayer:update', sendPlaylistData );
+        } catch { /* empty */ }
+
+        try {
+            document.addEventListener( 'musicplayer:shuffle', sendPlaylistData );
         } catch { /* empty */ }
     } );
 
