@@ -1,4 +1,5 @@
 import {
+    changesMade,
     currentSource,
     isPlaying,
     queue,
@@ -16,24 +17,21 @@ import type {
     Song
 } from '@/ts/dtype/playlist';
 import {
-    playlistIdx
-} from '@/ts/userPlaylists/state';
-import {
     setPlaylistIdx
 } from '@/ts/userPlaylists';
 
 export const addSongList = ( songs: Song[] ) => {
     rawQueue.value = rawQueue.value.concat( songs );
     queue.value = queue.value.concat( songs );
+    changesMade.value = true;
 };
 
 export const clearQueue = () => {
-    setPlaylistIdx( 0 );
+    setPlaylistIdx( -1 );
     queue.value = [];
     rawQueue.value = [];
     sources[currentSource.value]?.stop();
     duration.value = -1;
-    playlistIdx.value = -1;
     playbackPercentage.value = 1;
     isPlaying.value = false;
     repeat.value = 'off';
@@ -59,6 +57,8 @@ export const removeSong = ( idx: number ) => {
             rawQueue.value.splice( i, 1 );
         }
     }
+
+    changesMade.value = true;
 
     return true;
 };
@@ -97,6 +97,8 @@ export const moveSong = ( idx: number, newIdx: number ) => {
             rawQueue.value.push( song );
         }
     }
+
+    changesMade.value = true;
 
     return true;
 };

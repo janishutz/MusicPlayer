@@ -5,6 +5,7 @@ import {
     shuffleList
 } from './playlists/add';
 import {
+    changesMade,
     currentSource,
     isPlaying,
     queue,
@@ -124,6 +125,12 @@ const addSongFromSource = async ( source: string, cb?: ( songs: Song[] ) => void
 
     return true;
 };
+
+window.addEventListener( 'beforeunload', ev => {
+    if ( changesMade.value ) {
+        ev.preventDefault();
+    }
+} );
 
 useKeyboardListener();
 

@@ -1,12 +1,13 @@
 import {
-    playlistIdx,
-    playlists
-} from './state';
-import {
+    changesMade,
     queue,
     rawQueue,
     shuffle
 } from '../player/state';
+import {
+    playlistIdx,
+    playlists
+} from './state';
 import {
     addPlaylist
 } from '.';
@@ -74,6 +75,7 @@ export const savePlaylists = async () => {
             'playlists': playlists.value,
             'version': '1'
         } ) );
+        changesMade.value = false;
         notifications.notify( {
             'text': 'Playlists saved successfully',
             'type': 'success',

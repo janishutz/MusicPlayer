@@ -40,6 +40,8 @@ export const fullPlayer = ref( false );
 
 export const disableKeyHandler = ref( false );
 
+export const changesMade = ref( false );
+
 const initSources = async () => {
     try {
         sources['applemusic'] = await useMusicKit();

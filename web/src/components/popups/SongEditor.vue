@@ -3,13 +3,14 @@
         type Ref, ref,
         watch
     } from 'vue';
+    import {
+        changesMade,
+        disableKeyHandler
+    } from '@/ts/player/state';
     import PopupElement from './PopupElement.vue';
     import type {
         Song
     } from '@/ts/dtype/playlist';
-    import {
-        disableKeyHandler
-    } from '@/ts/player/state';
     import player from '@/ts/player';
 
     const model = defineModel<boolean>( {
@@ -52,6 +53,7 @@
 
     const save = () => {
         model.value = false;
+        changesMade.value = true;
         document.dispatchEvent( new CustomEvent( 'musicplayer:update' ) );
     };
 </script>

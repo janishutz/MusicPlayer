@@ -2,13 +2,14 @@ import {
     type Ref,
     ref
 } from 'vue';
+import {
+    changesMade,
+    queue
+} from '@/ts/player/state';
 import type {
     AssociationResult
 } from '@/ts/player/plugins/interface';
 import player from '@/ts/player';
-import {
-    queue
-} from '@/ts/player/state';
 import {
     updateIdentifiers
 } from '@/ts/player/plugins/local/association';
@@ -34,7 +35,6 @@ export const openAssociationManager = ( cb: ( files: FileList ) => Promise<Assoc
 
     const callback = async ( files: FileList ): Promise<void> => {
         const results = await cb( files );
-
 
         if ( results?.length ?? -1 > 0 ) {
             associationResults.value = associationResults.value.concat( results! );
@@ -64,4 +64,6 @@ export const saveAssociations = () => {
         isShowingAssociationManager.value = false;
         player.playIndex( 0 );
     }
+
+    changesMade.value = true;
 };

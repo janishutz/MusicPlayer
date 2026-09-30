@@ -2,6 +2,9 @@ import {
     playlistIdx,
     playlists
 } from './state';
+import {
+    changesMade
+} from '../player/state';
 import player from '../player';
 
 
@@ -11,10 +14,12 @@ export const addPlaylist = ( name: string ) => {
         'songs': [],
         'icon': 'music'
     } );
+    changesMade.value = true;
 };
 
 export const removePlaylist = ( idx: number ) => {
     playlists.value.splice( idx, 1 );
+    changesMade.value = true;
 };
 
 export const selectPlaylist = ( idx: number ) => {
@@ -24,6 +29,5 @@ export const selectPlaylist = ( idx: number ) => {
 };
 
 export const setPlaylistIdx = ( idx: number ) => {
-    console.log( 'Setting playlist index' );
     playlistIdx.value = idx;
 };
