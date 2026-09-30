@@ -56,13 +56,17 @@
             <p>
                 Connected. To connect another device, enter the link below on that device or scan the QR code.
                 <br>
-                <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}share/{{ room }}</a>
+                <a :href="baseURL + 'share/' + room" target="_blank">{{ baseURL }}share/{{ room }}</a>
             </p>
-            <Qrcode :value="baseURL + 'fancy/' + room" class="qrcode" :size="200" />
+            <Qrcode :value="baseURL + 'share/' + room" class="qrcode" :size="200" />
             <br>
-            <p v-if="useAntiTamper">
-                <a href="https://github.com/janishutz/MusicPlayer/wiki/Anti-Tamper">Anti-Tamper</a> is enabled. To connect a client to be surveyed, enter the following link instead:
+            <p>
+                For a fancy-by-default view, connect to
                 <a :href="baseURL + 'fancy/' + room" target="_blank">{{ baseURL }}fancy/{{ room }}</a>
+            </p>
+            <p v-if="useAntiTamper">
+                <a href="https://github.com/janishutz/MusicPlayer/wiki/Anti-Tamper">Anti-Tamper</a> is enabled.
+                To connect a client to be surveyed, connect to the above URL and click "Yes"
             </p>
             <button @click="stopShare">
                 End share
@@ -78,5 +82,10 @@
         flex-direction: column;
         align-items: center;
         width: 50vw;
+
+        p {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
     }
 </style>

@@ -31,7 +31,6 @@ const disconnect = () => {
     connection = null;
     hasConnected = false;
     retries = 0;
-    reset();
 };
 
 const connectHandler = (): Promise<boolean> => {

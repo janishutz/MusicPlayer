@@ -1,10 +1,12 @@
 <script setup lang="ts">
     import {
+        allowAntiTamper,
         backgroundAnimation,
         backgroundAnimationTypes,
         clientName,
         enableFancyBackground,
-        isAntiTamperEnabled,
+        isAntiTamperActive,
+        isAntiTamperAvailable,
         showArtworks
     } from '@/ts/shared/state';
     import PopupElement from '../popups/PopupElement.vue';
@@ -17,7 +19,7 @@
     const show = defineModel<boolean>();
 
     watch( show, () => {
-        if ( show.value ) {
+        if ( show.value && isAntiTamperActive.value ) {
             antiTamper.sendMessage( 'settings', 'You are not allowed to change any settings' );
         }
     } );
@@ -33,7 +35,13 @@
             <h2>Settings</h2>
             <table class="settings-opts">
                 <tbody>
-                    <tr v-if="isAntiTamperEnabled">
+                    <tr v-if="isAntiTamperAvailable">
+                        <td>Enable Anit-Tamper?</td>
+                        <td>
+                            <SwitchOption v-model="allowAntiTamper" text="" />
+                        </td>
+                    </tr>
+                    <tr v-if="isAntiTamperActive">
                         <td>
                             <label for="client-name">Anti-Tamper Client Name</label>
                         </td>

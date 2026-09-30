@@ -19,9 +19,6 @@ import type {
 import {
     request
 } from '@janishutz/oidc-login-sdk-browser';
-import {
-    reset
-} from './reset';
 
 const POLL_INTERVAL = 60000;
 
@@ -48,8 +45,6 @@ const disconnect = () => {
     try {
         clearInterval( interval );
     } catch { /* empty */ }
-
-    reset();
 };
 
 const poll = async ( room: string ): Promise<{

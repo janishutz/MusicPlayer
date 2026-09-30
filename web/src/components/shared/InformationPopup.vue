@@ -26,6 +26,6 @@
 
 <style lang="scss" scoped>
 .info-popup {
-    max-width: 60vw;
+    max-width: 50vw;
 }
 </style>

@@ -10,7 +10,7 @@
         currentQueue,
         currentQueueIdx,
         enableFancyBackground,
-        isAntiTamperEnabled,
+        isAntiTamperActive,
         isPlaying,
         playbackOffset,
         playbackProgress,
@@ -30,6 +30,7 @@
     import type {
         Song
     } from '@/ts/dtype/playlist';
+    import UseAntiTamper from '@/components/shared/UseAntiTamper.vue';
     import {
         beautifyTime
     } from '@/ts/util/time';
@@ -107,7 +108,7 @@
             @click="changeTheme"
         ></i>
         <i
-            v-if="isAntiTamperEnabled"
+            v-if="isAntiTamperActive"
             id="anti-tamper-symbol"
             class="fa-solid fa-lock"
             title="Anti-Tamper is enabled. Tampering with this screen in any way will send a notification to the admin"
@@ -118,6 +119,7 @@
             @click="openSettings"
         ></i>
         <InformationPopup v-model="showInfoPopup" :title="popupTitle" :msg="popupMsg" />
+        <UseAntiTamper />
         <SettingsPopup v-model="showSettings" />
 
         <div id="shared-song-panel" :class="['panel', compactLayout ? 'compact' : undefined] ">

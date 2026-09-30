@@ -1,6 +1,6 @@
 import {
     clientName,
-    isAntiTamperEnabled
+    isAntiTamperActive
 } from './state';
 import ws from './ws';
 
@@ -8,7 +8,7 @@ const start = () => {
     Notification.requestPermission();
     document.addEventListener( 'visibilitychange', handleVisibilityChange );
     document.addEventListener( 'blur', () => sendMessage( 'blur' ) );
-    isAntiTamperEnabled.value = true;
+    isAntiTamperActive.value = true;
 };
 
 const handleVisibilityChange = () => {
@@ -20,7 +20,7 @@ const handleVisibilityChange = () => {
 let notificationLock = false;
 
 const sendMessage = ( event: string, notification?: string ) => {
-    if ( !isAntiTamperEnabled.value ) return;
+    if ( !isAntiTamperActive.value ) return;
 
     if ( !notificationLock ) {
         notificationLock = true;
@@ -40,7 +40,20 @@ const sendMessage = ( event: string, notification?: string ) => {
     } ) );
 };
 
+const stop = () => {
+    try {
+        document.removeEventListener( 'visibilitychange', handleVisibilityChange );
+    } catch { /* empty */ }
+
+    try {
+        document.removeEventListener( 'blur', () => sendMessage( 'blur' ) );
+    } catch { /* empty */ }
+
+    isAntiTamperActive.value = false;
+};
+
 export default {
     start,
-    sendMessage
+    sendMessage,
+    stop
 };

@@ -35,6 +35,7 @@ import type {
 import {
     load
 } from './playlists/loader';
+import messages from '../messages';
 import {
     playIndex
 } from './playlists';
@@ -127,6 +128,8 @@ const addSongFromSource = async ( source: string, cb?: ( songs: Song[] ) => void
 };
 
 window.addEventListener( 'beforeunload', ev => {
+    messages.closeRoom();
+
     if ( changesMade.value ) {
         ev.preventDefault();
     }

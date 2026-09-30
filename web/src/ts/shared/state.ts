@@ -1,6 +1,7 @@
 import {
     type Ref,
-    ref
+    ref,
+    watch
 } from 'vue';
 import type {
     Song
@@ -16,8 +17,6 @@ export const startTime = ref( new Date().getTime() );
 
 export const showArtworks = ref( location.pathname.includes( 'fancy' ) );
 
-export const allowAntiTamper = ref( location.pathname.includes( 'fancy' ) );
-
 export const enableFancyBackground = ref( location.pathname.includes( 'fancy' ) );
 
 export const backgroundAnimationTypes = [
@@ -27,7 +26,20 @@ export const backgroundAnimationTypes = [
 
 export const backgroundAnimation: Ref<typeof backgroundAnimationTypes[number]> = ref( 'image' );
 
-export const isAntiTamperEnabled = ref( false );
+export const isAntiTamperPossiblePage = location.pathname.startsWith( '/fancy' );
+
+/** True if anti-tamper is available */
+export const isAntiTamperAvailable = ref( false );
+
+/** True if user allowed anit-tamper */
+export const allowAntiTamper = ref( sessionStorage.getItem( 'anti-tamper-allowed' ) === 'true' );
+
+watch( allowAntiTamper, () => {
+    sessionStorage.setItem( 'anti-tamper-allowed', String( allowAntiTamper.value ) );
+} );
+
+/** True if it is active */
+export const isAntiTamperActive = ref( false );
 
 export const playbackTime = ref( 0 );
 
