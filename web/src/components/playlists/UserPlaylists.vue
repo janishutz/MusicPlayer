@@ -18,6 +18,9 @@
     } from '@/ts/userPlaylists/state';
     import AddPlaylist from './AddPlaylist.vue';
     import EditPlaylist from './EditPlaylist.vue';
+    import {
+        changesMade
+    } from '@/ts/player/state';
     import router from '@/router';
     import {
         showPlaylistEdit
@@ -72,6 +75,10 @@
         removePlaylist( editingPlaylist.value );
         editingPlaylist.value = -1;
     };
+
+    const undoChanges = () => {
+        loadPlaylists();
+    };
 </script>
 
 <template>
@@ -98,7 +105,7 @@
                     <i class="fa-solid fa-floppy-disk"></i>
                     Save Changes
                 </button>
-                <button @click="loadPlaylists">
+                <button :class="changesMade ? undefined : 'inactive'" @click="undoChanges">
                     <i class="fa-solid fa-rotate"></i>
                     Undo unsaved changes
                 </button>
