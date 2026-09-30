@@ -2,12 +2,6 @@ volumes:
   data:
 
 services:
-  frontend:
-    image: ghcr.io/janishutz/musicplayer-frontend
-    restart: always
-    ports:
-      - 3000:3000
-
   backend:
     image: ghcr.io/janishutz/musicplayer
     restart: always
