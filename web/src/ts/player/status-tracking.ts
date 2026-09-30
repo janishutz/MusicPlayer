@@ -27,9 +27,17 @@ export const startTracking = () => {
     }
 
     duration.value = sources[currentSource.value]?.getDuration() ?? -1;
-    setTimeout( () => {
-        duration.value = sources[currentSource.value]?.getDuration() ?? -1;
-    }, 2000 );
+    const i = setInterval( () => {
+        const dur = sources[currentSource.value]?.getDuration() ?? -1;
+
+        if ( dur > 0 ) {
+            duration.value = dur;
+
+            try {
+                clearInterval( i );
+            } catch { /* empty */ }
+        }
+    }, 1000 );
 };
 
 const tracker = () => {
