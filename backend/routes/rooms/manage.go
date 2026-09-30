@@ -1,6 +1,9 @@
 package rooms
 
-import "musicplayer/routes/types"
+import (
+	"log"
+	"musicplayer/routes/types"
+)
 
 // Createa a new room, with `uid` being the owner and `name` being the name for the room.
 // Returns true if successful, false if room exists already or the room name is invalid
@@ -50,7 +53,15 @@ func Close(uid string, name string) bool {
 		}
 		delete(roomNames, name)
 		delete(rooms, name)
+		// Close all websockets for this room
+		for c, _ := range Clients.Rooms[name].Admins {
+			c.Close()
+		}
+		for c, _ := range Clients.Rooms[name].Members {
+			c.Close()
+		}
 		delete(Clients.Rooms, name)
+		log.Println("Room ", name, " closed successfully")
 		return true
 	}
 	return false

@@ -31,9 +31,7 @@ func broadcast(roomId string, message []byte) {
 	defer rooms.Clients.Lock.RUnlock()
 
 	data := UpdateMessage{}
-	if err := json.Unmarshal(message, &data); err != nil {
-		log.Print("Failed to unmarshal: ", err)
-	} else {
+	if err := json.Unmarshal(message, &data); err == nil {
 		if data.Playing != nil {
 			rooms.UpdateState(roomId, derefOrDefault(data.Playing, false), derefOrDefault(data.Index, -1), derefOrDefault(data.Start, -1), derefOrDefault(data.Offset, 0))
 		} else if data.Playlist != nil {
