@@ -42,20 +42,22 @@ a {
 
 // ── Notifications ──────────────────────────────────────────────────────
 .notifications {
-    .vue-notification {
-        padding: 20px;
-        .notification-title {
-            font-size: 1rem;
-        }
-        .notification-text {
-            font-size: 0.75rem;
-        }
+  .vue-notification {
+    padding: 20px;
+
+    .notification-title {
+      font-size: 1rem;
     }
+
+    .notification-text {
+      font-size: 0.75rem;
+    }
+  }
 }
 
 ::selection {
-    background-color: var(--theme-secondary);
-    color: var(--theme-on-secondary);
+  background-color: var(--theme-secondary);
+  color: var(--theme-on-secondary);
 }
 
 button {
@@ -104,11 +106,29 @@ button {
   }
 }
 
-input, select {
+input,
+select {
   background: none;
   border-radius: 10px;
   border: solid 1px var(--theme-on-app);
   color: var(--theme-on-app);
   padding: 5px;
   font-size: 0.9rem;
+}
+
+progress {
+  border: none;
+  border-radius: 10px;
+  height: 6px;
+  appearance: none;
+
+  &::-webkit-progress-value,
+  & {
+    background-color: var(--theme-primary);
+  }
+
+  &::-moz-progress-bar,
+  &::-webkit-progress-bar {
+    background-color: var(--theme-primary-hover);
+  }
 }
