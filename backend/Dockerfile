@@ -4,6 +4,7 @@ FROM alpine AS build
 WORKDIR /usr/src/build
 
 COPY . /usr/src/build
+ENV PROD=true
 
 RUN apk add go
 RUN go build -o musicplayer

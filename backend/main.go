@@ -49,7 +49,7 @@ func main() {
 	routes.AddRoutes(r, conf)
 
 	// Set up SDKs for login and store
-	oidclogin.Configure(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, true, util.OwnershipCheck)
+	oidclogin.Configure(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, true, util.OwnershipCheck, os.Getenv("PROD") == "true")
 	util.Init(conf)
 
 	// Healthcheck
