@@ -4,6 +4,10 @@
   align-items: center;
   justify-content: center;
 
+  >h2 {
+    margin-top: 0;
+  }
+
   .loader-view {
     max-width: 40vw;
     position: relative;
@@ -32,6 +36,7 @@
     height: 40vh;
     overflow-x: hidden;
     overflow-y: scroll;
+    border-top: solid 1px var(--theme-on-app);
 
     .association {
       display: flex;

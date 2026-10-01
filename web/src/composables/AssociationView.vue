@@ -62,10 +62,9 @@
     <PopupElement v-model="isShowingAssociationManager">
         <div class="association-popup">
             <h2>Load from disk</h2>
-            <!-- TODO: Design -->
             <div v-if="needsFiles" class="loader-view">
-                <p>Some songs in this playlist require local files.</p>
-                <div>
+                <div v-if="associationResults.length === 0">
+                    <p>Some songs in this playlist require local files.</p>
                     <table>
                         <tr v-for="(item, index) in filesToLoad" :key="index">
                             <td>{{ queue[item]!.name.length > 30 ? queue[item]!.name.slice( 0, 30 ) + '...' : queue[item]!.name }}</td>
@@ -83,6 +82,10 @@
                 >
             </div>
             <div v-if="needsFiles && !isAnalyzing && associationResults.length > 0" class="association-wrapper">
+                <p>
+                    The following song could not be uniquely associated with the supplied files.
+                    Please pick the correct file for each and hit save when done.
+                </p>
                 <div v-for="(result, index) in associationResults" :key="index" class="association">
                     <p>
                         <b>{{ result.song.name.length > 30 ? result.song.name.slice( 0, 30 ) + '...' : result.song.name }}</b>
