@@ -21,12 +21,11 @@ export const load = ( playlist: PlaylistSongs ) => {
     queue.value = playlist;
     rawQueue.value = playlist;
 
-    let needToLoadLocalSongs = false;
+    const filesToLoadLocaly: number[] = [];
 
-    for ( const song of playlist ) {
-        if ( song['additional-identifier'] ) {
-            needToLoadLocalSongs = true;
-            break;
+    for ( let i = 0; i < playlist.length; i++ ) {
+        if ( playlist[i]!['additional-identifier'] ) {
+            filesToLoadLocaly.push( i );
         }
     }
 
@@ -44,7 +43,7 @@ export const load = ( playlist: PlaylistSongs ) => {
         return associationResults.filter( val => val.match !== 'exact' );
     };
 
-    if ( needToLoadLocalSongs ) {
+    if ( filesToLoadLocaly.length > 0 ) {
         const mime = Object.values( sources )
             .map( src => {
                 return src.loading.requiresLocalFiles === true ? src.loading.mime : '';
@@ -53,7 +52,7 @@ export const load = ( playlist: PlaylistSongs ) => {
                 return prev === '' ? curr : prev + ',' + curr;
             } );
 
-        openAssociationManager( fileLoader, mime );
+        openAssociationManager( fileLoader, mime, filesToLoadLocaly );
     }
 
     fullPlayer.value = true;

@@ -18,6 +18,8 @@ export const isShowingAssociationManager = ref( false );
 
 export const needsFiles = ref( true );
 
+export const filesToLoad: Ref<number[]> = ref( [] );
+
 export const isAnalyzing = ref( false );
 
 export const associationResults: Ref<AssociationResult[]> = ref( [] );
@@ -27,17 +29,23 @@ export const associationOpts: Ref<{
     'mime': string;
 } | null> = ref( null );
 
-export const openAssociationManager = ( cb: ( files: FileList ) => Promise<AssociationResult[]>, mime: string ) => {
+export const openAssociationManager = ( cb: ( files: FileList ) => Promise<AssociationResult[]>, mime: string, files: number[] ) => {
     isShowingAssociationManager.value = true;
     associationResults.value = [];
     needsFiles.value = true;
     isAnalyzing.value = false;
+    filesToLoad.value = files;
 
     const callback = async ( files: FileList ): Promise<void> => {
         const results = await cb( files );
 
         if ( results?.length ?? -1 > 0 ) {
             associationResults.value = associationResults.value.concat( results! );
+            results.map( val => {
+                val.selectedIdx = 0;
+
+                return val;
+            } );
         } else {
             isShowingAssociationManager.value = false;
             player.playIndex( 0 );
@@ -50,15 +58,25 @@ export const openAssociationManager = ( cb: ( files: FileList ) => Promise<Assoc
     };
 };
 
-export const saveAssociations = () => {
+export const saveAssociations = async () => {
+    const remainingAssociations: AssociationResult[] = [];
+
     for ( const result of associationResults.value ) {
-        for ( const song of queue.value ) {
+        let found = false;
+
+        for ( let song of queue.value ) {
             if ( result.song.identifier === song.identifier ) {
-                updateIdentifiers( song, result.possibleFiles[ result.selectedIdx ?? 0 ]! );
+                song = await updateIdentifiers( song, result.possibleFiles[ result.selectedIdx ?? 0 ]! );
+                found = true;
                 break;
             }
         }
+
+        if ( !found )
+            remainingAssociations.push( result );
     }
+
+    associationResults.value = remainingAssociations;
 
     if ( associationResults.value.length === 0 ) {
         isShowingAssociationManager.value = false;

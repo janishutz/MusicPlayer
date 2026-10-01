@@ -2,6 +2,7 @@
     import {
         associationOpts,
         associationResults,
+        filesToLoad,
         isAnalyzing,
         isShowingAssociationManager,
         needsFiles,
@@ -37,7 +38,7 @@
             if ( song.identifier === id ) {
                 player.removeSong( i );
 
-                return;
+                break;
             }
         }
 
@@ -58,13 +59,22 @@
 </script>
 
 <template>
-    <div>
-        <PopupElement v-model="isShowingAssociationManager">
+    <PopupElement v-model="isShowingAssociationManager">
+        <div class="association-popup">
             <h2>Load from disk</h2>
-            <div v-if="needsFiles">
+            <!-- TODO: Design -->
+            <div v-if="needsFiles" class="loader-view">
                 <p>Some songs in this playlist require local files.</p>
-                <!-- TODO: probably need to list songs here somehow -->
-                <!-- TODO: Design -->
+                <div>
+                    <table>
+                        <tr v-for="(item, index) in filesToLoad" :key="index">
+                            <td>{{ queue[item]!.name.length > 30 ? queue[item]!.name.slice( 0, 30 ) + '...' : queue[item]!.name }}</td>
+                            <td>
+                                {{ queue[item]!.artist.length > 20 ? queue[item]!.artist.slice( 0, 20 ) + '...' : queue[item]!.artist }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <input
                     ref="fileinput"
                     type="file"
@@ -73,16 +83,13 @@
                 >
             </div>
             <div v-if="needsFiles && !isAnalyzing && associationResults.length > 0" class="association-wrapper">
-                <button @click="saveAssociations">
-                    Save
-                </button>
                 <div v-for="(result, index) in associationResults" :key="index" class="association">
                     <p>
                         <b>{{ result.song.name.length > 30 ? result.song.name.slice( 0, 30 ) + '...' : result.song.name }}</b>
                         by
                         <i>{{ result.song.artist.length > 20 ? result.song.artist.slice( 0, 20 ) + '...' : result.song.artist }}</i>
                     </p>
-                    <select v-if="result.match === 'multiple'">
+                    <select v-if="result.match === 'multiple'" v-model="result.selectedIdx">
                         <option v-for="(file, idx) in result.possibleFiles" :key="idx" :value="idx">
                             {{ file.name }}
                         </option>
@@ -102,35 +109,18 @@
                     Retry
                 </button>
             </div>
-            <button @click="cancel">
-                Cancel
-            </button>
-        </PopupElement>
-    </div>
+            <div>
+                <button @click="cancel">
+                    Cancel
+                </button>
+                <button v-if="needsFiles && !isAnalyzing && associationResults.length > 0" @click="saveAssociations">
+                    Save
+                </button>
+            </div>
+        </div>
+    </PopupElement>
 </template>
 
 <style lang="scss" scoped>
-.association-wrapper {
-    width: 60vw;
-    height: 50vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
-
-    .association {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 3rem;
-
-        >div, select {
-            display: flex;
-            margin-left: auto;
-            justify-content: center;
-            align-items: center;
-            >p {
-                margin-right: 10px;
-            }
-        }
-    }
-}
+@use '@/scss/components/association.scss';
 </style>

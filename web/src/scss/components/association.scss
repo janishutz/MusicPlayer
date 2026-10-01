@@ -1,0 +1,55 @@
+.association-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .loader-view {
+    max-width: 40vw;
+    position: relative;
+
+    >div {
+      width: 100%;
+      height: 10rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      text-align: start;
+      margin-bottom: .5rem;
+
+      table {
+        border-spacing: 10px 0px;
+      }
+    }
+
+    >input {
+      margin-bottom: 10px;
+      ;
+    }
+  }
+
+  .association-wrapper {
+    width: 60vw;
+    height: 40vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .association {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 3rem;
+
+      >div,
+      select {
+        display: flex;
+        margin-left: auto;
+        justify-content: center;
+        align-items: center;
+
+        >p {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
