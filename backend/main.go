@@ -38,7 +38,6 @@ func main() {
 	r.SetTrustedProxies(conf.Urls.TrustedProxies)
 
 	// Session management
-	// FIXME: Choose session store (probably best to support both redis and memstore or memcache)
 	secret, ok := os.LookupEnv("MUSICPLAYER_SESSION_SECRET")
 	if !ok {
 		log.Println("[WARN] Missing secret (MUSICPLAYER_SESSION_SECRET is unset), using unsafe default")

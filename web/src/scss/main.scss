@@ -10,8 +10,7 @@ html {
   font-size: 17px;
   background-color: var(--theme-bg);
   color: var(--theme-on-bg);
-  // TODO: Choose good font and load it
-  font-family: 'Manrope', sans-serif;
+  font-family: sans-serif;
 
   &.init-complete {
     transition: background-color 0.5s, color 0.5s;

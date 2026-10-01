@@ -1,4 +1,3 @@
-// TODO: Persist settings in local storage
 import {
     allowAntiTamper,
     isAntiTamperAvailable,
