@@ -2,8 +2,8 @@
 - [X] Status tracking (position, etc)
 - [X] Change metadata association for automated association
 - [X] Move songs with D&D, or index assignment?
-- [ ] Explain additional info
-- [ ] Tour
+- [X] Explain additional info
+- ~[ ] Tour~
 - [X] Get player working
 - [X] Save playlists locally or on backend
 - [X] SSE connection

@@ -64,7 +64,11 @@
         <UnownedPopup v-model="isUnowned" @recheck="check" />
         <div class="side-container">
             <h1>MusicPlayer</h1>
-            <p>Free and Open Source MusicPlayer combining multiple sources with a shareable playback status page</p>
+            <p>
+                Free and Open Source MusicPlayer combining multiple sources with a shareable playback status page
+                <br>
+                <a href="https://janishutz.com/projects/musicplayer" target="_blank">Learn More</a>
+            </p>
             <button :class="['fancy-button', isLoggingIn ? 'inactive' : undefined]" @click="login">
                 Log in / Sign up
             </button>
@@ -75,8 +79,8 @@
         </div>
 
         <div class="version">
-            <i class="fa-solid fa-code-branch"></i>
             <a :href="gitRef ? 'https://github.com/janishutz/MusicPlayer/compare/' + gitRef + '...dev' : 'https://github.com/janishutz/MusicPlayer'" target="_blank">
+                <i class="fa-solid fa-code-branch"></i>
                 MusicPlayer {{ version }}
             </a>
         </div>
