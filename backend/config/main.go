@@ -78,11 +78,11 @@ func LoadConfig() Config {
 	}
 	if conf.Urls.FrontendURL == "" {
 		log.Print("[WARN] Frontend URL URL was not configured, falling back to localhost")
-		conf.Urls.BackendURL = "http://localhost:8081"
+		conf.Urls.FrontendURL = "http://localhost:8081"
 	}
 	if conf.Urls.DefaultRedirect == "" {
 		log.Print("[WARN] DefaultRedirect was not configured, falling back to default")
-		conf.Urls.BackendURL = conf.Urls.FrontendURL + "/app"
+		conf.Urls.DefaultRedirect = conf.Urls.FrontendURL + "/app"
 	}
 	conf.OwnershipCheck.BypassingUIDs = append(conf.OwnershipCheck.BypassingUIDs, "stubs")
 
