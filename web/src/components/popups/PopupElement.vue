@@ -1,6 +1,6 @@
 <template>
     <div :class="['popup', isOpen ? undefined : 'hidden' ]">
-        <div class="popup-backdrop"></div>
+        <div class="popup-backdrop" @click="closePopup"></div>
         <div class="popup-main">
             <i v-if="props.showClose" class="fa-solid fa-xmark close-icon" @click="closePopup()"></i>
             <slot></slot>
