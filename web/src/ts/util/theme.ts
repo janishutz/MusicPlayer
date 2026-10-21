@@ -29,6 +29,7 @@ watch( [
         currTheme = formatThemeName( selectedTheme.value );
         document.documentElement.classList.add( currTheme );
         localStorage.setItem( 'theme', selectedTheme.value );
+        localStorage.setItem( 'theme-mode', darkMode.value ? 'dark' : 'light' );
     }
 } );
 
@@ -37,7 +38,7 @@ const tempTheme = localStorage.getItem( 'theme' );
 if ( tempTheme ) {
     if ( !themes.value.includes( tempTheme ) ) {
         localStorage.setItem( 'theme', selectedTheme.value );
-        localStorage.setItem( 'theme-mode', selectedTheme.value );
+        localStorage.setItem( 'theme-mode', darkMode.value ? 'dark' : 'light' );
         document.documentElement.classList.add( formatThemeName( themes.value[ 0 ]! ) );
     } else {
         selectedTheme.value = tempTheme;
