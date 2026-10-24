@@ -43,8 +43,8 @@
         left: 0;
         background-color: var(--theme-app);
         color: var(--theme-on-app);
-        transition: bottom 1s ease;
-        transition-delay: 0.25s;
+        transition: bottom 0.5s ease;
+        transition-delay: 0.2s;
         overflow: hidden;
 
         &.hidden {

@@ -79,8 +79,8 @@
     bottom: 15px;
     border-radius: 2rem;
     overflow: hidden;
-    transition: bottom 0.5s ease;
-    transition-delay: 0.75s;
+    transition: bottom 0.4s ease;
+    transition-delay: 0.4s;
     display: flex;
     align-items: center;
     justify-content: center;
