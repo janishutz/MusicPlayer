@@ -27,7 +27,7 @@
 
       >.playlist {
         width: 17rem;
-        height: 17rem;
+        height: 19rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -62,17 +62,19 @@
           color: var(--theme-on-primary);
           background-color: var(--theme-primary-hover);
           padding: 10px;
+          max-height: 4.1rem;
+          position: relative;
 
-          >h2{
+          >h2 {
             margin: 0;
             margin-right: auto;
             margin-left: 10px;
-            width: calc(100% - 6rem);
+            width: calc(100% - 4rem);
             text-align: start;
             cursor: pointer;
             height: 100%;
-            text-wrap: no-wrap;
             text-overflow: ellipsis;
+            overflow: hidden;
           }
 
           >.fa-solid {
