@@ -100,7 +100,7 @@
 
         totalPrice += totalDepot;
 
-        return ( totalPrice / 100 ) + ( totalDepot ? ` (Depot = ${ totalDepot })` : '' );
+        return ( totalPrice / 100 ) + ( totalDepot ? ` (Depot = ${ totalDepot / 100 })` : '' );
     } );
 
     const changeValue = ( id: string, amount: number ) => {
