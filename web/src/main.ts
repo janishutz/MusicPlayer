@@ -1,4 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.css';
+import * as Sentry from '@sentry/vue';
 import App from './App.vue';
 import Notifications from '@kyvg/vue3-notification';
 import {
@@ -35,3 +36,16 @@ app.use( router );
 app.use( Notifications );
 
 app.mount( '#app' );
+
+// Sentry
+declare const __APP_VERSION__: string;
+
+if ( import.meta.env.VITE_APP_VERSION && import.meta.env.VITE_SENTRY_DSN )
+    Sentry.init( {
+        'dsn': import.meta.env.VITE_SENTRY_DSN,
+
+        'release': __APP_VERSION__,
+
+        'integrations': [],
+        'tracesSampleRate': 0
+    } );
