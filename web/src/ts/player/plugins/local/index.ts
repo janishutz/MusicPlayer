@@ -17,8 +17,11 @@ import {
 export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<PlayerSourcePlugin> => {
     const player = new Audio();
 
+    player.preload = 'none';
+
     const playSong = async ( id: string ) => {
-        player.src = id;
+        player.setAttribute( 'src', id );
+        player.load();
         player.play();
     };
 

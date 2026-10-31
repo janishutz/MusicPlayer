@@ -8,3 +8,5 @@ musicplayerv2-server.zip
 dist
 package-lock.json
 yarn.lock
+
+.env

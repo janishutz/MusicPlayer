@@ -40,12 +40,15 @@ app.mount( '#app' );
 // Sentry
 declare const __APP_VERSION__: string;
 
-if ( import.meta.env.VITE_APP_VERSION && import.meta.env.VITE_SENTRY_DSN )
+if ( import.meta.env.VITE_SENTRY_DSN ) {
+    console.log( '[Sentry] Initializing' );
     Sentry.init( {
         'dsn': import.meta.env.VITE_SENTRY_DSN,
+        'app': app,
 
         'release': __APP_VERSION__,
 
         'integrations': [],
         'tracesSampleRate': 0
     } );
+}

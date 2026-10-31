@@ -17,6 +17,8 @@
     "@globalhive/vuejs-tour": "^3.0.1",
     "@janishutz/oidc-login-sdk-browser": "^1.5.1",
     "@kyvg/vue3-notification": "^3.4.2",
+    "@sentry/vite-plugin": "^11.10.0",
+    "@sentry/vue": "^11.10.0",
     "colorthief": "^3.5.0",
     "music-metadata": "^11.15.0",
     "nprogress": "^0.2.0",

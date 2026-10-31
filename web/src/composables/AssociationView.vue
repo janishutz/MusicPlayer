@@ -67,9 +67,15 @@
                     <p>Some songs in this playlist require local files.</p>
                     <table>
                         <tr v-for="(item, index) in filesToLoad" :key="index">
-                            <td>{{ queue[item]!.name.length > 30 ? queue[item]!.name.slice( 0, 30 ) + '...' : queue[item]!.name }}</td>
                             <td>
-                                {{ queue[item]!.artist.length > 20 ? queue[item]!.artist.slice( 0, 20 ) + '...' : queue[item]!.artist }}
+                                {{ queue[item]?.name.length ?? 0 > 30
+                                    ? queue[item]!.name.slice( 0, 30 ) + '...'
+                                    : queue[item]?.name ?? '' }}
+                            </td>
+                            <td>
+                                {{ queue[item]?.artist.length ?? 0 > 20
+                                    ? queue[item]!.artist.slice( 0, 20 ) + '...'
+                                    : queue[item]?.artist ?? '' }}
                             </td>
                         </tr>
                     </table>
