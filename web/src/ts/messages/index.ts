@@ -166,6 +166,8 @@ const sendPlaylistData = () => {
 };
 
 const sendStateData = async () => {
+    console.log( 'Trying to send state data' );
+
     if ( isConnected.value && !stateLock ) {
         setTimeout( () => {
             stateLock = false;
@@ -179,6 +181,7 @@ const sendStateData = async () => {
             'start': new Date().getTime() - 100,
             'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
         } ) );
+        console.log( 'State data sent' );
     }
 };
 

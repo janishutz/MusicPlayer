@@ -3,7 +3,10 @@ package rooms
 import (
 	"log"
 	"musicplayer/routes/types"
+	"time"
 )
+
+const ROOM_RETENTION_PERIOD = 3600 * 4
 
 // Createa a new room, with `uid` being the owner and `name` being the name for the room.
 // Returns true if successful, false if room exists already or the room name is invalid
@@ -13,7 +16,25 @@ func Create(uid string, name string, antiTamper bool) bool {
 	}
 
 	if roomNames[name] {
-		return false
+		// Recover rooms that are owned by current uid (or that have not been active in > retention period)
+		if rooms[name].uid != uid {
+			now := time.Now().Unix()
+			cutOffTime := now - ROOM_RETENTION_PERIOD
+			if rooms[name].state.LastUpdate > cutOffTime {
+				return false
+			} else {
+				rooms[name].uid = uid
+				rooms[name].state = state{}
+				rooms[name].playlist = playlistState{
+					LastUpdate: now,
+					Playlist:   types.Songs{},
+				}
+				rooms[name].antiTamper = antiTamper
+				return true
+			}
+		} else {
+			return true
+		}
 	} else {
 		roomNames[name] = true
 		rooms[name] = &room{
@@ -37,7 +58,13 @@ func Create(uid string, name string, antiTamper bool) bool {
 // Check if a room exists and the specified user is the admin
 func Exists(name string, uid string) (exists bool, owned bool, antiTamper bool) {
 	if roomNames[name] {
-		return true, rooms[name].uid == uid, rooms[name].antiTamper
+		cutOffTime := time.Now().Unix() - ROOM_RETENTION_PERIOD
+		if rooms[name].state.LastUpdate > cutOffTime {
+			return true, rooms[name].uid == uid, rooms[name].antiTamper
+		} else {
+			Close(rooms[name].uid, name)
+			return false, false, false
+		}
 	} else {
 		return false, false, false
 	}

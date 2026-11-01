@@ -18,7 +18,7 @@ var (
 )
 
 type playlistState struct {
-	LastUpdate int
+	LastUpdate int64
 	Playlist   types.Songs
 }
 
@@ -26,7 +26,7 @@ type state struct {
 	Index      int     `json:"index"`
 	Start      int     `json:"start"`
 	Playing    bool    `json:"playing"`
-	LastUpdate int     `json:"lastUpdate"`
+	LastUpdate int64   `json:"lastUpdate"`
 	Offset     float64 `json:"offset"`
 }
 
@@ -59,7 +59,7 @@ type StateUpdate struct {
 	Mode       bool         `json:"SSE"`
 }
 
-func GetState(roomId string, lastUpdate int, sse bool) *StateUpdate {
+func GetState(roomId string, lastUpdate int64, sse bool) *StateUpdate {
 	if roomNames[roomId] {
 		room := rooms[roomId]
 		if room.playlist.LastUpdate > lastUpdate {
@@ -83,7 +83,7 @@ func GetState(roomId string, lastUpdate int, sse bool) *StateUpdate {
 
 func UpdateState(roomId string, playing bool, index int, start int, offset float64) bool {
 	if roomNames[roomId] {
-		rooms[roomId].state.LastUpdate = int(time.Now().Unix())
+		rooms[roomId].state.LastUpdate = time.Now().Unix()
 		rooms[roomId].state.Index = index
 		rooms[roomId].state.Start = start
 		rooms[roomId].state.Playing = playing
@@ -95,7 +95,7 @@ func UpdateState(roomId string, playing bool, index int, start int, offset float
 
 func UpdatePlaylist(roomId string, playlist types.Songs) bool {
 	if roomNames[roomId] {
-		rooms[roomId].playlist.LastUpdate = int(time.Now().Unix())
+		rooms[roomId].playlist.LastUpdate = time.Now().Unix()
 		rooms[roomId].playlist.Playlist = playlist
 		return true
 	}

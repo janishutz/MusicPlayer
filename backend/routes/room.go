@@ -16,7 +16,7 @@ import (
 // The live displays can switch to WS-based solution, because that's only few clients and they benefit from this
 
 func pollHandler(c *gin.Context) {
-	i, err := strconv.Atoi(c.Query("lastUpdate"))
+	i, err := strconv.ParseInt(c.Query("lastUpdate"), 10, 64)
 	if err != nil {
 		i = 0
 	}
