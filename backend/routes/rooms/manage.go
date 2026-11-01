@@ -24,7 +24,9 @@ func Create(uid string, name string, antiTamper bool) bool {
 				return false
 			} else {
 				rooms[name].uid = uid
-				rooms[name].state = state{}
+				rooms[name].state = state{
+					LastUpdate: now,
+				}
 				rooms[name].playlist = playlistState{
 					LastUpdate: now,
 					Playlist:   types.Songs{},
@@ -39,9 +41,11 @@ func Create(uid string, name string, antiTamper bool) bool {
 		roomNames[name] = true
 		rooms[name] = &room{
 			uid:   uid,
-			state: state{},
+			state: state{
+				LastUpdate: time.Now().Unix(),
+			},
 			playlist: playlistState{
-				LastUpdate: 0,
+				LastUpdate: time.Now().Unix(),
 				Playlist:   types.Songs{},
 			},
 			antiTamper: antiTamper,

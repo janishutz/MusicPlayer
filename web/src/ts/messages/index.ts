@@ -149,8 +149,6 @@ let playlistLock = false;
 let stateLock = false;
 
 const sendPlaylistData = () => {
-    console.log( 'Trying to send playlist data' );
-
     if ( isConnected.value && !playlistLock ) {
         setTimeout( () => {
             playlistLock = false;
@@ -161,13 +159,10 @@ const sendPlaylistData = () => {
             'type': 'playlist',
             'playlist': queue.value
         } ) );
-        console.log( 'Playlist data sent' );
     }
 };
 
 const sendStateData = async () => {
-    console.log( 'Trying to send state data' );
-
     if ( isConnected.value && !stateLock ) {
         setTimeout( () => {
             stateLock = false;
@@ -181,7 +176,6 @@ const sendStateData = async () => {
             'start': new Date().getTime() - 100,
             'offset': playbackPercentage.value * ( queue.value[ queueIdx.value ]?.duration ?? 0 )
         } ) );
-        console.log( 'State data sent' );
     }
 };
 

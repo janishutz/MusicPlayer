@@ -68,13 +68,13 @@ func (stream *broker) listen() {
 				stream.TotalClients[client.Room] = map[chan string]bool{}
 			}
 			stream.TotalClients[client.Room][client.Channel] = true
-			log.Printf("Client added. %d registered clients", len(stream.TotalClients))
+			log.Printf("SSE Client added. %d registered clients", len(stream.TotalClients))
 
 		// Remove closed client
 		case client := <-stream.ClosedClients:
 			delete(stream.TotalClients[client.Room], client.Channel)
 			close(client.Channel)
-			log.Printf("Removed client. %d registered clients", len(stream.TotalClients))
+			log.Printf("Removed SSE client. %d registered clients", len(stream.TotalClients))
 
 		// Broadcast message to client
 		case eventMsg := <-stream.Message:
