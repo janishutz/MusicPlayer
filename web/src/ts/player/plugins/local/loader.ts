@@ -77,6 +77,7 @@ export const load = ( cb: ( songs: Song[] ) => void ) => {
         if ( result ) {
             result.source = 'local';
             result['additional-identifier'] = createFileAssociationString( file );
+            result.duration = data.format.duration ?? result.duration;
             result.identifier = url;
 
             return [
@@ -95,7 +96,7 @@ export const load = ( cb: ( songs: Song[] ) => void ) => {
                     'name': data.common.title ?? 'Unknown title',
                     'artwork': '',
                     'additional-info': '',
-                    'duration': -1
+                    'duration': data.format.duration ?? -1
                 },
                 false
             ];
