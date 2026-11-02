@@ -22,7 +22,7 @@ const connect = async () => {
     try {
         const conf = await poll.poll( room );
 
-        isAntiTamperAvailable.value = conf.antiTamper;
+        isAntiTamperAvailable.value = conf.antiTamper && location.pathname.startsWith( '/fancy' );
 
         if ( allowAntiTamper.value && conf.antiTamper ) {
             console.warn( 'Anti Tamper Enabled!' );

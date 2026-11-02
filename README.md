@@ -15,22 +15,16 @@
     <img alt="GitHub forks" src="https://img.shields.io/github/forks/janishutz/MusicPlayer">
     <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/janishutz/MusicPlayer">
     <br>
-    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/janishutz/MusicPlayer/total?label=Downloads (total)">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/downloads/janishutz/MusicPlayer/latest/total?label=Downloads (latest)">
     <img alt="Latest release" src="https://img.shields.io/github/release/janishutz/MusicPlayer.svg">
-    <img alt="App Version" src="https://img.shields.io/github/package-json/v/janishutz/MusicPlayer.svg?label=Development Version">
 </div>
-
-# Development Branch
-This branch is for the upcoming version 4 of MusicPlayer and is in late stages of development
-
-It switches to a backend written in `Go`, as opposed to `node.js` and should perform a lot better.
-Furthermore, the entire frontend has been rewritten from scratch to be *much* more user-friendly.
 
 
 # MusicPlayer
 A free and open source music player integrating multiple music sources (currently local and Apple Music) into a single playlist,
 with the option of sharing current playback status with other people on the internet via a link.
+
+It is entirely human written, focusing on backend performance and throughput.
+It has many advanced recovery features to easily have the backend recover from most sub-optimal situations.
 
 It uses my manually created [types for MusicKitJS](https://github.com/janishutz/musickit-v3-types),
 as well as my [OpenID Connect Login SDK for Go](https://github.com/janishutz/oidclogin)
@@ -51,6 +45,7 @@ See the [store page](https://store.janishutz.com/product/com.janishutz.MusicPlay
 - Tampering notifications for these devices on a specific page
 - Use the Apple Music API to get song details for local songs. This process is automated, but you can still manually change the details if you so choose.
 - Performant backend written in Go, easy installation with a Docker Compose file
+- Store your playlist details on the backend and load music from your device locally when needed, with automatic file association
 - No setup required when using the hosted version at [music.janishutz.com](https://music.janishutz.com)
 
 
@@ -62,7 +57,7 @@ See the [store page](https://store.janishutz.com/product/com.janishutz.MusicPlay
 ## Contributing
 Please note that this project has entirely been written without the help of AI and I am fairly opposed to Pretend Intelligence.
 
-If you wish to contribute code that was partially written by AI, you may do so, but be aware that as with most FOSS projects,
+If you wish to contribute code that was partially written by AI, you may do so if you declare that you used AI to help you, but be aware that as with most FOSS projects,
 you are fully responsible for the code it generates and obvious slop code will be rejected.
 
 
