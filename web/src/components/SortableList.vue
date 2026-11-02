@@ -152,7 +152,7 @@
             :class="[ 'movable', movingIdx === index ? 'moving' : undefined ]"
             :style="style(index)"
         >
-            <slot :item="item" :index="index"></slot>
+            <slot :item="item" :index="index" />
             <i class="fa-solid fa-grip-vertical" title="Reorder" @mousedown="( e ) => start( e, index )"></i>
         </div>
     </div>
