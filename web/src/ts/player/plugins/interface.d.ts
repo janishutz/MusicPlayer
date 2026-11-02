@@ -9,7 +9,7 @@ export type PlayerSourcePluginInitializer = () => Promise<PlayerSourcePlugin>;
 
 export interface AssociationResult {
     'song': Song,
-    'match': 'exact' | 'none' | 'multiple';
+    'match': 'exact' | 'none' | 'multiple' | 'possible';
     'possibleFiles': File[],
     'selectedIdx'?: number;
 }

@@ -48,6 +48,7 @@
             localSong.value.artist = song.artist;
             localSong.value.artwork = song.artwork;
             localSong.value.name = song.name;
+            localSong.value.duration = song.duration;
         }, true );
     };
 

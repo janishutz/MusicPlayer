@@ -103,6 +103,10 @@
                             {{ file.name }}
                         </option>
                     </select>
+                    <div v-else-if="result.match === 'possible'">
+                        <p>Likely match: {{ result.possibleFiles[0]?.name ?? 'no file name' }}</p>
+                        <i class="fa-solid fa-trash" @click="() => deleteSong( index )"></i>
+                    </div>
                     <div v-else-if="result.match === 'none'">
                         <p>
                             No match

@@ -20,8 +20,15 @@ export const associate = async ( files: FileList, song: Song ): Promise<Associat
         };
     }
 
+    let hasPartialMatch = false;
+
     for ( const file of files ) {
-        if ( createFileAssociationString( file ) === song['additional-identifier'] ) {
+        const associationString = createFileAssociationString( file );
+
+        if ( associationString === song['additional-identifier'] ) {
+            candidates.push( file );
+        } else if ( associationString.startsWith( song['additional-identifier'].split( '__' )[0]! ) ) {
+            hasPartialMatch = true;
             candidates.push( file );
         }
     }
@@ -33,13 +40,21 @@ export const associate = async ( files: FileList, song: Song ): Promise<Associat
             'possibleFiles': []
         };
     } else if ( candidates.length === 1 ) {
-        song.identifier = URL.createObjectURL( candidates[ 0 ]! );
+        if ( hasPartialMatch ) {
+            return {
+                'match': 'possible',
+                'song': song,
+                'possibleFiles': candidates
+            };
+        } else {
+            song.identifier = URL.createObjectURL( candidates[ 0 ]! );
 
-        return {
-            'match': 'exact',
-            'song': song,
-            'possibleFiles': []
-        };
+            return {
+                'match': 'exact',
+                'song': song,
+                'possibleFiles': []
+            };
+        }
     } else {
         return {
             'match': 'multiple',
