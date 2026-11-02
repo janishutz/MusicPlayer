@@ -85,12 +85,18 @@
         }
     }
 
-    .queue-scroll {
+    .queue-viewer {
         height: 100%;
-        width: 100%;
-        margin-top: 20px;
-        justify-content: flex-start !important;
-        overflow-y: scroll;
-        overflow-x: hidden;
+        >.queue-container {
+            height: 98%;
+            >.queue-scroll {
+                height: 100%;
+                width: 100%;
+                margin-top: 20px;
+                justify-content: flex-start !important;
+                overflow-y: scroll;
+                overflow-x: hidden;
+            }
+        }
     }
 </style>
