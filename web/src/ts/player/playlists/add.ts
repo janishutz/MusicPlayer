@@ -36,6 +36,7 @@ export const clearQueue = () => {
     isPlaying.value = false;
     repeat.value = 'off';
     shuffle.value = false;
+    currentSource.value = '';
 
     for ( const song of queue.value ) {
         sources[ song.source ]?.songUnload( song );

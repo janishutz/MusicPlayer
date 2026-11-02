@@ -4,12 +4,14 @@
         queueIdx
     } from '@/ts/player/state';
     import CurrentSong from '../player/CurrentSong.vue';
+    import FileDetailsIssuePopup from '../popups/FileDetailsIssuePopup.vue';
     import PlayerControls from '../player/PlayerControls.vue';
     import QueueViewer from '../player/QueueViewer.vue';
 </script>
 
 <template>
     <div class="player">
+        <FileDetailsIssuePopup />
         <div
             class="panel"
         >

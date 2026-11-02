@@ -69,6 +69,15 @@
 
             <table class="song-details">
                 <tbody>
+                    <tr v-if="localSong['additional-identifier']">
+                        <td>
+                            <label for="song-name">Song filename</label>
+                        </td>
+                        <td>
+                            <p>{{ localSong['additional-identifier'].split( '__' )[0] }}</p>
+                        </td>
+                    </tr>
+
                     <tr>
                         <td>
                             <label for="song-name">Song title</label>

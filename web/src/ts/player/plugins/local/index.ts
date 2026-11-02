@@ -11,6 +11,10 @@ import {
     unload
 } from './loader';
 import {
+    queue,
+    queueIdx
+} from '../../state';
+import {
     ref
 } from 'vue';
 
@@ -29,7 +33,13 @@ export const useLocalPlayer: PlayerSourcePluginInitializer = async (): Promise<P
         'authorized': ref( true ),
         'id': 'local',
         'name': 'Local Disk',
-        'play': () => player.play(),
+        'play': () => {
+            if ( player.src == null || player.readyState === 0 ) {
+                playSong( queue.value[queueIdx.value]!.identifier );
+            } else {
+                player.play();
+            }
+        },
         'getPlaybackPos': () => player.currentTime / player.duration,
         'getDuration': () => player.duration,
         playSong,
