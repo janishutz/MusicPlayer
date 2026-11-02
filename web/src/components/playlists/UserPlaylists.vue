@@ -78,6 +78,7 @@
 
     const undoChanges = () => {
         loadPlaylists();
+        changesMade.value = false;
     };
 </script>
 
