@@ -4,12 +4,16 @@
         room,
         useAntiTamper
     } from '@/ts/messages';
+    import {
+        ref,
+        watch
+    } from 'vue';
     import PopupElement from '../popups/PopupElement.vue';
     import Qrcode from 'qrcode.vue';
     import SwitchOption from '../SwitchOption.vue';
     import {
-        ref
-    } from 'vue';
+        disableKeyHandler
+    } from '@/ts/player/state';
 
     const showPopup = defineModel<boolean>( {
         'required': true
@@ -27,6 +31,10 @@
     const stopShare = () => {
         messages.closeRoom();
     };
+
+    watch( showPopup, () => {
+        disableKeyHandler.value = showPopup.value;
+    } );
 
     const baseURL = ref( location.protocol + '//' + location.host + '/' );
 </script>
