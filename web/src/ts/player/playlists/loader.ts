@@ -14,7 +14,7 @@ import {
     openAssociationManager
 } from '@/composables/associationManager';
 import {
-    openRequieredLoginManager
+    openRequiredLoginManager
 } from '@/composables/requiredLogin';
 import {
     playIndex
@@ -54,7 +54,7 @@ export const load = ( playlist: PlaylistSongs ) => {
     };
 
     if ( filesToLoadLocaly.length > 0 || servicesToLogInto.length > 0 ) {
-        openRequieredLoginManager( servicesToLogInto );
+        openRequiredLoginManager( servicesToLogInto );
 
         if ( filesToLoadLocaly.length > 0 ) {
             const mime = Object.values( sources )
@@ -68,8 +68,8 @@ export const load = ( playlist: PlaylistSongs ) => {
             openAssociationManager( fileLoader, mime, filesToLoadLocaly );
         }
     } else {
-        fullPlayer.value = true;
-
         playIndex( 0 );
     }
+
+    fullPlayer.value = true;
 };

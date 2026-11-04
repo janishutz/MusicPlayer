@@ -18,7 +18,7 @@ export const requiredLoginsList: Ref<{
     'icon'?: string;
 }[]> = ref( [] );
 
-export const openRequieredLoginManager = ( serviceList: string[] ) => {
+export const openRequiredLoginManager = ( serviceList: string[] ) => {
     requiredLoginsList.value = [];
     isShowingRequiredLoginView.value = false;
     requiredLoginsRawIdList.value = serviceList;
@@ -42,8 +42,8 @@ export const openRequieredLoginManager = ( serviceList: string[] ) => {
     if ( requiredLoginsList.value.length > 0 ) {
         isShowingRequiredLoginView.value = true;
     } else {
-        player.playIndex( 0 );
-        isShowingRequiredLoginView.value = false;
+        if ( serviceList.length > 0 )
+            player.playIndex( 0 );
     }
 };
 
