@@ -14,6 +14,9 @@ import {
     openAssociationManager
 } from '@/composables/associationManager';
 import {
+    openRequieredLoginManager
+} from '@/composables/requiredLogin';
+import {
     playIndex
 } from '.';
 
@@ -22,10 +25,17 @@ export const load = ( playlist: PlaylistSongs ) => {
     rawQueue.value = playlist;
 
     const filesToLoadLocaly: number[] = [];
+    const servicesToLogInto: string[] = [];
 
     for ( let i = 0; i < playlist.length; i++ ) {
         if ( playlist[i]!['additional-identifier'] ) {
             filesToLoadLocaly.push( i );
+        } else if ( playlist[i]!.source !== 'local' ) {
+            const src = playlist[i]!.source;
+
+            if ( !servicesToLogInto.includes( src ) ) {
+                servicesToLogInto.push( src );
+            }
         }
     }
 
@@ -43,19 +53,23 @@ export const load = ( playlist: PlaylistSongs ) => {
         return associationResults.filter( val => val.match !== 'exact' );
     };
 
-    if ( filesToLoadLocaly.length > 0 ) {
-        const mime = Object.values( sources )
-            .map( src => {
-                return src.loading.requiresLocalFiles === true ? src.loading.mime : '';
-            } )
-            .reduce( ( prev, curr ) => {
-                return prev === '' ? curr : prev + ',' + curr;
-            } );
+    if ( filesToLoadLocaly.length > 0 || servicesToLogInto.length > 0 ) {
+        openRequieredLoginManager( servicesToLogInto );
 
-        openAssociationManager( fileLoader, mime, filesToLoadLocaly );
+        if ( filesToLoadLocaly.length > 0 ) {
+            const mime = Object.values( sources )
+                .map( src => {
+                    return src.loading.requiresLocalFiles === true ? src.loading.mime : '';
+                } )
+                .reduce( ( prev, curr ) => {
+                    return prev === '' ? curr : prev + ',' + curr;
+                } );
+
+            openAssociationManager( fileLoader, mime, filesToLoadLocaly );
+        }
+    } else {
+        fullPlayer.value = true;
+
+        playIndex( 0 );
     }
-
-    fullPlayer.value = true;
-
-    playIndex( 0 );
 };

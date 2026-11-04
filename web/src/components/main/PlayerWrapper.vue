@@ -2,6 +2,7 @@
     import AssociationView from '@/composables/AssociationView.vue';
     import PlayerComponent from './PlayerComponent.vue';
     import ReauthPopup from '../popups/ReauthPopup.vue';
+    import RequiredLoginView from '@/composables/RequiredLoginView.vue';
     import SmallPlayerComponent from './SmallPlayerComponent.vue';
     import TamperingPopup from '../popups/TamperingPopup.vue';
     import {
@@ -25,6 +26,7 @@
     <div class="player-wrapper">
         <TamperingPopup />
         <ReauthPopup />
+        <RequiredLoginView />
         <AssociationView />
         <SmallPlayerComponent v-model="fullPlayer" />
         <div :class="['player-container', fullPlayer ? undefined : 'hidden']">
