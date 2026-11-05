@@ -28,7 +28,7 @@ const router = createRouter( {
             }
         },
         {
-            'path': '/app/bar',
+            'path': '/tools/bar',
             'name': 'bar',
             'component': () => import( '@/views/BarView.vue' ),
             'meta': {

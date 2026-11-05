@@ -100,7 +100,7 @@
 
         totalPrice += totalDepot;
 
-        return ( totalPrice / 100 ) + ( totalDepot ? ` (Depot = ${ totalDepot / 100 })` : '' );
+        return ( totalPrice / 100 ) + ( totalDepot ? ` (Depot = CHF ${ totalDepot / 100 })` : '' );
     } );
 
     const changeValue = ( id: string, amount: number ) => {
@@ -183,7 +183,7 @@
         .offering {
             &.show-line {
                 >td {
-                    border-bottom: solid 1px black;
+                    border-bottom: solid 1px var(--theme-on-bg);
                 }
             }
 
@@ -210,7 +210,7 @@
                         user-select: none;
                         cursor: pointer;
                         background: none;
-                        border: solid var( --theme-primary ) 1px;
+                        border: solid var(--theme-on-bg) 1px;
                         border-radius: 20px;
                         width: 2rem;
                         height: 2rem;
@@ -218,7 +218,7 @@
                         justify-content: center;
                         align-items: center;
                         font-size: 1.5rem;
-                        color: var( --theme-primary );
+                        color: var(--theme-on-bg);
                         touch-action: manipulation;
                     }
                 }
