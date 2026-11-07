@@ -2,7 +2,6 @@ package sse
 
 import (
 	"log"
-	"musicplayer/routes/rooms"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,7 +21,7 @@ type broker struct {
 	// Closed client connections
 	ClosedClients chan clientConfig
 
-	// Total client connections
+	// Total client connections (room to clientMap)
 	TotalClients map[string]clientsMap
 }
 
@@ -97,11 +96,6 @@ func (stream *broker) serveHTTP() gin.HandlerFunc {
 		// Initialize client channel
 		clientChan := make(clientChan)
 		room := c.Params.ByName("id")
-		exists, _, _ := rooms.Exists(room, "")
-		if !exists {
-			c.AbortWithStatus(404)
-			return
-		}
 
 		// Send new connection to event server
 		stream.NewClients <- clientConfig{

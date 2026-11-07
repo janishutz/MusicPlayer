@@ -2,6 +2,7 @@ package rooms
 
 import (
 	"log"
+	"musicplayer/routes/sse"
 	"musicplayer/routes/types"
 	"time"
 )
@@ -40,7 +41,7 @@ func Create(uid string, name string, antiTamper bool) bool {
 	} else {
 		roomNames[name] = true
 		rooms[name] = &room{
-			uid:   uid,
+			uid: uid,
 			state: state{
 				LastUpdate: time.Now().Unix(),
 			},
@@ -91,8 +92,13 @@ func Close(uid string, name string) bool {
 		for c, _ := range Clients.Rooms[name].Members {
 			c.Close()
 		}
+
+		// Close all SSE connections
+		sse.CloseAllSSEForRoom(name)
+
 		delete(Clients.Rooms, name)
 		log.Println("Room ", name, " closed successfully")
+
 		return true
 	}
 	return false

@@ -13,6 +13,15 @@ import (
 
 var conf config.Config
 
+func checkRoomAvailable(c *gin.Context) {
+	room := c.Params.ByName("id")
+	exists, _, _ := rooms.Exists(room, "")
+	if !exists {
+		c.AbortWithStatus(404)
+		return
+	}
+}
+
 func AddRoutes(r *gin.Engine, configuration config.Config) {
 	initializeDevTokenGenerator(configuration)
 	rooms.Init()
@@ -41,7 +50,7 @@ func AddRoutes(r *gin.Engine, configuration config.Config) {
 
 	// Initialize SSE if enabled in config
 	if configuration.ClientMode == "sse" {
-		sse.Init(r)
+		sse.Init(r, checkRoomAvailable)
 	}
 
 	conf = configuration

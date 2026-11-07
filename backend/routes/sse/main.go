@@ -9,10 +9,25 @@ import (
 var controller *broker
 
 // Get updates faster via SSE (but at higher server cost)
-func Init(r *gin.Engine) {
+func Init(r *gin.Engine, check gin.HandlerFunc) {
 	controller = newServer()
 	log.Println("[SSE] Enabled by configuration, clients will default to using it")
-	r.GET("/room/:id/sse", headersMiddleware(), controller.serveHTTP(), handler)
+	r.GET("/room/:id/sse", headersMiddleware(), check, controller.serveHTTP(), handler)
+}
+
+func CloseAllSSEForRoom(roomId string) {
+	controller.closeSSEForRoom(roomId)
+}
+
+func (stream *broker) closeSSEForRoom(roomId string) {
+	if stream.TotalClients[roomId] != nil {
+		for client := range stream.TotalClients[roomId] {
+			stream.ClosedClients <- clientConfig{
+				Channel: client,
+				Room:    roomId,
+			}
+		}
+	}
 }
 
 // Send an update via sse to all connected clients
