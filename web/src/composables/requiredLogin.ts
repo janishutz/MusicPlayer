@@ -34,7 +34,7 @@ export const openRequiredLoginManager = ( serviceList: string[] ) => {
             } );
 
             watch( source.authorized, () => {
-                openRequieredLoginManager( requiredLoginsRawIdList.value );
+                openRequiredLoginManager( requiredLoginsRawIdList.value );
             } );
         }
     }
