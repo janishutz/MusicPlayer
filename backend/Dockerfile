@@ -7,7 +7,7 @@ COPY . /usr/src/build
 ENV PROD=true
 
 RUN apk add go
-RUN go build -o musicplayer
+RUN go build -ldflags="-w -s" -o musicplayer
 
 
 # Production image
