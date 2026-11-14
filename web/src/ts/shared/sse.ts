@@ -74,7 +74,7 @@ const connectHandler = (): Promise<void> => {
                 retries += 1;
                 setTimeout( () => {
                     connectHandler();
-                }, 1000 * retries );
+                }, 2000 * retries );
             } else {
                 popupTitle.value = 'Share went offline';
                 popupMsg.value = 'The share you were connected to has gone offline';

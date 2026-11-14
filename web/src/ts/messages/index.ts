@@ -23,7 +23,7 @@ import {
     showIsReconnecting
 } from '@/composables/requiredLogin';
 
-const RETRY_CAP = 20;
+const RETRY_CAP = 30;
 
 export const room = ref( localStorage.getItem( 'room' ) ?? '' );
 
