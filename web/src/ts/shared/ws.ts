@@ -12,6 +12,9 @@ import {
 import {
     reset
 } from './reset';
+import {
+    showIsReconnecting
+} from '@/composables/requiredLogin';
 
 const RETRY_CAP = 10;
 
@@ -48,6 +51,7 @@ const connectHandler = (): Promise<boolean> => {
 
         connection.onopen = () => {
             hasConnected = true;
+            showIsReconnecting.value = false;
             console.log( '[WS] Connection established successfully' );
             resolve( true );
         };
@@ -71,6 +75,8 @@ const connectHandler = (): Promise<boolean> => {
 
             if ( !hasConnected ) reject( 'ERR_CONNECT' );
 
+            showIsReconnecting.value = true;
+
             if ( retries <= RETRY_CAP ) {
                 retries += 1;
 
@@ -80,6 +86,7 @@ const connectHandler = (): Promise<boolean> => {
             } else {
                 popupTitle.value = 'Share went offline';
                 popupMsg.value = 'The share you were connected to has gone offline';
+                showIsReconnecting.value = false;
                 showInfoPopup.value = true;
             }
         };

@@ -7,6 +7,7 @@
     import {
         Notifications
     } from '@kyvg/vue3-notification';
+    import ReconnectingNotification from './components/ReconnectingNotification.vue';
     import {
         RouterView
     } from 'vue-router';
@@ -32,6 +33,7 @@
             width="400px"
             :max="3"
         />
+        <ReconnectingNotification />
         <i
             id="theme-selector"
             class="fa-solid fa-moon"

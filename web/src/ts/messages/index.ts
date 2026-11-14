@@ -19,6 +19,9 @@ import {
 import {
     request
 } from '@janishutz/oidc-login-sdk-browser';
+import {
+    showIsReconnecting
+} from '@/composables/requiredLogin';
 
 const RETRY_CAP = 20;
 
@@ -53,6 +56,10 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
         }
     }
 
+    try {
+        document.removeEventListener( 'musicplayer:reauth', reconnectRoom );
+    } catch { /* empty */ }
+
     localStorage.setItem( 'room', name );
     useAntiTamper.value = antiTamper;
     room.value = name;
@@ -69,6 +76,8 @@ const createRoom = async ( name: string, antiTamper: boolean ): Promise<boolean>
 };
 
 const reconnectRoom = () => {
+    console.log( '[WS] room is reconnecting after reauth' );
+    retries = 0;
     createRoom( room.value, useAntiTamper.value );
 };
 
@@ -102,6 +111,7 @@ const connect = (): Promise<boolean> => {
 
         connection.onopen = () => {
             isConnected.value = true;
+            showIsReconnecting.value = false;
             console.log( '[WS] Connection established successfully' );
             sendPlaylistData();
             sendStateData();
@@ -121,6 +131,8 @@ const connect = (): Promise<boolean> => {
 
             if ( !isConnected.value ) reject( 'ERR_CONNECT' );
 
+            showIsReconnecting.value = true;
+
             if ( retries <= RETRY_CAP ) {
                 retries += 1;
 
@@ -129,6 +141,7 @@ const connect = (): Promise<boolean> => {
                 }, 1000 * retries );
             } else {
                 showShareFailedPopup.value = true;
+                showIsReconnecting.value = false;
                 isConnected.value = false;
             }
         };

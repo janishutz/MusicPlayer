@@ -8,6 +8,8 @@ import {
     sources
 } from '@/ts/player/state';
 
+export const showIsReconnecting = ref( false );
+
 export const isShowingRequiredLoginView = ref( false );
 
 export const requiredLoginsRawIdList: Ref<string[]> = ref( [] );

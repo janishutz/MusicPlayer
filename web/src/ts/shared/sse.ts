@@ -12,6 +12,9 @@ import {
 import {
     reset
 } from './reset';
+import {
+    showIsReconnecting
+} from '@/composables/requiredLogin';
 
 const RETRY_CAP = 10;
 
@@ -41,7 +44,7 @@ const connectHandler = (): Promise<void> => {
 
         connection.onopen = async () => {
             hasConnected = true;
-
+            showIsReconnecting.value = false;
             console.log( '[SSE] Connection established successfully' );
             resolve();
         };
@@ -64,6 +67,7 @@ const connectHandler = (): Promise<void> => {
 
             if ( !hasConnected ) return reject( 'ERR_CONNECT' );
 
+            showIsReconnecting.value = true;
             console.error( '[SSE] Connection failed, reconnecting' );
 
             if ( retries <= RETRY_CAP ) {
@@ -74,6 +78,7 @@ const connectHandler = (): Promise<void> => {
             } else {
                 popupTitle.value = 'Share went offline';
                 popupMsg.value = 'The share you were connected to has gone offline';
+                showIsReconnecting.value = false;
                 showInfoPopup.value = true;
             }
         };

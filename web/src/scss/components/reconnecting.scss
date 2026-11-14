@@ -1,0 +1,20 @@
+.reconnecting {
+  position: fixed;
+  bottom: -20px;
+  right: -11rem;
+  height: 2.5rem;
+  color: var(--theme-on-primary);
+  background-color: var(--theme-primary);
+  z-index: 10000;
+  padding: 0px 40px 20px 20px;
+  line-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 10px;
+  transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  &.shown {
+    right: -20px;
+  }
+}
