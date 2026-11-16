@@ -73,6 +73,7 @@ func devTokenHandler(conf config.Config) gin.HandlerFunc {
 			},
 			Signature: string(sig),
 		}
+		c.Header("Cache-Control", "max-age=86000, private")
 		signed, err := t.SignedString(key)
 		if err != nil {
 			log.Print("Apple Music API JWT signing failed with error", err)

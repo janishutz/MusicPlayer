@@ -12,6 +12,7 @@ import (
 
 func playlistGetHandler(c *gin.Context) {
 	session := sessions.Default(c)
+	c.Header("Cache-Control", "max-age=60, private")
 	c.File(conf.Datadir + session.Get("jhid_uid").(string) + ".json")
 }
 
@@ -25,7 +26,7 @@ func playlistPostHandler(c *gin.Context) {
 			log.Println("[WARN] Failed to marshal playlists for user")
 			c.AbortWithStatus(500)
 		}
-		os.WriteFile(conf.Datadir + session.Get("jhid_uid").(string) + ".json", raw, 0644)
+		os.WriteFile(conf.Datadir+session.Get("jhid_uid").(string)+".json", raw, 0644)
 	} else {
 		log.Println("[WARN] Parsing JSON data failed with error", err)
 		c.AbortWithStatus(400)
