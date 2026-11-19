@@ -68,7 +68,15 @@
     const reset = ( skipCheck = true ) => {
         if ( !skipCheck && !Object.keys( offering.value ).includes( selectedBar.value ) ) return;
 
-        if ( cashinInDepot && enableDepotReminder.value ) alert( 'Hand out chips for depot' );
+        if ( cashinInDepot && enableDepotReminder.value ) {
+            const cnt = Object.keys( selection.value )
+                .map( val => {
+                    return selection.value[ val ]! * ( ( offering.value[ selectedBar.value ]!.offering[ val ]!.depot ?? 0 ) > 0 ? 1 : 0 );
+                } )
+                .reduce( ( prev, curr ) => prev + curr );
+
+            alert( `Hand out ${ cnt } chips for depot` );
+        }
 
         cashinInDepot = false;
 
