@@ -75,7 +75,7 @@
             const cnt = Object.keys( selection.value )
                 .map( val => {
                     isAgeCheckRequired = isAgeCheckRequired
-                        || offering.value[ selectedBar.value ]!.offering[ val ]!.ageCheckRequired ?? false;
+                        || ( offering.value[ selectedBar.value ]!.offering[ val ]!.ageCheckRequired ?? false );
 
                     return selection.value[ val ]! * ( ( offering.value[ selectedBar.value ]!.offering[ val ]!.depot ?? 0 ) > 0 ? 1 : 0 );
                 } )

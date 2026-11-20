@@ -155,8 +155,7 @@
                 "softdrinks": {
                     "name": "Softdrinks (Alle)",
                     "price": 300,
-                    "id": "softdrinks",
-                    "showLine": true
+                    "id": "softdrinks"
                 },
                 "sparkly-water": {
                     "name": "Mineralwasser mit",
