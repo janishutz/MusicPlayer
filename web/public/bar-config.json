@@ -32,12 +32,14 @@
                 "rose": {
                     "name": "Rosé",
                     "price": 1500,
+                    "ageCheckRequired": true,
                     "id": "rose",
                     "depot": 200
                 },
                 "red": {
                     "name": "Rotwein",
                     "price": 2000,
+                    "ageCheckRequired": true,
                     "id": "red",
                     "depot": 200
                 },
@@ -50,18 +52,28 @@
                 "appenzeller": {
                     "name": "Appenzeller Vollmond",
                     "price": 500,
+                    "ageCheckRequired": true,
                     "id": "appenzeller",
                     "depot": 200
                 },
-                "feldschloesschen": {
-                    "name": "Feldschlösschen",
+                "turbinenbrew": {
+                    "name": "Turbinenbräu",
                     "price": 500,
-                    "id": "feldschloesschen",
+                    "ageCheckRequired": true,
+                    "id": "turbinenbrew",
+                    "depot": 200
+                },
+                "other-beer": {
+                    "name": "The other beer",
+                    "price": 500,
+                    "ageCheckRequired": true,
+                    "id": "other-beer",
                     "depot": 200
                 },
                 "sommersby": {
                     "name": "Sommersby",
                     "price": 500,
+                    "ageCheckRequired": true,
                     "id": "sommersby",
                     "depot": 200
                 },
@@ -76,62 +88,66 @@
                     "price": 600,
                     "id": "trojka-ice",
                     "depot": 200,
+                    "ageCheckRequired": true,
                     "showLine": true
                 },
                 "vodka-red-energy": {
                     "name": "Vodka Rot Energy",
                     "price": 800,
+                    "ageCheckRequired": true,
                     "id": "vodka-red-energy"
                 },
                 "vodka-green-citro": {
                     "name": "Vodka Grün Citro",
                     "price": 800,
+                    "ageCheckRequired": true,
                     "id": "vodka-green-citro"
                 },
                 "vodka-white-energy": {
                     "name": "Vodka White Energy",
                     "price": 900,
+                    "ageCheckRequired": true,
                     "id": "vodka-white-energy"
-                },
-                "gin-tonic": {
-                    "name": "Gin Tonic",
-                    "price": 900,
-                    "id": "gin-tonic"
                 },
                 "rum-cola": {
                     "name": "Rum Cola",
                     "price": 900,
+                    "ageCheckRequired": true,
                     "id": "rum-cola"
                 },
                 "whiskey-cola": {
                     "name": "Whiskey Cola",
                     "price": 900,
+                    "ageCheckRequired": true,
                     "id": "whiskey-cola"
                 },
                 "mate-mit-schuss": {
                     "name": "Mate mit Schuss",
                     "price": 1200,
+                    "ageCheckRequired": true,
                     "id": "mate-mit-schuss",
                     "depot": 200,
                     "showLine": true
                 },
-                "poseidon": {
-                    "name": "Poseidon",
+                "maschera-rose": {
+                    "name": "Maschera Rosé",
                     "price": 900,
-                    "id": "poseidon"
+                    "ageCheckRequired": true,
+                    "id": "maschera-rose"
                 },
-                "arielle": {
-                    "name": "Arielle",
+                "maschera-blu": {
+                    "name": "Maschera Blu",
                     "price": 900,
-                    "id": "arielle"
+                    "ageCheckRequired": true,
+                    "id": "maschera-blu"
                 },
-                "pearl-driver": {
-                    "name": "Pearl Driver",
+                "venezia-blu": {
+                    "name": "Venezia Blu",
                     "price": 400,
-                    "id": "pearl-driver"
+                    "id": "venezia-blu"
                 }
             },
-            "name": "Poseidon's Quelle",
+            "name": "La Maschera (unten)",
             "id": "big-bar"
         },
         "small-bar": {
@@ -142,21 +158,57 @@
                     "id": "softdrinks",
                     "showLine": true
                 },
+                "sparkly-water": {
+                    "name": "Mineralwasser mit",
+                    "price": 300,
+                    "id": "sparkly-water",
+                    "showLine": true
+                },
+                "rose": {
+                    "name": "Rosé",
+                    "price": 1500,
+                    "id": "rose",
+                    "ageCheckRequired": true,
+                    "depot": 200
+                },
+                "red": {
+                    "name": "Rotwein",
+                    "price": 2000,
+                    "id": "red",
+                    "ageCheckRequired": true,
+                    "depot": 200
+                },
+                "wine-glasses": {
+                    "name": "Weingläser",
+                    "price": 0,
+                    "id": "wine-glasses",
+                    "depot": 200
+                },
                 "appenzeller": {
                     "name": "Appenzeller Vollmond",
                     "price": 500,
                     "id": "appenzeller",
+                    "ageCheckRequired": true,
                     "depot": 200
                 },
-                "feldschloesschen": {
-                    "name": "Feldschlösschen",
+                "turbinenbrew": {
+                    "name": "Turbinenbräu",
                     "price": 500,
-                    "id": "feldschloesschen",
+                    "ageCheckRequired": true,
+                    "id": "turbinenbrew",
+                    "depot": 200
+                },
+                "other-beer": {
+                    "name": "The other beer",
+                    "price": 500,
+                    "ageCheckRequired": true,
+                    "id": "other-beer",
                     "depot": 200
                 },
                 "sommersby": {
                     "name": "Sommersby",
                     "price": 500,
+                    "ageCheckRequired": true,
                     "id": "sommersby",
                     "depot": 200
                 },
@@ -166,27 +218,9 @@
                     "id": "jever-fun",
                     "depot": 200,
                     "showLine": true
-                },
-                "rose": {
-                    "name": "Rosé",
-                    "price": 1500,
-                    "id": "rose",
-                    "depot": 200
-                },
-                "red": {
-                    "name": "Rotwein",
-                    "price": 2000,
-                    "id": "red",
-                    "depot": 200
-                },
-                "wine-glasses": {
-                    "name": "Weingläser",
-                    "price": 0,
-                    "id": "wine-glasses",
-                    "depot": 200
                 }
             },
-            "name": "Seepferdchenbar",
+            "name": "Ballo Segreto (oben)",
             "id": "small-bar"
         }
     }

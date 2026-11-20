@@ -32,6 +32,7 @@
         'depot'?: number; // In cents
         'showLine'?: boolean;
         'id': string;
+        'ageCheckRequired'?: boolean;
     }
 
     interface Selection {
@@ -69,13 +70,18 @@
         if ( !skipCheck && !Object.keys( offering.value ).includes( selectedBar.value ) ) return;
 
         if ( cashinInDepot && enableDepotReminder.value ) {
+            let isAgeCheckRequired = false;
+
             const cnt = Object.keys( selection.value )
                 .map( val => {
+                    isAgeCheckRequired = isAgeCheckRequired
+                        || offering.value[ selectedBar.value ]!.offering[ val ]!.ageCheckRequired ?? false;
+
                     return selection.value[ val ]! * ( ( offering.value[ selectedBar.value ]!.offering[ val ]!.depot ?? 0 ) > 0 ? 1 : 0 );
                 } )
                 .reduce( ( prev, curr ) => prev + curr );
 
-            alert( `Hand out ${ cnt } chips for depot` );
+            alert( `Hand out ${ cnt } chips for depot` + ( isAgeCheckRequired ? ' and CHECK FOR AGES!' : '' ) );
         }
 
         cashinInDepot = false;
