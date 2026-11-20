@@ -63,11 +63,11 @@
                     "id": "turbinenbrew",
                     "depot": 200
                 },
-                "other-beer": {
-                    "name": "The other beer",
+                "ehrunsbacher": {
+                    "name": "Ehrunsbacher",
                     "price": 500,
                     "ageCheckRequired": true,
-                    "id": "other-beer",
+                    "id": "ehrunsbacher",
                     "depot": 200
                 },
                 "sommersby": {
@@ -197,11 +197,11 @@
                     "id": "turbinenbrew",
                     "depot": 200
                 },
-                "other-beer": {
-                    "name": "The other beer",
+                "ehrunsbacher": {
+                    "name": "Ehrunsbacher",
                     "price": 500,
                     "ageCheckRequired": true,
-                    "id": "other-beer",
+                    "id": "ehrunsbacher",
                     "depot": 200
                 },
                 "sommersby": {
