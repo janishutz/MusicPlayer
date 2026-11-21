@@ -56,4 +56,6 @@ const initSources = async () => {
     }
 };
 
-initSources();
+setTimeout( () => {
+    initSources();
+}, 500 );
