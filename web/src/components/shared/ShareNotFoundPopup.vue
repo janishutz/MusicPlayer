@@ -27,7 +27,11 @@
     <PopupElement v-model="showShareNotFoundPopup">
         <div class="info-popup">
             <h2>Share not found</h2>
-            <p>The share you have specified does not currently exist. Please try again later</p>
+            <p>
+                The share you have specified does not currently exist.
+                This may mean that it has not been started yet or that your link is incorrect.
+                Please try again later
+            </p>
             <div>
                 <button @click="close">
                     Ok
